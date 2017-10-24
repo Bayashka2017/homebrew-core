@@ -6,6 +6,7 @@ class GccAT6 < Formula
   sha256 "850bf21eafdfe5cd5f6827148184c08c4a0852a37ccf36ce69855334d2c914d4"
 
   bottle do
+    sha256 "d33494e55966361e4ceeebac90868e1376470a0cf892d7d560fb33cb8517d315" => :high_sierra
     sha256 "a8b246961500f3ffb8fc30da8bb7b261029fb6e8ba602c18797785bfd405c2c9" => :sierra
     sha256 "8942f79d833b4897820795607b25f5feaa49a0f0e160a9db25263d6876069313" => :el_capitan
     sha256 "5c3d71e364916409f8eafe3868d0d66209720c5303334bfcf44b7a712d23ce18" => :yosemite
@@ -18,8 +19,6 @@ class GccAT6 < Formula
   option "with-nls", "Build with native language support (localization)"
   option "with-jit", "Build the jit compiler"
   option "without-fortran", "Build without the gfortran compiler"
-  # enabling multilib on a host that can't run 64-bit results in build failures
-  option "without-multilib", "Build without multilib support" if MacOS.prefer_64_bit?
 
   depends_on "gmp"
   depends_on "libmpc"
@@ -46,6 +45,15 @@ class GccAT6 < Formula
   patch do
     url "https://raw.githubusercontent.com/Homebrew/formula-patches/e9e0ee09389a54cc4c8fe1c24ebca3cd765ed0ba/gcc/6.1.0-jit.patch"
     sha256 "863957f90a934ee8f89707980473769cff47ca0663c3906992da6afb242fb220"
+  end
+
+  # Fix parallel build on APFS filesystem
+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81797
+  if MacOS.version >= :high_sierra
+    patch do
+      url "https://raw.githubusercontent.com/Homebrew/formula-patches/df0465c02a/gcc/apfs.patch"
+      sha256 "f7772a6ba73f44a6b378e4fe3548e0284f48ae2d02c701df1be93780c1607074"
+    end
   end
 
   def install
@@ -110,10 +118,10 @@ class GccAT6 < Formula
       args << "--with-ecj-jar=#{Formula["ecj"].opt_share}/java/ecj.jar"
     end
 
-    if build.without?("multilib") || !MacOS.prefer_64_bit?
-      args << "--disable-multilib"
-    else
+    if MacOS.prefer_64_bit?
       args << "--enable-multilib"
+    else
+      args << "--disable-multilib"
     end
 
     args << "--enable-host-shared" if build.with?("jit") || build.with?("all-languages")
@@ -151,7 +159,7 @@ class GccAT6 < Formula
   end
 
   test do
-    (testpath/"hello-c.c").write <<-EOS.undent
+    (testpath/"hello-c.c").write <<~EOS
       #include <stdio.h>
       int main()
       {
@@ -162,7 +170,7 @@ class GccAT6 < Formula
     system "#{bin}/gcc-6", "-o", "hello-c", "hello-c.c"
     assert_equal "Hello, world!\n", `./hello-c`
 
-    (testpath/"hello-cc.cc").write <<-EOS.undent
+    (testpath/"hello-cc.cc").write <<~EOS
       #include <iostream>
       int main()
       {
@@ -174,7 +182,7 @@ class GccAT6 < Formula
     assert_equal "Hello, world!\n", `./hello-cc`
 
     if build.with?("fortran") || build.with?("all-languages")
-      fixture = <<-EOS.undent
+      fixture = <<~EOS
         integer,parameter::m=10000
         real::a(m), b(m)
         real::fact=0.5

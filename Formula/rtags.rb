@@ -2,14 +2,16 @@ class Rtags < Formula
   desc "Source code cross-referencer like ctags with a clang frontend"
   homepage "https://github.com/Andersbakken/rtags"
   url "https://github.com/Andersbakken/rtags.git",
-      :tag => "v2.10",
-      :revision => "3b3ace901f53827daef81d4c13658ec4feb318b4"
+      :tag => "v2.14",
+      :revision => "15ef9a8bab847773d6e247005be929422fc9c285"
+  revision 1
   head "https://github.com/Andersbakken/rtags.git"
 
   bottle do
-    sha256 "e50a7b7a002a122a2fe5b37a89dd244e7ea5b62c833d461617e1bc925658166d" => :sierra
-    sha256 "ffbfe6d1837c215e23a747762475535371681528e3a5d2b471c3865e0e9f6985" => :el_capitan
-    sha256 "838d71ff36317a437fd5eda40ca90db31f8860258b033818ce41c5b6dc502b0c" => :yosemite
+    sha256 "e209f12dad8a38835ab21faa90b077b2df5a0fdd84ae2986ef840ad6b5fe1465" => :high_sierra
+    sha256 "ba02801b679d09bea8ffcd78600283c76027fef1b6dada91f4bb8d9858ccc7e6" => :sierra
+    sha256 "f3e566c9093c99b9edf5ce4037f0d288637c4c3823292c3736deade9e20941ab" => :el_capitan
+    sha256 "55e08fa2512062a942ed61feb6e89466cb759b5214d7d4d7fb60d468903c3297" => :yosemite
   end
 
   depends_on "cmake" => :build
@@ -36,7 +38,7 @@ class Rtags < Formula
 
   plist_options :manual => "#{HOMEBREW_PREFIX}/bin/rdm --verbose --inactivity-timeout=300 --log-file=#{HOMEBREW_PREFIX}/var/log/rtags.log"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -66,16 +68,16 @@ class Rtags < Formula
 
   test do
     mkpath testpath/"src"
-    (testpath/"src/foo.c").write <<-EOS.undent
-        void zaphod() {
-        }
+    (testpath/"src/foo.c").write <<~EOS
+      void zaphod() {
+      }
 
-        void beeblebrox() {
-          zaphod();
-        }
+      void beeblebrox() {
+        zaphod();
+      }
     EOS
-    (testpath/"src/README").write <<-EOS.undent
-        42
+    (testpath/"src/README").write <<~EOS
+      42
     EOS
 
     rdm = fork do

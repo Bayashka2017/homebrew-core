@@ -8,6 +8,7 @@ class Lua < Formula
   bottle do
     cellar :any
     rebuild 1
+    sha256 "9d81d844cb167ba66b4eefdd33edcd1ffc6c48355ccede9d05064859a9a8d4d2" => :high_sierra
     sha256 "cc0e904400207422498efe4b352bfa185927ba75115920275cfe1f051ecbe768" => :sierra
     sha256 "71e15d3f9db85ec870950d9d7d4aa2b0295914a60d5062c4b5db3bda50972a79" => :el_capitan
     sha256 "fbef1569ff95f0a63ca17208891b4ce6f9d4e1e484bf3a9a6052271e00e35637" => :yosemite
@@ -107,7 +108,7 @@ class Lua < Formula
     end
   end
 
-  def pc_file; <<-EOS.undent
+  def pc_file; <<~EOS
     V= 5.2
     R= 5.2.4
     prefix=#{opt_prefix}
@@ -130,7 +131,7 @@ class Lua < Formula
     EOS
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     Please be aware due to the way Luarocks is designed any binaries installed
     via Luarocks-5.2 AND 5.1 will overwrite each other in #{HOMEBREW_PREFIX}/bin.
 
@@ -146,7 +147,7 @@ class Lua < Formula
     if File.exist?(bin/"luarocks-5.2")
       mkdir testpath/"luarocks"
       system bin/"luarocks-5.2", "install", "moonscript", "--tree=#{testpath}/luarocks"
-      assert File.exist? testpath/"luarocks/bin/moon"
+      assert_predicate testpath/"luarocks/bin/moon", :exist?
     end
   end
 end

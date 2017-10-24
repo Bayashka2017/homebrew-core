@@ -1,15 +1,16 @@
 class Stella < Formula
   desc "Atari 2600 VCS emulator"
   homepage "https://stella-emu.github.io/"
-  url "https://github.com/stella-emu/stella/releases/download/5.0/stella-5.0-src.tar.xz"
-  sha256 "c21ba87959312f833a5a0e8d73d99cb8fb2ddd312f4e0a7ef0412b445903d0bc"
+  url "https://github.com/stella-emu/stella/releases/download/5.0.2/stella-5.0.2-src.tar.xz"
+  sha256 "74ee708b68340b65519a04a22c61921cdcf69a1d308600c212414b28e9e689ac"
   head "https://github.com/stella-emu/stella.git"
 
   bottle do
     cellar :any
-    sha256 "62cc1956e830b9dd2d6e3c5af5a73c548a14c671f40af2f73374604b4fb265dd" => :sierra
-    sha256 "06ade7c7621586cfc5d46089d599af04cd3d05678b9ef1c103c19f9f4f12a1ac" => :el_capitan
-    sha256 "d4a5e838b4fb6766fdc86af516c0aeb3ae3db869bf101ef0e4f4caced939fd7e" => :yosemite
+    sha256 "d785be494c19b1254ae8d36173e03155cfe7ddb5904811a846b6d5b36e57f8cd" => :high_sierra
+    sha256 "a5f27dadb73bac03b216c87bec7e4de593aadfdeaa6e1058d0a5c457d16a1071" => :sierra
+    sha256 "443b004f1f0cf445b66a28a253a423f2f02ca32729a828ff2fb0ccc414a914f4" => :el_capitan
+    sha256 "1f53b58fc29ced3dd2390191760481af1ecdf822653ff02b2e5a0ce5420f4ace" => :yosemite
   end
 
   depends_on :xcode => :build

@@ -10,6 +10,7 @@ class Gitfs < Formula
 
   bottle do
     cellar :any
+    sha256 "29951f6b6a8d983fdc70dcdb521d0f1cb5bb6e2f01c8b5c7e6c76cc8733507c7" => :high_sierra
     sha256 "7c2ccf5484a84e8beb07e0aac7b9b61178da275deba85ad199924d452b536aef" => :sierra
     sha256 "924e0207bf6dddd61455a78b92f7bbfa940607834b5a0d1e5f2d60e16b13a9e2" => :el_capitan
     sha256 "20a796f7b30c7f3fbb2273ed7d5823fb4a53bd708e0854add3d536aa09619f3a" => :yosemite
@@ -48,7 +49,7 @@ class Gitfs < Formula
     virtualenv_install_with_resources
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     gitfs clones repos in /var/lib/gitfs. You can either create it with
     sudo mkdir -m 1777 /var/lib/gitfs or use another folder with the
     repo_path argument.
@@ -60,14 +61,14 @@ class Gitfs < Formula
   test do
     ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python2.7/site-packages"
 
-    (testpath/"test.py").write <<-EOS.undent
+    (testpath/"test.py").write <<~EOS
       import gitfs
       import pygit2
       pygit2.init_repository('testing/.git', True)
     EOS
 
     system "python", "test.py"
-    assert File.exist?("testing/.git/config")
+    assert_predicate testpath/"testing/.git/config", :exist?
     cd "testing" do
       system "git", "remote", "add", "homebrew", "https://github.com/Homebrew/homebrew.git"
       assert_match "homebrew", shell_output("git remote")

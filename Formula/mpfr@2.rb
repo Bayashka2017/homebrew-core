@@ -2,13 +2,14 @@ class MpfrAT2 < Formula
   desc "Multiple-precision floating-point computations C lib"
   homepage "http://www.mpfr.org/"
   # Track gcc infrastructure releases.
-  url "http://www.mpfr.org/mpfr-2.4.2/mpfr-2.4.2.tar.bz2"
-  mirror "ftp://gcc.gnu.org/pub/gcc/infrastructure/mpfr-2.4.2.tar.bz2"
+  url "https://gcc.gnu.org/pub/gcc/infrastructure/mpfr-2.4.2.tar.bz2"
+  mirror "http://www.mpfr.org/mpfr-2.4.2/mpfr-2.4.2.tar.bz2"
   sha256 "c7e75a08a8d49d2082e4caee1591a05d11b9d5627514e678f02d66a124bcf2ba"
 
   bottle do
     cellar :any
     rebuild 1
+    sha256 "4736818793c64345323ceeb5f7ab66a52d84c3123ba476b08b790ef9abc12e3d" => :high_sierra
     sha256 "338b557f978df323497c4b56ce90fb623817e51d312c474220029a9ddd42ccc9" => :sierra
     sha256 "999668c3a0a71ed8c4f4a7b50a5c2b242ba488b565702e5fcea42a113a553210" => :el_capitan
     sha256 "f923e8b5a61e736aac64b98c54881e6d336c286b456c78932681c3238c5b3751" => :yosemite
@@ -20,7 +21,7 @@ class MpfrAT2 < Formula
 
   fails_with :clang do
     build 421
-    cause <<-EOS.undent
+    cause <<~EOS
       clang build 421 segfaults while building in superenv;
       see https://github.com/mxcl/homebrew/issues/15061
       EOS
@@ -50,7 +51,7 @@ class MpfrAT2 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <gmp.h>
       #include <mpfr.h>
 

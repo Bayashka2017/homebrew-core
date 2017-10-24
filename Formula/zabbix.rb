@@ -1,13 +1,13 @@
 class Zabbix < Formula
   desc "Availability and monitoring solution"
   homepage "https://www.zabbix.com/"
-  url "https://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.2.7/zabbix-3.2.7.tar.gz"
-  sha256 "3ea0c299bd69bc728177128740f0476bc1a2c1de438330df5bbd8f5fc6090712"
+  url "https://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.3/zabbix-3.4.3.tar.gz"
+  sha256 "00e87db503d332a1e3905d13f36b6ddad32c2514f03060361168655a8d4fd8cf"
 
   bottle do
-    sha256 "f5339668b22723446077ccb27043d2231ed62c0bc9dc7e2195fe94c49b1a6e4b" => :sierra
-    sha256 "a00256ad062808595260400eddb4fa75707adf04817bd7a48d42098897404ae7" => :el_capitan
-    sha256 "c3bad0c8a76d1b20fe163805ecf26a8a6f040305e172ffc6a09ceacf645d9746" => :yosemite
+    sha256 "fc5f42b9ea28dc90f60b84951982951d56fafc176ac6e2d85228088e76d0c4d4" => :high_sierra
+    sha256 "ec6dd70c4e463a89fbcdc8bb5cf80665e4e8dca9996124db097e296f7d34663f" => :sierra
+    sha256 "37f589c679565dd1b4df33503c472e9f4d102ab42804dbc471620aec711d316d" => :el_capitan
   end
 
   option "with-mysql", "Use Zabbix Server with MySQL library instead PostgreSQL."
@@ -16,10 +16,14 @@ class Zabbix < Formula
 
   deprecated_option "agent-only" => "without-server-proxy"
 
+  depends_on "openssl"
+  depends_on "pcre"
+
   if build.with? "server-proxy"
     depends_on :mysql => :optional
     depends_on :postgresql if build.without? "mysql"
     depends_on "fping"
+    depends_on "libevent"
     depends_on "libssh2"
   end
 
@@ -35,6 +39,8 @@ class Zabbix < Formula
       --sysconfdir=#{etc}/zabbix
       --enable-agent
       --with-iconv=#{MacOS.sdk_path}/usr
+      --with-libpcre=#{Formula["pcre"].opt_prefix}
+      --with-openssl=#{Formula["openssl"].opt_prefix}
     ]
 
     if build.with? "server-proxy"

@@ -1,14 +1,14 @@
 class Libtensorflow < Formula
   desc "C interface for Google's OS library for Machine Intelligence"
   homepage "https://www.tensorflow.org/"
-  url "https://github.com/tensorflow/tensorflow/archive/v1.2.1.tar.gz"
-  sha256 "f2baf09b1a9a0500907b4d5cb5473070b3ecede06ed6e8d1096873c91922fb9e"
+  url "https://github.com/tensorflow/tensorflow/archive/v1.3.1.tar.gz"
+  sha256 "ded509c209f8a1d390df8a2f44be5b5c29963172b0e0f095304efb59765d0523"
 
   bottle do
     cellar :any
-    sha256 "1fcf113066d12ec927fe18b8f8b58a9ee90c829ee0e8867de6475d1acb0fbe1b" => :sierra
-    sha256 "14c73d05efa47b32cdbab86b1854f2d6da3da1a58a4c893cc096f485103ca534" => :el_capitan
-    sha256 "391027909b9706d71c7ccdcc151896c8e15bdf3ab231775848c8ec566a5608ed" => :yosemite
+    sha256 "a8593a1d2ea56c368216640e26778f15d400d16317127000593d517bed8f06c4" => :high_sierra
+    sha256 "36bc98da7aed74977866314cc86acbb23c3c897b36865717151c503a5527e360" => :sierra
+    sha256 "9bec7533d9704629d860583fc6d2916c7b7e7a8266a2b49f5380bf64f0097fc4" => :el_capitan
   end
 
   depends_on "bazel" => :build
@@ -25,12 +25,13 @@ class Libtensorflow < Formula
     ENV["TF_NEED_CUDA"] = "0"
     ENV["TF_NEED_MKL"] = "0"
     ENV["TF_NEED_VERBS"] = "0"
+    ENV["TF_NEED_MPI"] = "0"
     system "./configure"
 
     system "bazel", "build", "--compilation_mode=opt", "--copt=-march=native", "tensorflow:libtensorflow.so"
     lib.install "bazel-bin/tensorflow/libtensorflow.so"
     (include/"tensorflow/c").install "tensorflow/c/c_api.h"
-    (lib/"pkgconfig/tensorflow.pc").write <<-EOS.undent
+    (lib/"pkgconfig/tensorflow.pc").write <<~EOS
       Name: tensorflow
       Description: Tensorflow library
       Version: #{version}
@@ -40,7 +41,7 @@ class Libtensorflow < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <stdio.h>
       #include <tensorflow/c/c_api.h>
       int main() {

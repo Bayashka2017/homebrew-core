@@ -3,12 +3,14 @@ class VowpalWabbit < Formula
   homepage "https://github.com/JohnLangford/vowpal_wabbit"
   url "https://github.com/JohnLangford/vowpal_wabbit/archive/8.4.0.tar.gz"
   sha256 "8624c33fd516e8b738fbbc6fc49f62ac03f97af183dbecff298162b4bf5736d5"
+  revision 2
 
   bottle do
     cellar :any
-    sha256 "3b97cee6901f411e24dbfde2b021adcc9c8b88696c33a23d5addb125e8825e78" => :sierra
-    sha256 "8448a6addc4ade0e29bfa829b2ef02caba89ac88db91109902f85fd918048503" => :el_capitan
-    sha256 "348a1333340bf8d8ae189d09bc5589cd9a3f4dbd5818cb7382554d6ddac861d9" => :yosemite
+    sha256 "1c75a20fd7b7c0ce685f1a56e4c9c79349bc26943b3cd4bcd906764b757017be" => :high_sierra
+    sha256 "7ef502ea64c6c0eaafe328037354ff317cd4432dff8b68d2669c85688b2dd145" => :sierra
+    sha256 "689048beda8fffbe1a7bb888bfef4cdccaf36e5f03eb6bed172efe82ebbc58e8" => :el_capitan
+    sha256 "2e7c5709faf8fe35f65c676cf994e9d6e3928b9f609d6820f78224b0276278d0" => :yosemite
   end
 
   if MacOS.version < :mavericks
@@ -45,7 +47,7 @@ class VowpalWabbit < Formula
   end
 
   test do
-    (testpath/"house_dataset").write <<-EOS.undent
+    (testpath/"house_dataset").write <<~EOS
       0 | price:.23 sqft:.25 age:.05 2006
       1 2 'second_house | price:.18 sqft:.15 age:.35 1976
       0 1 0.5 'third_house | price:.53 sqft:.32 age:.87 1924
@@ -53,7 +55,7 @@ class VowpalWabbit < Formula
     system bin/"vw", "house_dataset", "-l", "10", "-c", "--passes", "25", "--holdout_off", "--audit", "-f", "house.model", "--nn", "5"
     system bin/"vw", "-t", "-i", "house.model", "-d", "house_dataset", "-p", "house.predict"
 
-    (testpath/"csoaa.dat").write <<-EOS.undent
+    (testpath/"csoaa.dat").write <<~EOS
       1:1.0 a1_expect_1| a
       2:1.0 b1_expect_2| b
       3:1.0 c1_expect_3| c
@@ -65,7 +67,7 @@ class VowpalWabbit < Formula
     system bin/"vw", "--csoaa", "3", "csoaa.dat", "-f", "csoaa.model"
     system bin/"vw", "-t", "-i", "csoaa.model", "-d", "csoaa.dat", "-p", "csoaa.predict"
 
-    (testpath/"ect.dat").write <<-EOS.undent
+    (testpath/"ect.dat").write <<~EOS
       1 ex1| a
       2 ex2| a b
       3 ex3| c d e
@@ -75,14 +77,14 @@ class VowpalWabbit < Formula
     system bin/"vw", "--ect", "3", "-d", "ect.dat", "-f", "ect.model"
     system bin/"vw", "-t", "-i", "ect.model", "-d", "ect.dat", "-p", "ect.predict"
 
-    (testpath/"train.dat").write <<-EOS.undent
-    1:2:0.4 | a c
-      3:0.5:0.2 | b d
-      4:1.2:0.5 | a b c
-      2:1:0.3 | b c
-      3:1.5:0.7 | a d
+    (testpath/"train.dat").write <<~EOS
+      1:2:0.4 | a c
+        3:0.5:0.2 | b d
+        4:1.2:0.5 | a b c
+        2:1:0.3 | b c
+        3:1.5:0.7 | a d
     EOS
-    (testpath/"test.dat").write <<-EOS.undent
+    (testpath/"test.dat").write <<~EOS
       1:2 3:5 4:1:0.6 | a c d
       1:0.5 2:1:0.4 3:2 4:1.5 | c d
     EOS

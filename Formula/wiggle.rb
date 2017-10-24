@@ -1,11 +1,12 @@
 class Wiggle < Formula
   desc "Program for applying patches with conflicting changes"
   homepage "http://neil.brown.name/blog/20100324064620"
-  url "http://neil.brown.name/wiggle/wiggle-1.0.tar.gz"
+  url "https://src.fedoraproject.org/repo/pkgs/wiggle/wiggle-1.0.tar.gz/777d8d4c718220063511e82e16275d1b/wiggle-1.0.tar.gz"
   sha256 "44c97b2d47a109c709cdd4181d9ba941fee50dbb64448018b91d4a2fffe69cf2"
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "e9ec785cabc40fb4879c63982bf85cd1412d411fa33775b7e1e3f53dc1df977b" => :high_sierra
     sha256 "0f002fb282dfaa1df66f28cd3f2135b571095b4f5db5528e288dcf439d480a2f" => :sierra
     sha256 "7e832c2b0e4e4564f15c3a66b1d0b78c309a0f28ca548b5e39b6967bdf12a542" => :el_capitan
     sha256 "e6799084357708eb5142ec5c1104f43c9fdcc0d953f0b80c458e931f53e210e8" => :yosemite

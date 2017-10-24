@@ -1,7 +1,7 @@
 class Couchdb < Formula
   desc "Document database server"
   homepage "https://couchdb.apache.org/"
-  revision 11
+  revision 13
 
   stable do
     url "https://www.apache.org/dyn/closer.cgi?path=/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz"
@@ -14,9 +14,10 @@ class Couchdb < Formula
   end
 
   bottle do
-    sha256 "2fca98719e1b07bad00359077435958628ff38774da27815ff3381ed53a37d92" => :sierra
-    sha256 "e48ceeb748aaec229fb18386d49a46dc39fc293e07f6f41bae1da80fe581844e" => :el_capitan
-    sha256 "b5cc784619d2fe9af3acceec4f1d191af6b7fdf23dca751e3096157e4b780f4a" => :yosemite
+    sha256 "e8ee8e78cfdccbcb03fb672b0189354553e920fe49a82ed48e7308375a61c3b6" => :high_sierra
+    sha256 "e762e24878c9354a8316c83cd9c0453d44c2ba2402cb1f79da76bf54f1dffb9a" => :sierra
+    sha256 "7561fda33e55d676787f456a83edf1322b506715171188dc478ff508f5dde19c" => :el_capitan
+    sha256 "1b828b7df1f1eb8feccc278e8eb1cf138784fdb77cd805eaf29a322e144bbb07" => :yosemite
   end
 
   head do
@@ -137,17 +138,17 @@ class Couchdb < Formula
   end
 
   def caveats
-    str = <<-EOS.undent
-    To test CouchDB run:
-        curl http://127.0.0.1:5984/
-    The reply should look like:
-        {"couchdb":"Welcome","uuid":"....","version":"#{version}","vendor":{"version":"#{version}-1","name":"Homebrew"}}
+    str = <<~EOS
+      To test CouchDB run:
+          curl http://127.0.0.1:5984/
+      The reply should look like:
+          {"couchdb":"Welcome","uuid":"....","version":"#{version}","vendor":{"version":"#{version}-1","name":"Homebrew"}}
     EOS
     str += "\n#{geocouch_caveats}" if build.with? "geocouch"
     str
   end
 
-  def geocouch_caveats; <<-EOS.undent
+  def geocouch_caveats; <<~EOS
     GeoCouch Caveats:
     FYI:  geocouch installs as an extension of couchdb, so couchdb effectively
     becomes geocouch.  However, you can use couchdb normally (using geocouch
@@ -184,7 +185,7 @@ class Couchdb < Formula
 
   plist_options :manual => "couchdb"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

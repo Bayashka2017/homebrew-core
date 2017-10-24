@@ -1,16 +1,17 @@
 class Dub < Formula
   desc "Build tool for D projects"
   homepage "https://code.dlang.org/getting_started"
-  url "https://github.com/dlang/dub/archive/v1.4.0.tar.gz"
-  sha256 "11e2604e61fb89152044927df1f87561640da8406ea4bdb35655572bbdfd77f0"
+  url "https://github.com/dlang/dub/archive/v1.5.0.tar.gz"
+  sha256 "3509f959cc5b34e44adaae586b62ded387ac10031f6c1aaf1cfbb4aae5af37dd"
   version_scheme 1
 
   head "https://github.com/dlang/dub.git"
 
   bottle do
-    sha256 "d90795924f04dcd73daf64dae1f5c7ddb3c5515c83e3ab7a921ad92952ebc1b5" => :sierra
-    sha256 "3e679d35a0c7e43321e49680b9bb3322cdbab28d662af211017d08236527f190" => :el_capitan
-    sha256 "9b41c338802264a16d670bf1f0e90441ca4411992abcc8f9da33f49150785956" => :yosemite
+    sha256 "fdabddfc93234bbedf6e3fedb65fd6a9fd58c961b1ca21d85a7b7e1bdeef8034" => :high_sierra
+    sha256 "2fa310eadd78afbe3e9fa2bf6129075d1e8ebc0cfbcbc85790576bcf887194da" => :sierra
+    sha256 "14408bc3f1ed7c5193c37bd61f570ad22f8920d6b00cce1613a582bbbced8312" => :el_capitan
+    sha256 "672931bef778a726c69692c0ca4cb3145ef5ba55cd616865dccc4e818ea0079d" => :yosemite
   end
 
   depends_on "pkg-config" => [:recommended, :run]
@@ -23,10 +24,6 @@ class Dub < Formula
   end
 
   test do
-    if build.stable?
-      assert_match version.to_s, shell_output("#{bin}/dub --version")
-    else
-      assert_match version.to_s, shell_output("#{bin}/dub --version").split(/[ ,]/)[2]
-    end
+    assert_match version.to_s, shell_output("#{bin}/dub --version").split(/[ ,]/)[2]
   end
 end

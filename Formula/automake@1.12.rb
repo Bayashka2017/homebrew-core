@@ -8,6 +8,7 @@ class AutomakeAT112 < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "abada42d8234d43f6e2b5af66389d5b930752f20d0a413b34e438ddc53097e36" => :high_sierra
     sha256 "74e9cf57241defe9e32223904bb91a881f1091b7081a552fcdde2f520fdfeaa2" => :sierra
     sha256 "3caf60c70024e3997193a907f1e848b4a37e5a2e3465c9e95ab97a709faebe00" => :el_capitan
     sha256 "7a20cc435d255a4b2f31dfa4246020e91bcaeaa4706576b8847366f7422d31e8" => :yosemite
@@ -26,24 +27,24 @@ class AutomakeAT112 < Formula
 
     # Our aclocal must go first. See:
     # https://github.com/Homebrew/homebrew/issues/10618
-    (share/"aclocal/dirlist").write <<-EOS.undent
+    (share/"aclocal/dirlist").write <<~EOS
       #{HOMEBREW_PREFIX}/share/aclocal
       /usr/share/aclocal
     EOS
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       int main() { return 0; }
     EOS
-    (testpath/"configure.ac").write <<-EOS.undent
+    (testpath/"configure.ac").write <<~EOS
       AC_INIT(test, 1.0)
       AM_INIT_AUTOMAKE
       AC_PROG_CC
       AC_CONFIG_FILES(Makefile)
       AC_OUTPUT
     EOS
-    (testpath/"Makefile.am").write <<-EOS.undent
+    (testpath/"Makefile.am").write <<~EOS
       bin_PROGRAMS = test
       test_SOURCES = test.c
     EOS

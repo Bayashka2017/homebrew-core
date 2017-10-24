@@ -3,12 +3,14 @@ class Gdal < Formula
   homepage "http://www.gdal.org/"
   url "http://download.osgeo.org/gdal/1.11.5/gdal-1.11.5.tar.gz"
   sha256 "49f99971182864abed9ac42de10545a92392d88f7dbcfdb11afe449a7eb754fe"
-  revision 2
+  revision 3
 
   bottle do
-    sha256 "aff01d6c7b092145c820bc2cd55f68e14f7c576c1641f4b725523688757f96dc" => :sierra
-    sha256 "4958dc9b921f68ab7de5fc1dde52ce1ee16ea280a29d2b4683909cf1cfc325b8" => :el_capitan
-    sha256 "cea3dc8fef27b6a19e43d642fbf9d2a6c62706acd9400499d735d4c36e6ea6a2" => :yosemite
+    rebuild 1
+    sha256 "4d084ada89aa6461c48730686ae157ae0f3447cc7b04aa11ffecb3e19feb81a7" => :high_sierra
+    sha256 "69dcd735eb3543c602e65d2b35be1f09dd62724d8673571397f2802a38d5e3de" => :sierra
+    sha256 "4d960f47450a62f7b59fa3d83691c8379111f6d00ad7231774d21bdcc45ebcc2" => :el_capitan
+    sha256 "4107e0b06a0466f37f5ffe8dfddae8ccc8eafce8c187ccf4382a3986851115bb" => :yosemite
   end
 
   head do
@@ -47,8 +49,7 @@ class Gdal < Formula
 
   depends_on "postgresql" => :optional
   depends_on "mysql" => :optional
-
-  depends_on "homebrew/science/armadillo" if build.with? "armadillo"
+  depends_on "armadillo" => :optional
 
   if build.with? "libkml"
     depends_on "autoconf" => :build
@@ -58,10 +59,10 @@ class Gdal < Formula
 
   if build.with? "complete"
     # Raster libraries
-    depends_on "homebrew/science/netcdf" # Also brings in HDF5
+    depends_on "netcdf" # Also brings in HDF5
     depends_on "jasper"
     depends_on "webp"
-    depends_on "homebrew/science/cfitsio"
+    depends_on "cfitsio"
     depends_on "epsilon"
     depends_on "libdap"
     depends_on "libxml2"
@@ -128,14 +129,9 @@ class Gdal < Formula
       "--with-grib",
       "--with-pam",
 
-      # Backends supported by macOS.
-      "--with-libiconv-prefix=/usr",
-      "--with-libz=/usr",
-      "--with-png=#{Formula["libpng"].opt_prefix}",
-      "--with-expat=/usr",
-      "--with-curl=/usr/bin/curl-config",
-
       # Default Homebrew backends.
+      "--with-png=#{Formula["libpng"].opt_prefix}",
+      "--with-curl=/usr/bin/curl-config",
       "--with-jpeg=#{HOMEBREW_PREFIX}",
       "--without-jpeg12", # Needs specially configured JPEG and TIFF libraries.
       "--with-gif=#{HOMEBREW_PREFIX}",
@@ -323,12 +319,11 @@ class Gdal < Formula
 
   def caveats
     if build.with? "mdb"
-      <<-EOS.undent
+      <<~EOS
+        To have a functional MDB driver, install supporting .jar files in:
+          `/Library/Java/Extensions/`
 
-      To have a functional MDB driver, install supporting .jar files in:
-        `/Library/Java/Extensions/`
-
-      See: `http://www.gdal.org/ogr/drv_mdb.html`
+        See: `http://www.gdal.org/ogr/drv_mdb.html`
       EOS
     end
   end

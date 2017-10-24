@@ -1,15 +1,16 @@
 class PerconaServerAT55 < Formula
   desc "Drop-in MySQL replacement"
   homepage "https://www.percona.com/"
-  url "https://www.percona.com/downloads/Percona-Server-5.5/Percona-Server-5.5.54-38.7/source/tarball/percona-server-5.5.54-38.7.tar.gz"
-  version "5.5.54-38.7"
-  sha256 "2c5f23a5bd41e36c681d882b94e021a2fe34acfb3951945146ee2ead2aeb7f1c"
+  url "https://www.percona.com/downloads/Percona-Server-5.5/Percona-Server-5.5.57-38.9/source/tarball/percona-server-5.5.57-38.9.tar.gz"
+  version "5.5.57-38.9"
+  sha256 "253f5c254b038c0622055dc8f0259a517be58736cfdb2eefebcba028a8c58da4"
 
   bottle do
-    rebuild 2
-    sha256 "77f1c5c1e63c8d71b3c744a3c8f1565f9a9eb82816c478111a0f86bf09ae7fba" => :sierra
-    sha256 "4f6b288a457ac54d6ee39f3aa6ed5f1b1337583ef66ea41d554c65d9a11e52f1" => :el_capitan
-    sha256 "bbe21e62e670e24e32d8950b837e51c7abf7bba21a641ef37918548ddfd72c67" => :yosemite
+    rebuild 1
+    sha256 "fbe85feed350b63a74bd0271ba97873ecd60a1e79c8d1dac1b3a2708e49d52c3" => :high_sierra
+    sha256 "6e983264db4df69a954d7232e908bbc7bd283d058a8831b9c9fe4f907f55e417" => :sierra
+    sha256 "0f6b7b056117903982a979fd68c0a1a74279dac6fe941d27d1d217ad2ebfdc8a" => :el_capitan
+    sha256 "5a4743c33b2e5fc3546b82cb267f60ca35b16eb20b5635df468a470c2fa90999" => :yosemite
   end
 
   keg_only :versioned_formula
@@ -42,6 +43,7 @@ class PerconaServerAT55 < Formula
   def install
     args = std_cmake_args + %W[
       -DMYSQL_DATADIR=#{datadir}
+      -DINSTALL_PLUGINDIR=lib/plugin
       -DSYSCONFDIR=#{etc}
       -DINSTALL_MANDIR=#{man}
       -DINSTALL_DOCDIR=#{doc}
@@ -101,7 +103,7 @@ class PerconaServerAT55 < Formula
     mv "#{bin}/mysqlaccess.conf", libexec
 
     # Install my.cnf that binds to 127.0.0.1 by default
-    (buildpath/"my.cnf").write <<-EOS.undent
+    (buildpath/"my.cnf").write <<~EOS
       # Default Homebrew MySQL server config
       [mysqld]
       # Only allow connections from localhost
@@ -110,7 +112,7 @@ class PerconaServerAT55 < Formula
     etc.install "my.cnf"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     Set up databases to run AS YOUR USER ACCOUNT with:
         unset TMPDIR
         mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix percona-server55)" --datadir=#{datadir} --tmpdir=/tmp
@@ -138,7 +140,7 @@ class PerconaServerAT55 < Formula
 
   plist_options :manual => "mysql.server start"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

@@ -1,15 +1,14 @@
 class OpenSceneGraph < Formula
   desc "3D graphics toolkit"
   homepage "https://github.com/openscenegraph/OpenSceneGraph"
-  url "https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-3.5.6.tar.gz"
-  sha256 "58e9436b811d0344723116cb1ada6ef305bdb6d97f42f04a700a29eda17f54b2"
+  url "https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-3.5.7.tar.gz"
+  sha256 "32e435184b3e0340adf50558acb890e04fce3b4c990c6b8789479c1a11f08a05"
   head "https://github.com/openscenegraph/OpenSceneGraph.git"
 
   bottle do
-    rebuild 1
-    sha256 "fa515dddcf46a25dfef02a83896cbdb404cab22381d8de06bea82fdad9d97d6d" => :sierra
-    sha256 "f0431363c7ab2fb6b72576e22f22dd6fe96b871667ad3119f5ec1806e7521e79" => :el_capitan
-    sha256 "abd62947899d155aeaf2f15dc11c34be004633b80d6bf6446f39a62b738a7e1f" => :yosemite
+    sha256 "e3a4c09eb32b2172eb3d0ace1e0b9a4e6f55b11d73fb55978482347b82547d06" => :high_sierra
+    sha256 "2f4a210187f5287422926b2b7d84d4dbb0ef3d34b5e4898166dbfb14dcd273f6" => :sierra
+    sha256 "7f6b090e7609d242738b721b7e063f1ab749661185145f4e6c0e93440a961861" => :el_capitan
   end
 
   option :cxx11
@@ -23,6 +22,7 @@ class OpenSceneGraph < Formula
   depends_on "jpeg"
   depends_on "gtkglext"
   depends_on "freetype"
+  depends_on "sdl"
   depends_on "gdal" => :optional
   depends_on "jasper" => :optional
   depends_on "openexr" => :optional
@@ -80,7 +80,7 @@ class OpenSceneGraph < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<-EOS.undent
+    (testpath/"test.cpp").write <<~EOS
       #include <iostream>
       #include <osg/Version>
       using namespace std;

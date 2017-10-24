@@ -3,11 +3,13 @@ class Pike < Formula
   homepage "https://pike.lysator.liu.se"
   url "https://pike.lysator.liu.se/pub/pike/all/8.0.438/Pike-v8.0.438.tar.gz"
   sha256 "3865f8a4c9ba95c006602f24cc6ad0c07e9f936135d2346e21da627807a90ca0"
+  revision 1
 
   bottle do
-    sha256 "38300c1ce81213b7e0ecacb708843aa32864c63262833da5334e37295dabbfc9" => :sierra
-    sha256 "0f3a1cfde2029f9136684dac3d7462ef5311a5bcb03ccbe75aaf4727130c230b" => :el_capitan
-    sha256 "4501daa2c71467f7bb40b2f3ad4848fb55c284c1dcb0ca1a8bc940a1189cb8b6" => :yosemite
+    sha256 "d968101e005e78ac529b9b7bb29cfe546e2dc8231ac2d3d7282ac1f3185751c8" => :high_sierra
+    sha256 "0251c2e968307aec3ce415c257e897e76b2968055334764407711dcf191c78ff" => :sierra
+    sha256 "d631d66fbaa6053e9cf6fe9ecab1af00db0dc504c3cd4b86962e54ab7269f9d9" => :el_capitan
+    sha256 "44fc539a915050d3521b91f87f387937f3727179a89f4a51bec9973ac98f1bf5" => :yosemite
   end
 
   option "with-gettext", "Include Gettext support"
@@ -95,7 +97,7 @@ class Pike < Formula
 
   test do
     path = testpath/"test.pike"
-    path.write <<-EOS.undent
+    path.write <<~EOS
       int main() {
         for (int i=0; i<10; i++) { write("%d", i); }
         return 0;

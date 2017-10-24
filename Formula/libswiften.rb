@@ -2,7 +2,7 @@ class Libswiften < Formula
   desc "C++ library for implementing XMPP applications"
   homepage "https://swift.im/swiften"
   revision 1
-  head "git://swift.im/swift"
+  head "https://swift.im/git/swift"
 
   stable do
     url "https://swift.im/downloads/releases/swift-3.0/swift-3.0.tar.gz"
@@ -14,6 +14,7 @@ class Libswiften < Formula
   end
 
   bottle do
+    sha256 "c26c563a3c1423cbe9a1d5c0432ecb9aea4b588fb4fc08f9adf92572eba2c8ad" => :high_sierra
     sha256 "d7a96ec5a0f396486acf810c88efec48beff0778e770084a980d09773029ffd7" => :sierra
     sha256 "e9bf41171f626c71350d0db7f13857b56c57f63248a229fe0ac4ed09c42dcfcf" => :el_capitan
     sha256 "162f1c07d37888abd2c2f616f3bc512209ed5575444f5f17b555b974e0461939" => :yosemite
@@ -26,6 +27,13 @@ class Libswiften < Formula
   depends_on "lua" => :recommended
 
   def install
+    inreplace "Sluift/main.cpp", "#include <string>",
+                                 "#include <iostream>\n#include <string>"
+
+    inreplace "BuildTools/SCons/SConstruct",
+              /(\["BOOST_SIGNALS_NO_DEPRECATION_WARNING")\]/,
+              "\\1, \"__ASSERT_MACROS_DEFINE_VERSIONS_WITHOUT_UNDERSCORES=0\"]"
+
     boost = Formula["boost"]
     libidn = Formula["libidn"]
 

@@ -3,12 +3,26 @@ class Pgloader < Formula
   homepage "https://github.com/dimitri/pgloader"
   url "https://github.com/dimitri/pgloader/archive/v3.4.1.tar.gz"
   sha256 "3ac4d03706057a35e1d4d0e63571b84be7d0d07ea09e015d90e242200488fe82"
-  head "https://github.com/dimitri/pgloader.git"
+  revision 1
 
   bottle do
-    sha256 "cecc9893052b4a83336cdfc30003a644437007c50c3fa52545a298c5fd3a1855" => :sierra
-    sha256 "526011cbd9450678440736d4bb7e299d97797d0fab345a2e60f274ad60c9954f" => :el_capitan
-    sha256 "b3add21d4311309e8b524a9e64621b672696e4d7f320d67dac9c30dd45b6d458" => :yosemite
+    sha256 "53730fd18e30016cdff390c71dcd0d8edc73752d8cd6c052712d537be70572ee" => :high_sierra
+    sha256 "439e83a886a19c0833721b3e67aa6a08ab0aff17045c279d7e54d9171637abfe" => :sierra
+    sha256 "0eff8a198207076e8e7e9f56d164c1c705b1310b2af0a79e27afd0be91338426" => :el_capitan
+  end
+
+  head do
+    url "https://github.com/dimitri/pgloader.git"
+
+    resource "cl-mustache" do
+      url "https://beta.quicklisp.org/archive/cl-mustache/2015-09-23/cl-mustache-20150923-git.tgz"
+      sha256 "22b0938a3765229a54bd84f70c7de2a56e8903fef4dbc987a3c8621314d800e4"
+    end
+
+    resource "yason" do
+      url "https://beta.quicklisp.org/archive/yason/2016-02-08/yason-v0.7.6.tgz"
+      sha256 "1332170b030067e2ea7119e8a18abb7778b89fd6a2163f808d80dbbd48b0ee01"
+    end
   end
 
   depends_on "sbcl"
@@ -229,11 +243,6 @@ class Pgloader < Formula
     sha256 "90ae04cd1a43fe186d07e5f805faa6cc8a00d1134dd9d99b56e31fa2f5811279"
   end
 
-  resource "pgloader" do
-    url "https://beta.quicklisp.org/archive/pgloader/2016-12-04/pgloader-3.3.2.tgz"
-    sha256 "1b0fd097932f980942c46ac7ec4211e2c4646577bc598a088b5f53b9a5393fe6"
-  end
-
   resource "postmodern" do
     url "https://beta.quicklisp.org/archive/postmodern/2017-04-03/postmodern-20170403-git.tgz"
     sha256 "37edfb43fc73a25a482ed5b7adb4a2fad1cc726ee950da57cd5439e0c1ad74de"
@@ -353,7 +362,7 @@ class Pgloader < Formula
     ENV["PGHOST"] = testpath/"socket"
     ENV["PGDATABASE"] = "brew"
 
-    (testpath/"test.load").write <<-EOS.undent
+    (testpath/"test.load").write <<~EOS
       LOAD CSV
         FROM inline (code, country)
         INTO postgresql:///#{ENV["PGDATABASE"]}?tablename=csv

@@ -1,15 +1,15 @@
 class Hugo < Formula
   desc "Configurable static site generator"
   homepage "https://gohugo.io/"
-  url "https://github.com/gohugoio/hugo/archive/v0.25.1.tar.gz"
-  sha256 "12f77c87cdc0bf4c6886a4c3343ba80bfe8bceeabed7a37e9dae945fa9010d1d"
+  url "https://github.com/gohugoio/hugo/archive/v0.30.2.tar.gz"
+  sha256 "44a5012a0ee8a567cf12c8a5fd21de031e85148206a9d513942fd409f75b9a7d"
   head "https://github.com/gohugoio/hugo.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "8caae3e68f78163f56ebf29efaa03d9c60e9763eb5a88c7abe82fba7070a1fa3" => :sierra
-    sha256 "07d04dfece69edf6b5a6ade3cac7e333885bef65077fcaadfd541fd51e935485" => :el_capitan
-    sha256 "9c2018820b88285c834280f625faa5469fd61b2353c9fa7745f21bf879177715" => :yosemite
+    sha256 "af4871951f143ff35fb2105ef63b04f3a102aaf2210241a1d03ed423411f71b7" => :high_sierra
+    sha256 "7e7c676576de893838318a5e13af830cc6139f9f7178f63be2e748ac9f4ea0be" => :sierra
+    sha256 "be105eaf7b49d69133ddd83cfc92e1420af64e183bb947e3be5cc2e4521792c2" => :el_capitan
   end
 
   depends_on "go" => :build
@@ -38,6 +38,6 @@ class Hugo < Formula
   test do
     site = testpath/"hops-yeast-malt-water"
     system "#{bin}/hugo", "new", "site", site
-    assert File.exist?("#{site}/config.toml")
+    assert_predicate testpath/"#{site}/config.toml", :exist?
   end
 end

@@ -6,13 +6,14 @@ class Fpc < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "9d6cd48a25cf2af28866aebbcd7b8be9c1a5b2f5228ff35bed59b791d96062ef" => :high_sierra
     sha256 "79462df36eb732e04c7d5c1d1782ff24dc6ac533b6ec5629965b47fe603c8616" => :sierra
     sha256 "20886e1135ad520727087fb8ab9d3b2bf49b7ea275f8af725b9d3bf17bab4aba" => :el_capitan
     sha256 "946ccb4fb90ef1809111003f1b2da68dddd599f8c73c450e95aa3cd948e86c8e" => :yosemite
   end
 
   resource "bootstrap" do
-    url "ftp://ftp.freepascal.org/pub/fpc/dist/3.0.0/bootstrap/x86_64-macosx-10.7-ppcx64.tar.bz2"
+    url "https://downloads.sourceforge.net/project/freepascal/Bootstrap/3.0.0/x86_64-macosx-10.7-ppcx64.tar.bz2"
     sha256 "a67ef5def356d122a4692e21b209c328f6d46deef4539f4d4506c3dc1eecb4b0"
   end
 
@@ -34,7 +35,7 @@ class Fpc < Formula
   end
 
   test do
-    hello = <<-EOS.undent
+    hello = <<~EOS
       program Hello;
       uses GL;
       begin

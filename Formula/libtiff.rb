@@ -4,13 +4,14 @@ class Libtiff < Formula
   url "http://download.osgeo.org/libtiff/tiff-4.0.8.tar.gz"
   mirror "https://fossies.org/linux/misc/tiff-4.0.8.tar.gz"
   sha256 "59d7a5a8ccd92059913f246877db95a2918e6c04fb9d43fd74e5c3390dac2910"
-  revision 2
+  revision 4
 
   bottle do
     cellar :any
-    sha256 "5f6e2920629870c9bb1f58f822a9d7df57ed014aed8485faaf7e6b3a6aec865a" => :sierra
-    sha256 "f42309a09dee79dcacf71a962444c2b68b9a51f9eebb18e5fa6852af70ee40aa" => :el_capitan
-    sha256 "5dcea68981e2b715abaaf882d51a962725e418bf28a4233f3373a07987c92e35" => :yosemite
+    sha256 "4fefeed096469cbcaa2a5708900155d5d19b51f877c18d5545e7fda83048af74" => :high_sierra
+    sha256 "31d87d01ab80f662899a09efa2eb517689fc758a31f1170c1ea2448d098291c2" => :sierra
+    sha256 "6b2c64b6e251707fb8fc3dee0b947a8108432e1ef73fa7e8c3983596a2fd0649" => :el_capitan
+    sha256 "855c2d44ad08e24f9748857b6f351f674b682bb16664c2da3f24c29223eb4657" => :yosemite
   end
 
   option :cxx11
@@ -22,9 +23,9 @@ class Libtiff < Formula
   # All of these have been reported upstream & should
   # be fixed in the next release, but please check.
   patch do
-    url "https://mirrors.ocf.berkeley.edu/debian/pool/main/t/tiff/tiff_4.0.8-4.debian.tar.xz"
-    mirror "https://mirrorservice.org/sites/ftp.debian.org/debian/pool/main/t/tiff/tiff_4.0.8-4.debian.tar.xz"
-    sha256 "36c008179ae08d6958cd9fcd75f82c082624bf55e2c4e6ca0e1af59ea4d75d9c"
+    url "https://mirrors.ocf.berkeley.edu/debian/pool/main/t/tiff/tiff_4.0.8-5.debian.tar.xz"
+    mirror "https://mirrorservice.org/sites/ftp.debian.org/debian/pool/main/t/tiff/tiff_4.0.8-5.debian.tar.xz"
+    sha256 "0a72efaba5da935537dd7dc28593503c3a0161d954fcd2da6eb511c0238d1387"
     apply "patches/01-CVE-2015-7554.patch",
           "patches/02-CVE.patch",
           "patches/03-CVE.patch",
@@ -33,7 +34,9 @@ class Libtiff < Formula
           "patches/06-OOM_in_gtTileContig.patch",
           "patches/07-CVE-2017-10688.patch",
           "patches/08-LZW_compression_regression.patch",
-          "patches/09-CVE-2017-11335.patch"
+          "patches/09-CVE-2017-11335.patch",
+          "patches/10-CVE-2017-13726.patch",
+          "patches/11-CVE-2017-13727.patch"
   end
 
   def install
@@ -57,7 +60,7 @@ class Libtiff < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <tiffio.h>
 
       int main(int argc, char* argv[])

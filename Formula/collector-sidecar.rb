@@ -1,13 +1,14 @@
 class CollectorSidecar < Formula
   desc "Manage log collectors through Graylog"
   homepage "https://github.com/Graylog2/collector-sidecar"
-  url "https://github.com/Graylog2/collector-sidecar/archive/0.1.3.tar.gz"
-  sha256 "96bae250e12d2ab17c563feacba4367e4089f72e54048eec8462584d49f2440f"
+  url "https://github.com/Graylog2/collector-sidecar/archive/0.1.4.tar.gz"
+  sha256 "3d73f8054a52411ff6d71634bc93b23a55372477069fcfad699876f82ae22ce8"
 
   bottle do
-    sha256 "2f66645d9fabf955937241e1c45c0a5a1ebe9aadf9c067da03d32354a9e4d2ce" => :sierra
-    sha256 "2101d71785925194a0fe73f20e066afa67f3e5a658ff9d8a665004fe48714c03" => :el_capitan
-    sha256 "76c42c8199bae3d7c552753946ee991f33c0c48365e937a1ac85ebde4807d3c9" => :yosemite
+    rebuild 2
+    sha256 "c31cd3d9caa0d658aae224ade213d64eaa0be2e040d1b7180e78b10c1c8725a3" => :high_sierra
+    sha256 "cac1fff6f16a21edca6f7b671840e9df9d076b31b37806b3f50c01b486e8ebad" => :sierra
+    sha256 "d21746e91d501bbb6544a239ac8bb846727f940e3ca152f6c79262c3aa0eec1e" => :el_capitan
   end
 
   depends_on "glide" => :build
@@ -19,16 +20,41 @@ class CollectorSidecar < Formula
     ENV["GOPATH"] = buildpath
     ENV["GLIDE_HOME"] = HOMEBREW_CACHE/"glide_home/#{name}"
     (buildpath/"src/github.com/Graylog2/collector-sidecar").install buildpath.children
+
     cd "src/github.com/Graylog2/collector-sidecar" do
       inreplace "main.go", "/etc", etc
-      inreplace "collector_sidecar.yml", "/usr", HOMEBREW_PREFIX
-      inreplace "collector_sidecar.yml", "/etc", etc
-      inreplace "collector_sidecar.yml", "/var", var
+
+      inreplace "collector_sidecar.yml" do |s|
+        s.gsub! "/usr", HOMEBREW_PREFIX
+        s.gsub! "/etc", etc
+        s.gsub! "/var", var
+      end
+
       system "glide", "install"
       system "make", "build"
       (etc/"graylog/collector-sidecar").install "collector_sidecar.yml"
       bin.install "graylog-collector-sidecar"
+      prefix.install_metafiles
     end
+  end
+
+  plist_options :manual => "graylog-collector-sidecar"
+
+  def plist; <<~EOS
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+      <dict>
+        <key>Label</key>
+        <string>#{plist_name}</string>
+        <key>Program</key>
+        <string>#{opt_bin}/graylog-collector-sidecar</string>
+        <key>RunAtLoad</key>
+        <true/>
+      </dict>
+    </plist>
+  EOS
   end
 
   test do

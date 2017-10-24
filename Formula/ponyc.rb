@@ -1,14 +1,14 @@
 class Ponyc < Formula
   desc "Object-oriented, actor-model, capabilities-secure programming language"
   homepage "https://www.ponylang.org/"
-  url "https://github.com/ponylang/ponyc/archive/0.15.0.tar.gz"
-  sha256 "3ef2e95ffca8adc6653c7bbebd829370d7da28923dc0f5dac2fadbb7e12cfb24"
+  url "https://github.com/ponylang/ponyc/archive/0.20.0.tar.gz"
+  sha256 "f2be4b11714113eb506e1fcd4b7fdb6f6f84abc73291156a34b4e76abcb77866"
 
   bottle do
     cellar :any
-    sha256 "d1d3173e79b938217d8a1d03f3fcbd2d0a2b24c1581ceac45f886183fb0ec6d0" => :sierra
-    sha256 "e5f66eedbfb69bcab0a604c2e32e3282243292a39125fdab850f776d1e15f209" => :el_capitan
-    sha256 "3c6cb45d95aea7431e079ee1e71d234a3de28a1ce2dac7650f4180d83dc99b69" => :yosemite
+    sha256 "fd1101309bb4bbd20cb8e43f0ec05b7f42af88816cfed3054cfadacd12c640a5" => :high_sierra
+    sha256 "b4fca5cddd3b0088a5bfae4b332cb68df1491aef0835e2b6c103d75b40dae003" => :sierra
+    sha256 "87c7ca6268bb626fc30272b365db0bb3466d6ec22b8f904f94b82c8fb7fa7a57" => :el_capitan
   end
 
   depends_on :macos => :yosemite
@@ -20,7 +20,7 @@ class Ponyc < Formula
   # https://github.com/ponylang/ponyc/issues/1274
   # https://github.com/Homebrew/homebrew-core/issues/5346
   pour_bottle? do
-    reason <<-EOS.undent
+    reason <<~EOS
       The bottle requires Xcode/CLT 8.0 or later to work properly.
     EOS
     satisfy { DevelopmentTools.clang_build_version >= 800 }
@@ -35,10 +35,10 @@ class Ponyc < Formula
   test do
     system "#{bin}/ponyc", "-rexpr", "#{prefix}/packages/stdlib"
 
-    (testpath/"test/main.pony").write <<-EOS.undent
-    actor Main
-      new create(env: Env) =>
-        env.out.print("Hello World!")
+    (testpath/"test/main.pony").write <<~EOS
+      actor Main
+        new create(env: Env) =>
+          env.out.print("Hello World!")
     EOS
     system "#{bin}/ponyc", "test"
     assert_equal "Hello World!", shell_output("./test1").strip

@@ -1,14 +1,13 @@
 class Hevea < Formula
   desc "LaTeX-to-HTML translator"
   homepage "http://hevea.inria.fr/"
-  url "http://hevea.inria.fr/old/hevea-2.28.tar.gz"
-  sha256 "cde2000e4642f3f88d73a317aec54e8b6036e29e81a00262daf15aca47d0d691"
-  revision 1
+  url "http://hevea.inria.fr/old/hevea-2.31.tar.gz"
+  sha256 "fbd7ad20aff45e557f5835f99a53d29a1753657cf2c004f26de83345b1b5b997"
 
   bottle do
-    sha256 "00d05e38a39e27a8e4d12913266e75f39ad46fcd327e134098dea14602dd67cf" => :sierra
-    sha256 "a9356d96f3fc49905f11abeb69cae214bbf55c6d00b001c84307b50ae077a5c8" => :el_capitan
-    sha256 "b79a483b56128142ed9ff0207e2dffbb676a86d1af8acc7f26562976567739b1" => :yosemite
+    sha256 "b4ed09c5e29b302070a67251c8c87c56bca0817c704438fbd013fa5370bb0fbc" => :high_sierra
+    sha256 "876829b6fea3a803ad583e0939fd7272618f1e82a21da4e73e0b581238dc34e0" => :sierra
+    sha256 "5689cf43754e25c57bfea971d44186e737d73bab0f2489956861a98bcdb065a4" => :el_capitan
   end
 
   depends_on "ocaml"
@@ -22,7 +21,7 @@ class Hevea < Formula
   end
 
   test do
-    (testpath/"test.tex").write <<-EOS.undent
+    (testpath/"test.tex").write <<~EOS
       \\documentclass{article}
       \\begin{document}
       \\end{document}

@@ -1,18 +1,19 @@
 class Vala < Formula
   desc "Compiler for the GObject type system"
   homepage "https://live.gnome.org/Vala"
-  url "https://download.gnome.org/sources/vala/0.36/vala-0.36.4.tar.xz"
-  sha256 "e9f23ce711c1a72ce664d10946fbc5953f01b0b7f2a3562e7a01e362d86de059"
+  url "https://download.gnome.org/sources/vala/0.38/vala-0.38.2.tar.xz"
+  sha256 "20d5d9c4fbd17877969dbce27e6428da67138e116b1717cc07b5b75fd6ab78a7"
 
   bottle do
-    sha256 "d60bff583c824ca374f2ddec37b573969997e9c4a81a164cfda4a61dfe36f1be" => :sierra
-    sha256 "b407a8a0f68aa009f78a8dc91dc8af053d044243081ac3e6945b7ff8364f22f1" => :el_capitan
-    sha256 "0ea438c7d9a22cf4c93e7efc0ad75eeb9e6e68197303e5df582b6b6706bfb249" => :yosemite
+    sha256 "938663a8ad34b6e4d3bf07a789324c1bbbde0488270e9784899d7715984cd4f1" => :high_sierra
+    sha256 "1e661d527bc74e31ad5ef398c7246cdeb779c33bda31bb033ebb56d2270d2d34" => :sierra
+    sha256 "cb8c2b6258a2b8dfde673ad1d6efdd89ce47ff392779d17f5095ada8256b656a" => :el_capitan
   end
 
   depends_on "pkg-config" => :run
   depends_on "gettext"
   depends_on "glib"
+  depends_on "graphviz"
 
   def install
     system "./configure", "--disable-dependency-tracking",
@@ -41,7 +42,7 @@ class Vala < Formula
       path.to_s,
     ]
     system "#{bin}/valac", *valac_args
-    assert File.exist?(testpath/"hello.c")
+    assert_predicate testpath/"hello.c", :exist?
 
     assert_equal test_string, shell_output("#{testpath}/hello")
   end

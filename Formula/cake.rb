@@ -1,12 +1,14 @@
 class Cake < Formula
   desc "Cross platform build automation system with a C# DSL."
-  homepage "http://cakebuild.net/"
-  url "https://github.com/cake-build/cake/releases/download/v0.21.1/Cake-bin-net45-v0.21.1.zip"
-  sha256 "a5d28df7ac33cf0111a33d04118a6f1f0fd91675d721db8ea5f94665818aa883"
+  homepage "https://cakebuild.net/"
+  url "https://github.com/cake-build/cake/releases/download/v0.23.0/Cake-bin-net461-v0.23.0.zip"
+  sha256 "1ad334de4188e6dd320a8501dd0d76f5efc8f2f4e83a562fb3f309a298f39a4a"
 
   bottle :unneeded
 
   depends_on "mono" => :recommended
+
+  conflicts_with "coffeescript", :because => "both install `cake` binaries"
 
   def install
     libexec.install Dir["*.dll"]
@@ -14,14 +16,14 @@ class Cake < Formula
     libexec.install Dir["*.xml"]
 
     bin.mkpath
-    (bin/"cake").write <<-EOS.undent
+    (bin/"cake").write <<~EOS
       #!/bin/bash
       mono #{libexec}/Cake.exe "$@"
     EOS
   end
 
   test do
-    (testpath/"build.cake").write <<-EOS.undent
+    (testpath/"build.cake").write <<~EOS
       var target = Argument ("target", "info");
 
       Task("info").Does(() =>

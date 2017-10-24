@@ -6,6 +6,7 @@ class Mg < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "c6cd9d4e0aef9f2f4b178b08e1d7edb30d7657ce762fdad4f15b736ed7aca3e0" => :high_sierra
     sha256 "231f0f356fb33dbb14a21c5605b9049d834285cd7b78a6647580eb7548e823d2" => :sierra
     sha256 "510b4da455b8018934cd19d70952fe39633af1978d9f7b0bcc41d7b714dc1dcc" => :el_capitan
     sha256 "90283bf60bd3bd0f287514fc30857903f138c5177affed345962cfa9ffbb1d07" => :yosemite
@@ -20,7 +21,7 @@ class Mg < Formula
   end
 
   test do
-    (testpath/"command.sh").write <<-EOS.undent
+    (testpath/"command.sh").write <<~EOS
       #!/usr/bin/expect -f
       set timeout -1
       spawn #{bin}/mg

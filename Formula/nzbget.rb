@@ -1,14 +1,15 @@
 class Nzbget < Formula
   desc "Binary newsgrabber for nzb files"
   homepage "https://nzbget.net/"
-  url "https://github.com/nzbget/nzbget/releases/download/v19.0/nzbget-19.0-src.tar.gz"
-  sha256 "2648e0eeb6f38bda3870e994caacd182f6e49a1f8c7404fbbe0112583f896f22"
+  url "https://github.com/nzbget/nzbget/releases/download/v19.1/nzbget-19.1-src.tar.gz"
+  sha256 "06df42356ac2d63bbc9f7861abe9c3216df56fa06802e09e8a50b05f4ad95ce6"
   head "https://github.com/nzbget/nzbget.git"
 
   bottle do
-    sha256 "73929b7213ef9302f90efde2c442a4ada66db226eee83b920e2be1860038638e" => :sierra
-    sha256 "0e22b8203a2e562bacd8354237398201d01329b41052de1bf13c99ed50817fd5" => :el_capitan
-    sha256 "395c749b00681ea8fea7746460a31299f7abd8808225f6c22e26709fafbdddc3" => :yosemite
+    sha256 "0f508d759d085ea42af708598eba3d2f589614f6025f8ca160b93c6170d5576b" => :high_sierra
+    sha256 "b2b460f1f4a850d282b3faa56a0cdc66d7d9f2072e34528fe1fc875f615e3705" => :sierra
+    sha256 "3aa8bd8510dbde22143fa6d9637d664951c4a48758c840548dcee0ce48f3b95f" => :el_capitan
+    sha256 "f9731421aa1289d62d9f30691c3e643e8548eb066d55c72511ad74d994e826e7" => :yosemite
   end
 
   depends_on "pkg-config" => :build
@@ -24,7 +25,7 @@ class Nzbget < Formula
 
   fails_with :clang do
     build 500
-    cause <<-EOS.undent
+    cause <<~EOS
       Clang older than 5.1 requires flexible array members to be POD types.
       More recent versions require only that they be trivially destructible.
     EOS
@@ -58,7 +59,7 @@ class Nzbget < Formula
 
   plist_options :manual => "nzbget"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

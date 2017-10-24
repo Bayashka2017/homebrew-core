@@ -1,15 +1,15 @@
 class Bitcoin < Formula
   desc "Decentralized, peer to peer payment network"
   homepage "https://bitcoin.org/"
-  url "https://github.com/bitcoin/bitcoin/archive/v0.14.2.tar.gz"
-  sha256 "e0ac23f01a953fcc6290c96799deeffb32aa76ca8e216c564d20c18e75a25219"
+  url "https://github.com/bitcoin/bitcoin/archive/v0.15.0.1.tar.gz"
+  sha256 "a2d28632be6918ce23d2fd589f0aecbb2a90579c9345f47fdfe1e77ec31f023e"
   head "https://github.com/bitcoin/bitcoin.git"
 
   bottle do
     cellar :any
-    sha256 "b74097eceb0623f6063b462c170245ae560fad2ef245646192fcf48f3923b0c6" => :sierra
-    sha256 "9baf0f8233c2b01ad7dc77d74efdb8b1d1fd8cd6c05ee8b359ef0cd9fa497e74" => :el_capitan
-    sha256 "4007af1f770c8fa77174b07c135f663451489866a3dfe306636cb010a64d88ac" => :yosemite
+    sha256 "c9f708c03d4096f1e95de9d25c513a0ebffe5f666f33eedc8c25a782d795e509" => :high_sierra
+    sha256 "f385af35e9c0ffb47d9ec7c0385b5bedff177912be756a130ef999773a371f80" => :sierra
+    sha256 "ccd2d67f6d7036cace0c3e44e14e969e388642dfc6caa63fb3f5efe89c3d4886" => :el_capitan
   end
 
   depends_on "autoconf" => :build
@@ -22,12 +22,40 @@ class Bitcoin < Formula
   depends_on "miniupnpc"
   depends_on "openssl"
 
+  needs :cxx11
+
   def install
+    if MacOS.version == :el_capitan && MacOS::Xcode.installed? &&
+       MacOS::Xcode.version >= "8.0"
+      ENV.delete("SDKROOT")
+    end
+
     system "./autogen.sh"
     system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",
+                          "--with-boost-libdir=#{Formula["boost"].opt_lib}",
                           "--prefix=#{prefix}"
     system "make", "install"
+  end
+
+  plist_options :manual => "bitcoind"
+
+  def plist; <<~EOS
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+      <key>Label</key>
+      <string>#{plist_name}</string>
+      <key>ProgramArguments</key>
+      <array>
+        <string>#{opt_bin}/bitcoind</string>
+      </array>
+      <key>RunAtLoad</key>
+      <true/>
+    </dict>
+    </plist>
+    EOS
   end
 
   test do

@@ -1,14 +1,14 @@
 class Ripgrep < Formula
   desc "Search tool like grep and The Silver Searcher."
   homepage "https://github.com/BurntSushi/ripgrep"
-  url "https://github.com/BurntSushi/ripgrep/archive/0.5.2.tar.gz"
-  sha256 "5d880c590cbb09d907d64ba24557fb2b2f025c8363bcdde29f303e9261625eea"
+  url "https://github.com/BurntSushi/ripgrep/archive/0.7.1.tar.gz"
+  sha256 "e010693637acebb409f3dba7caf59ef093d1894a33b14015041b8d43547665f5"
   head "https://github.com/BurntSushi/ripgrep.git"
 
   bottle do
-    sha256 "cb81327bd6f3eae5abc3ca0e445c5ad1c1051c5f56c71504478ce21927a13d3a" => :sierra
-    sha256 "2267c6a6bcad614c5c96709e50829de6a77d0c8c06e488383801aa5d21262949" => :el_capitan
-    sha256 "0a80a55397476474d0e33daad3966407c0f84cd504bc8aad4c944c7144a03bef" => :yosemite
+    sha256 "141f4a372665a161550835842cf967511cbad95487913fd28bb3fd87868c3755" => :high_sierra
+    sha256 "5d41c5d4322357b2d39e00d24c37f4dec08fb3b4f2cd7d5dfd944627871646d4" => :sierra
+    sha256 "8e183fb5763d350ae070756d3ff07e852ec624f6294d6657c067165328f7c6a5" => :el_capitan
   end
 
   depends_on "rust" => :build
@@ -24,11 +24,7 @@ class Ripgrep < Formula
     out_dir = Dir["target/release/build/ripgrep-*/out"].first
     bash_completion.install "#{out_dir}/rg.bash-completion"
     fish_completion.install "#{out_dir}/rg.fish"
-    if build.head?
-      zsh_completion.install "complete/_rg"
-    else
-      zsh_completion.install "#{out_dir}/_rg"
-    end
+    zsh_completion.install "complete/_rg"
   end
 
   test do

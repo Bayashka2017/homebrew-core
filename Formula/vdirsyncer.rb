@@ -4,15 +4,15 @@ class Vdirsyncer < Formula
   desc "Synchronize calendars and contacts"
   homepage "https://github.com/pimutils/vdirsyncer"
   url "https://github.com/pimutils/vdirsyncer.git",
-      :tag => "0.16.0",
-      :revision => "87c7143fa400c25a9b0b73a17fb057cbbdb329fc"
+      :tag => "0.16.3",
+      :revision => "cca412e7a8ce862a196ed19ba801886cda936f99"
   head "https://github.com/pimutils/vdirsyncer.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "cf8fcd1bb0be37d9d0562f51611686980e6c8e4da34261112a66c5ff817c27ad" => :sierra
-    sha256 "b403566ffa9c327541e9372185e8d881595091e8fc8dac83cdd3212abc60a813" => :el_capitan
-    sha256 "012b08aa8b5c568127fa48cee4093de6c605599c6122f3692df75aa1207cfbef" => :yosemite
+    sha256 "a62abbf4541a598dfcef485ac339e68fc907e49ca49e0e3b571c5cec329d4418" => :high_sierra
+    sha256 "865ecd717342ff7a1737f5ea42851f42a9c7433d6874e9eff7582510cfd3e4be" => :sierra
+    sha256 "25804a2cc2c75257254e4f06c823ba992a0a225359cb381a8b23dd42bc59066f" => :el_capitan
   end
 
   depends_on :python3
@@ -39,7 +39,7 @@ class Vdirsyncer < Formula
 
   test do
     ENV["LC_ALL"] = "en_US.UTF-8"
-    (testpath/".config/vdirsyncer/config").write <<-EOS.undent
+    (testpath/".config/vdirsyncer/config").write <<~EOS
       [general]
       status_path = "#{testpath}/.vdirsyncer/status/"
       [pair contacts]
@@ -55,7 +55,7 @@ class Vdirsyncer < Formula
       path = "~/.contacts/b/"
       fileext = ".vcf"
     EOS
-    (testpath/".contacts/a/foo/092a1e3b55.vcf").write <<-EOS.undent
+    (testpath/".contacts/a/foo/092a1e3b55.vcf").write <<~EOS
       BEGIN:VCARD
       VERSION:3.0
       EMAIL;TYPE=work:username@example.org

@@ -7,7 +7,6 @@ class Byteman < Formula
   devel do
     url "https://downloads.jboss.org/byteman/4.0.0-BETA5/byteman-download-4.0.0-BETA5-bin.zip"
     sha256 "d947650cfb72698152952d18aa8f7668d9876dc22ce71af1719527d4eb2764c0"
-    version "4.0.0-BETA5"
   end
 
   bottle :unneeded
@@ -28,7 +27,7 @@ class Byteman < Formula
   end
 
   test do
-    (testpath/"src/main/java/BytemanHello.java").write <<-EOS.undent
+    (testpath/"src/main/java/BytemanHello.java").write <<~EOS
       class BytemanHello {
         public static void main(String... args) {
           System.out.println("Hello, Brew!");
@@ -36,7 +35,7 @@ class Byteman < Formula
       }
     EOS
 
-    (testpath/"brew.btm").write <<-EOS.undent
+    (testpath/"brew.btm").write <<~EOS
       RULE trace main entry
       CLASS BytemanHello
       METHOD main
@@ -56,10 +55,10 @@ class Byteman < Formula
     # Compile example
     system "javac", "src/main/java/BytemanHello.java"
     # Expected successful output when Byteman runs example
-    expected = <<-EOS.undent
-    Entering main
-    Hello, Brew!
-    Exiting main
+    expected = <<~EOS
+      Entering main
+      Hello, Brew!
+      Exiting main
     EOS
     actual = shell_output("#{bin}/bmjava -l brew.btm -cp src/main/java BytemanHello")
     assert_equal(expected, actual)

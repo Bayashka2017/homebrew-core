@@ -5,38 +5,20 @@ class GitAnnex < Formula
 
   desc "Manage files with git without checking in file contents"
   homepage "https://git-annex.branchable.com/"
-  revision 1
+  url "https://hackage.haskell.org/package/git-annex-6.20171018/git-annex-6.20171018.tar.gz"
+  sha256 "ad049707bed0c5c0b2b6d70b353ccc6a7902df93fe626836bc9c90ff3caf599d"
   head "git://git-annex.branchable.com/"
 
-  stable do
-    url "https://hackage.haskell.org/package/git-annex-6.20170520/git-annex-6.20170520.tar.gz"
-    sha256 "f8cf9b44172ce1914c8be8134795c4197d02960b81a2ba596712cbd35e002717"
-
-    # Fix "Utility/QuickCheck.hs:38:10: error: Duplicate instance declarations"
-    # Upstream commit from 17 Jun 2017 "Fix build with QuickCheck 2.10."
-    patch do
-      url "http://source.git-annex.branchable.com/?p=source.git;a=patch;h=75cecbbe3fdafdb6652e95ac17cd755c28e67f20"
-      sha256 "2d50b633b29895755c8cbe1b55262866f5c09fe346ee5d552edde5e141730de7"
-    end
-
-    # Fix two "git annex test" failures with QuickCheck 2.10
-    # Upstream commit from 17 Jun 2017 "fix failing quickcheck properties"
-    patch do
-      url "http://source.git-annex.branchable.com/?p=source.git;a=patch;h=da8e84efe997fcbfcf489bc4fa9cc835ed131d3a"
-      sha256 "3ab0dfe93e2f121818cce74dd76653a7acd8c2c97b34529b1684a640cabf79fc"
-    end
-  end
-
   bottle do
-    sha256 "2ffab45fcf375b97300423adda199439ef2960f18d00c8d6425235d0a802072d" => :sierra
-    sha256 "691d96c14406b08f89250edd2f8b665ebc88893ef4fca38f06c547ee2e45f857" => :el_capitan
-    sha256 "4fe563338e2902807332c2f43168d327fed6101012ed3686bc69dc41f4ac6eaa" => :yosemite
+    sha256 "69d411c1ad24b5b098bca71bc9693867273b287588602a74da19330cc07ca896" => :high_sierra
+    sha256 "d66abc7ff7e7c9142515ae06ffcbd10a9619c9f6246ffaf509636b94b6e0b5c4" => :sierra
+    sha256 "76d6adcf508f47a6fde44bfb2aa675960a7082d414ce576ed7181a8b9b6f40fc" => :el_capitan
   end
 
   option "with-git-union-merge", "Build the git-union-merge tool"
 
-  depends_on "ghc" => :build
   depends_on "cabal-install" => :build
+  depends_on "ghc" => :build
   depends_on "pkg-config" => :build
   depends_on "gsasl"
   depends_on "libmagic"
@@ -44,7 +26,8 @@ class GitAnnex < Formula
   depends_on "xdot" => :recommended
 
   def install
-    install_cabal_package :using => ["alex", "happy", "c2hs"], :flags => ["s3", "webapp"] do
+    install_cabal_package :using => ["alex", "happy", "c2hs"],
+                          :flags => ["s3", "webapp"] do
       # this can be made the default behavior again once git-union-merge builds properly when bottling
       if build.with? "git-union-merge"
         system "make", "git-union-merge", "PREFIX=#{prefix}"

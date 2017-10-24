@@ -1,15 +1,14 @@
 class Infer < Formula
   desc "Static analyzer for Java, C and Objective-C"
   homepage "http://fbinfer.com/"
-  url "https://github.com/facebook/infer/releases/download/v0.12.0/infer-osx-v0.12.0.tar.xz"
-  sha256 "3b97bcabf85af8feb8d6fd0b8622fe2b4fbf27fa215fab61e3a660b5435b6d21"
-  revision 1
+  url "https://github.com/facebook/infer/releases/download/v0.12.1/infer-osx-v0.12.1.tar.xz"
+  sha256 "ce76b87bf4f70be594aaddc7402609af6338623fbb448dacca610e10bcb7c60a"
 
   bottle do
     cellar :any
-    sha256 "16da98afd4312582d219eaf62d6619567ee1df367d5b6b4e8e4e667e9b7908a2" => :sierra
-    sha256 "a3de914afe3ffc5e65f46fc10516607d7a4614f5a2d476d47fd053cd662f43e4" => :el_capitan
-    sha256 "8e97022052281a1e5681e9855a1d4cfe456c906897b20f10e0ef3b3e55d27443" => :yosemite
+    sha256 "57643d1549a778596cce9a4926298dd4adafea4c12995a14564a8fd4dc07a563" => :sierra_or_later
+    sha256 "667715c360743f6f3d865043da3ce423baf123f3a5e6e775ac16fb9d5e839333" => :el_capitan
+    sha256 "607cc291dbc3aa11836b975d2bcc47b7f700c9fbcf4ae83910312baed9ef0843" => :yosemite
   end
 
   option "without-clang", "Build without C/Objective-C analyzer"
@@ -56,7 +55,7 @@ class Infer < Formula
   end
 
   test do
-    (testpath/"FailingTest.c").write <<-EOS.undent
+    (testpath/"FailingTest.c").write <<~EOS
       #include <stdio.h>
 
       int main() {
@@ -67,7 +66,7 @@ class Infer < Formula
       }
     EOS
 
-    (testpath/"PassingTest.c").write <<-EOS.undent
+    (testpath/"PassingTest.c").write <<~EOS
       #include <stdio.h>
 
       int main() {
@@ -83,7 +82,7 @@ class Infer < Formula
     shell_output("#{bin}/infer --fail-on-issue -- clang -c FailingTest.c", 2)
     shell_output("#{bin}/infer --fail-on-issue -- clang -c PassingTest.c", 0)
 
-    (testpath/"FailingTest.java").write <<-EOS.undent
+    (testpath/"FailingTest.java").write <<~EOS
       class FailingTest {
 
         String mayReturnNull(int i) {
@@ -100,7 +99,7 @@ class Infer < Formula
       }
     EOS
 
-    (testpath/"PassingTest.java").write <<-EOS.undent
+    (testpath/"PassingTest.java").write <<~EOS
       class PassingTest {
 
         String mayReturnNull(int i) {

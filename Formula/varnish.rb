@@ -1,13 +1,13 @@
 class Varnish < Formula
   desc "High-performance HTTP accelerator"
   homepage "https://www.varnish-cache.org/"
-  url "https://repo.varnish-cache.org/source/varnish-5.1.2.tar.gz"
-  sha256 "39d858137e26948a7c85f07363f13f0778da61d234126e03a160a0cb9ba4fce3"
+  url "https://varnish-cache.org/_downloads/varnish-5.2.0.tgz"
+  sha256 "cc4826a0480f49268d3996309e4b7e465151e9a523ccf8ead499ec575149f47e"
 
   bottle do
-    sha256 "3b2b5845141626bfd898be2ebb579b0a631675b36bc9bd9459298b060735123c" => :sierra
-    sha256 "e69d47c7e7ee48147d5ad7c7963fab02284581fb025031a00dc3e0a21b5a6180" => :el_capitan
-    sha256 "66a506e59337d060001e91970fe227279bbb7bd76bea4d372563792879c33e6f" => :yosemite
+    sha256 "5512f0894c01aa13ac5f46c97cc0ea92d91e3762499065871d033fb48da509fb" => :high_sierra
+    sha256 "4f258821e068b2f83718a7ead9cfaf7d1d89bd2880bc7e389429815b04668ef8" => :sierra
+    sha256 "25482a24178cf87aacaa447bd3b6c37346e495d502107795b600805ecfb98a53" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
@@ -25,7 +25,8 @@ class Varnish < Formula
 
   plist_options :manual => "#{HOMEBREW_PREFIX}/sbin/varnishd -n #{HOMEBREW_PREFIX}/var/varnish -f #{HOMEBREW_PREFIX}/etc/varnish/default.vcl -s malloc,1G -T 127.0.0.1:2000 -a 0.0.0.0:8080 -F"
 
-  def plist; <<-EOS.undent
+  def plist
+    <<~EOS
       <?xml version="1.0" encoding="UTF-8"?>
       <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
       <plist version="1.0">

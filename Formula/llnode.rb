@@ -1,14 +1,14 @@
 class Llnode < Formula
   desc "LLDB plugin for live/post-mortem debugging of node.js apps"
   homepage "https://github.com/nodejs/llnode"
-  url "https://github.com/nodejs/llnode/archive/v1.6.0.tar.gz"
-  sha256 "38d31b1709f1ceaa718f6eae53785ac21ff9ff4c3cb66034ebac959742d54cb0"
+  url "https://github.com/nodejs/llnode/archive/v1.6.2.tar.gz"
+  sha256 "d5e979812f7e4ec62b451beb30770dcb8c7f7184fe8816fc6a13ba2b35c1b919"
 
   bottle do
     cellar :any
-    sha256 "ae95123a980ed75cba8256ef5218c62dac4ccabb2ab18321f34df60de5ba1559" => :sierra
-    sha256 "20ce6d9046bdf0fa75a471eb78153eba73eac7d9d89efab8e3ccb17d4dce782e" => :el_capitan
-    sha256 "0a4e74a20205586b11f77a37aab6acb2a2ce68ae02460735c3da9c8979d0ff2b" => :yosemite
+    sha256 "cb965fb47971316eb8928157eefd03c9bcdb13387fa9984291e3dd36809845c6" => :high_sierra
+    sha256 "cba54eddd2cbc47a628a1163f5d02bea21bd7759e95f7c3c905142d4a8fb757a" => :sierra
+    sha256 "83c34005044ba77217d0c9415268a9fa72392213191fe474d8cca0b8f68957a8" => :el_capitan
   end
 
   depends_on :macos => :yosemite
@@ -16,7 +16,7 @@ class Llnode < Formula
 
   resource "gyp" do
     url "https://chromium.googlesource.com/external/gyp.git",
-        :revision => "db72e9fcf55ba9d8089f0bc7e447180f8972b5c0"
+        :revision => "324dd166b7c0b39d513026fa52d6280ac6d56770"
   end
 
   resource "lldb" do
@@ -46,7 +46,7 @@ class Llnode < Formula
     prefix.install "out/Release/llnode.dylib"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     `brew install llnode` does not link the plugin to LLDB PlugIns dir.
 
     To load this plugin in LLDB, one will need to either
@@ -61,7 +61,7 @@ class Llnode < Formula
   end
 
   test do
-    lldb_out = pipe_output "lldb", <<-EOS.undent
+    lldb_out = pipe_output "lldb", <<~EOS
       plugin load #{opt_prefix}/llnode.dylib
       help v8
       quit

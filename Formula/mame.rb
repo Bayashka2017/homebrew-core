@@ -1,16 +1,16 @@
 class Mame < Formula
   desc "Multiple Arcade Machine Emulator"
   homepage "http://mamedev.org/"
-  url "https://github.com/mamedev/mame/archive/mame0187.tar.gz"
-  version "0.187"
-  sha256 "5ac6950158ba6f550b3c5f19434752e837f17edf0d83c41ab07d0f02cca787b0"
+  url "https://github.com/mamedev/mame/archive/mame0190.tar.gz"
+  version "0.190"
+  sha256 "ea9604a5c586f1a0fa3ca431e6fb35f39b71eb1a6f0464b4dd7fc6379231ed74"
   head "https://github.com/mamedev/mame.git"
 
   bottle do
     cellar :any
-    sha256 "0bb7aeab94581e90baff25823bbd318b0002fc66feb8e6efe3b920050b0a0ef7" => :sierra
-    sha256 "24e60870e94a5762d4ead0a3f7dbb61abdfa0b62e3272d317023b3b6834a5d07" => :el_capitan
-    sha256 "79ae2ac676d8de06ac505593197d02e4d1d9d0ffb4358354ac15412bd6a2a1bd" => :yosemite
+    sha256 "51942f570928c54c9172cdadb1ae7a12f1581cf5db3bc4e13944c4d287d145d6" => :high_sierra
+    sha256 "58b1312418f705f37320a00d1f5d4b32700e19a15d3521e89e7187c0d8294aa5" => :sierra
+    sha256 "25eeb585ab11624702009f07860139cad665e6f7e8b074f851baa0c570471a1e" => :el_capitan
   end
 
   depends_on :macos => :yosemite
@@ -25,8 +25,14 @@ class Mame < Formula
   depends_on "portaudio"
   depends_on "utf8proc"
 
-  # Needs compiler and library support C++14.
+  # Need C++ compiler and standard library support C++14.
   needs :cxx14
+
+  # jpeg 9 compatibility
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/2b7053a/mame/jpeg9.patch"
+    sha256 "be8095e1b519f17ac4b9e6208f2d434e47346d8b4a8faf001b68749aac3efd20"
+  end
 
   def install
     inreplace "scripts/src/osd/sdl.lua", "--static", ""

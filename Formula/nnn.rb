@@ -1,14 +1,14 @@
 class Nnn < Formula
   desc "Free, fast, friendly file browser"
   homepage "https://github.com/jarun/nnn"
-  url "https://github.com/jarun/nnn/archive/v1.2.tar.gz"
-  sha256 "d8b1f04ef99324a16504d14999833fe97da7840e058e37538fb350cd39e38022"
+  url "https://github.com/jarun/nnn/archive/v1.5.tar.gz"
+  sha256 "f50f59953c29408963bbb961891155bd0a1fe2072d4441cc0ff927b128725c7f"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "027311a7f496c9415dcd5c2eee2413eaf638dd3203275117e0be850833bb41b0" => :sierra
-    sha256 "8a0ff9a193849895fac3583e75be1047de5fc70a75504028643128e61a20d0af" => :el_capitan
-    sha256 "2c9245d1c6ee16363e3d200d140064a1955a5300cf1af7c3cb0df143082c0e58" => :yosemite
+    sha256 "686064429ad6c93882d66bbe0ee5e58e49371ab4405f7471b06727a611ce0303" => :high_sierra
+    sha256 "116b742a578044fe4309cee847b72d15b0687c19887b8dd65bc1fac1a5d27eeb" => :sierra
+    sha256 "26901989e2a66d9ec8806ea21b931e66ab8b6f4a1a35544b4da473a8b490e692" => :el_capitan
   end
 
   def install

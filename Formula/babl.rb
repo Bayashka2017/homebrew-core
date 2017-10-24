@@ -1,14 +1,13 @@
 class Babl < Formula
   desc "Dynamic, any-to-any, pixel format translation library"
   homepage "http://www.gegl.org/babl/"
-  url "https://download.gimp.org/pub/babl/0.1/babl-0.1.28.tar.bz2"
-  mirror "https://mirrors.kernel.org/debian/pool/main/b/babl/babl_0.1.28.orig.tar.bz2"
-  sha256 "63f3ed23e72a857a0e6df53d9d968a325024177b01edbe314a0c98b499eb8603"
+  url "https://download.gimp.org/pub/babl/0.1/babl-0.1.34.tar.bz2"
+  sha256 "5ebfe0b3b108a8438adc86ae3ef315f1844fdedc0a857e6d814dd011869c8a5b"
 
   bottle do
-    sha256 "3ce0980b598b09cd523b6e224a6a9fb8997153d3bd9f9aa2d7f2c5c1cc1fa126" => :sierra
-    sha256 "14c733c7c04a834f18ffe550ec744d573cf68fa0d955aa2107c9e823407b4ce2" => :el_capitan
-    sha256 "1633483a612b35b96e7317af2be2de9c7dec0d0c2b6abac992b41dd29bbc5adf" => :yosemite
+    sha256 "485a493419f46bc32a31f7506eaa40b689ed6301d74cd139806f7b9c5662ed07" => :high_sierra
+    sha256 "9c25fa7bc86e773a6466d959653834bfcc2435b17149e5f7a973adc8c0db9075" => :sierra
+    sha256 "36a4b1036d745ac25cf58deed53d7f3b6408c7a147facc18f3f08bd711ceaf82" => :el_capitan
   end
 
   head do
@@ -30,7 +29,7 @@ class Babl < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <babl/babl.h>
       int main() {
         babl_init();

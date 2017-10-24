@@ -1,19 +1,20 @@
 class SqliteAnalyzer < Formula
   desc "Analyze how space is allocated inside an SQLite file"
   homepage "https://www.sqlite.org/"
-  url "https://www.sqlite.org/2017/sqlite-src-3190300.zip"
-  version "3.19.3"
-  sha256 "5595bbf59e7bb6bb43a6e816b9dd2ee74369c6ae3cd60284e24d5f7957286120"
+  url "https://www.sqlite.org/2017/sqlite-src-3200100.zip"
+  version "3.20.1"
+  sha256 "665bcae19f313c974e3fc2e375b93521c3668d79bc7b66250c24a4a4aeaa2c2a"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "4e5a9bc4d8e39eef480d2ff6626556372fcd23c5681998969529d516a066da0d" => :sierra
-    sha256 "4dc7291b2bf2fa2ddf84290e30e0870816089417f51c2c9533ac189d4ad429e1" => :el_capitan
-    sha256 "bcfe976a2389731fabb34e01dc251b32671056c0a36a4ac4fc14e753acce2155" => :yosemite
+    rebuild 1
+    sha256 "099327c9376093e2f764e3cd6b6f681395d305a4832a5ffde06fc3d43028604c" => :high_sierra
+    sha256 "170ce3aff95cd073678b710d7616ddf0815c25354fc9e5f7e3dc36d3fc3d629d" => :sierra
+    sha256 "87141adfe581826af5bb93023adc07662c16ad6fe3f7ea611c6004ce2f6c8080" => :el_capitan
   end
 
   def install
-    system "./configure", "--disable-debug", "--prefix=#{prefix}"
+    system "./configure", "--disable-debug", "--with-tcl=/System/Library/Frameworks/Tcl.framework/", "--prefix=#{prefix}"
     system "make", "sqlite3_analyzer"
     bin.install "sqlite3_analyzer"
   end
@@ -21,7 +22,7 @@ class SqliteAnalyzer < Formula
   test do
     dbpath = testpath/"school.sqlite"
     sqlpath = testpath/"school.sql"
-    sqlpath.write <<-EOS.undent
+    sqlpath.write <<~EOS
       create table students (name text, age integer);
       insert into students (name, age) values ('Bob', 14);
       insert into students (name, age) values ('Sue', 12);

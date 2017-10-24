@@ -4,13 +4,14 @@ class GmpAT4 < Formula
   # Track gcc infrastructure releases.
   url "https://ftp.gnu.org/gnu/gmp/gmp-4.3.2.tar.bz2"
   mirror "https://ftpmirror.gnu.org/gmp/gmp-4.3.2.tar.bz2"
-  mirror "ftp://ftp.gmplib.org/pub/gmp-4.3.2/gmp-4.3.2.tar.bz2"
-  mirror "ftp://gcc.gnu.org/pub/gcc/infrastructure/gmp-4.3.2.tar.bz2"
+  mirror "https://gmplib.org/download/gmp/archive/gmp-4.3.2.tar.bz2"
+  mirror "https://gcc.gnu.org/pub/gcc/infrastructure/gmp-4.3.2.tar.bz2"
   sha256 "936162c0312886c21581002b79932829aa048cfaf9937c6265aeaa14f1cd1775"
 
   bottle do
     cellar :any
     rebuild 1
+    sha256 "bd06720d525470b3c29f44142910e269c96d987e8a06c5880c103a3f922277f8" => :high_sierra
     sha256 "ffe0f83f33aa04955e44436faa88c7a0779469dd08017e4e29359992f0d38639" => :sierra
     sha256 "dd54633274e190e6c9ab087a0288496ba004c567b4e9042460e22cf89f9da47a" => :el_capitan
     sha256 "43cfbad47c614698d833e285546e18d05ebd71ebc8ce1227f580b189be2ed05b" => :yosemite
@@ -50,7 +51,7 @@ class GmpAT4 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <gmp.h>
 
       int main()

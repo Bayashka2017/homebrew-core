@@ -7,6 +7,7 @@ class RedisAT26 < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "0276246f36addab47addbb133f51fd322519cd9d4a0f20c3b4eced68846aa843" => :high_sierra
     sha256 "29e779868a0bfaf2d5fbeb275c12dacbc18c9509ccccfbfb41900053b63431df" => :sierra
     sha256 "43fe747ac54b58150f90763f8e89de3c40f6048d7038c6014ec88b7dfe8a3ab0" => :el_capitan
     sha256 "36e5677bc7fa1cfede9409a571823fc3585fe3e086e7087c98f8b14add5214ce" => :yosemite
@@ -37,7 +38,7 @@ class RedisAT26 < Formula
 
   plist_options :manual => "redis-server #{HOMEBREW_PREFIX}/etc/redis.conf"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

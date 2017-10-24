@@ -1,13 +1,13 @@
 class Atk < Formula
   desc "GNOME accessibility toolkit"
   homepage "https://library.gnome.org/devel/atk/"
-  url "https://download.gnome.org/sources/atk/2.24/atk-2.24.0.tar.xz"
-  sha256 "bb2daa9a808c73a7a79d2983f333e0ba74be42fc51e3ba1faf2551a636487a49"
+  url "https://download.gnome.org/sources/atk/2.26/atk-2.26.1.tar.xz"
+  sha256 "ef00ff6b83851dddc8db38b4d9faeffb99572ba150b0664ee02e46f015ea97cb"
 
   bottle do
-    sha256 "89d59856b8bbd0a51961c0569237da2f6119fddd40f67b50d96651483fe9be10" => :sierra
-    sha256 "87028a5febfcdce413c64f7786468db61b1c62412799405e6b3ac179c0a8ae05" => :el_capitan
-    sha256 "e628db1461560fbe5fa9da800987ed2eab6e6c969709797de07a6052521a022e" => :yosemite
+    sha256 "08bf533625443e9f7e47c08d163fcc74fcc973c6aae9b61b6ef1a09d506d6a3b" => :high_sierra
+    sha256 "cce0be459801eb065dd540baee6aec81740895e46f422722f23c9bfb3dd0a1ff" => :sierra
+    sha256 "40860eef1dacca8db3f7de7b1c2aa302e352ea6cd9f05a3ab84234b77bcf6b1c" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
@@ -23,7 +23,7 @@ class Atk < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <atk/atk.h>
 
       int main(int argc, char *argv[]) {

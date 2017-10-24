@@ -4,15 +4,15 @@ class Khal < Formula
   desc "CLI calendar application."
   homepage "https://lostpackets.de/khal/"
   url "https://github.com/pimutils/khal.git",
-      :tag => "v0.9.6",
-      :revision => "6a51e2d6fcfce448c2a08337012c5fd6accf06e6"
+      :tag => "v0.9.8",
+      :revision => "b03df58c129f99a35ba74cda0fbc253eb47cfeac"
   head "https://github.com/pimutils/khal.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "2640a5e0ff3637898055a5774b49349bbe84b1826abac03c14f985b095003580" => :sierra
-    sha256 "344c8019dc9751bfe3b93989118d94725c22cc96df7cb90ab27d6bdfe09a8abe" => :el_capitan
-    sha256 "69919f74ea0fe50283fd7923f87024f55e689ede3e6057b7461370b9349179fb" => :yosemite
+    sha256 "5fa63ff4ec81dc9b5b72ad553636ce899584e7ac4ec265bddded0453e0de3069" => :high_sierra
+    sha256 "0f70a0cf9e761fb25fa3e7b8ad45fe935f3e46b393d10daa345a4b1d27bef7a9" => :sierra
+    sha256 "3006d316948618c8a0702b4fba2b568f43fca5fa51d3836c8d6b8e7966f858ff" => :el_capitan
   end
 
   depends_on :python3
@@ -28,7 +28,7 @@ class Khal < Formula
   test do
     ENV["LC_ALL"] = "en_US.UTF-8"
     ENV["LANG"] = "en_US.UTF-8"
-    (testpath/".calendar/test/01ef8547.ics").write <<-EOS.undent
+    (testpath/".calendar/test/01ef8547.ics").write <<~EOS
       BEGIN:VCALENDAR
       VERSION:2.0
       BEGIN:VEVENT
@@ -42,7 +42,7 @@ class Khal < Formula
       END:VEVENT
       END:VCALENDAR
     EOS
-    (testpath/".config/khal/config").write <<-EOS.undent
+    (testpath/".config/khal/config").write <<~EOS
       [calendars]
       [[test]]
       path = #{testpath}/.calendar/test/

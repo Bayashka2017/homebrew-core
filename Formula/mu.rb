@@ -9,6 +9,7 @@ class Mu < Formula
   revision 1
 
   bottle do
+    sha256 "9fe39b0fd5eab4d52915b9a93cb2e499fb35aacbb2be5f2a342596d8d47fb6ce" => :high_sierra
     sha256 "a38652c9dfce2d6fb774b55b547dec424d46325d480d986061647f7fbe4fc9c9" => :sierra
     sha256 "292581f0d256a20d26aa2f49e39961cd8212fb041f3e89546830a17e677ae436" => :el_capitan
     sha256 "807173ae614afee3cd3b577d1653ad78629f564ce0d6e443b55752f8303efc20" => :yosemite
@@ -55,7 +56,7 @@ class Mu < Formula
     system "make", "install"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     Existing mu users are recommended to run the following after upgrading:
 
       mu index --rebuild
@@ -69,7 +70,7 @@ class Mu < Formula
   test do
     mkdir (testpath/"cur")
 
-    (testpath/"cur/1234567890.11111_1.host1!2,S").write <<-EOS.undent
+    (testpath/"cur/1234567890.11111_1.host1!2,S").write <<~EOS
       From: "Road Runner" <fasterthanyou@example.com>
       To: "Wile E. Coyote" <wile@example.com>
       Date: Mon, 4 Aug 2008 11:40:49 +0200
@@ -78,7 +79,7 @@ class Mu < Formula
       Beep beep!
     EOS
 
-    (testpath/"cur/0987654321.22222_2.host2!2,S").write <<-EOS.undent
+    (testpath/"cur/0987654321.22222_2.host2!2,S").write <<~EOS
       From: "Wile E. Coyote" <wile@example.com>
       To: "Road Runner" <fasterthanyou@example.com>
       Date: Mon, 4 Aug 2008 12:40:49 +0200

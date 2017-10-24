@@ -8,6 +8,7 @@ class Liblinear < Formula
 
   bottle do
     cellar :any
+    sha256 "efb583e36ef63e166b5b7f535347daf93ac5aa7eab3c4c69da3cec756081a61c" => :high_sierra
     sha256 "c84311ed57023b4f3e8f50a08c2057e77d5334e4d48544235ea9f6d99e8d3b5c" => :sierra
     sha256 "dab9f6a7708156bf6f28f61bb98b4f25bba7e24a712a1d1e982540594bf7bf37" => :el_capitan
     sha256 "573b3d217a292c5f180c9be565f03f13d279400d48a22dc817e05fb069e1c59b" => :yosemite
@@ -28,12 +29,12 @@ class Liblinear < Formula
   end
 
   test do
-    (testpath/"train_classification.txt").write <<-EOS.undent
-    +1 201:1.2 3148:1.8 3983:1 4882:1
-    -1 874:0.3 3652:1.1 3963:1 6179:1
-    +1 1168:1.2 3318:1.2 3938:1.8 4481:1
-    +1 350:1 3082:1.5 3965:1 6122:0.2
-    -1 99:1 3057:1 3957:1 5838:0.3
+    (testpath/"train_classification.txt").write <<~EOS
+      +1 201:1.2 3148:1.8 3983:1 4882:1
+      -1 874:0.3 3652:1.1 3963:1 6179:1
+      +1 1168:1.2 3318:1.2 3938:1.8 4481:1
+      +1 350:1 3082:1.5 3965:1 6122:0.2
+      -1 99:1 3057:1 3957:1 5838:0.3
     EOS
 
     system "#{bin}/train", "train_classification.txt"

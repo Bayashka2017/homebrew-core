@@ -1,15 +1,14 @@
 class Mpg123 < Formula
   desc "MP3 player for Linux and UNIX"
   homepage "https://www.mpg123.de/"
-  url "https://downloads.sourceforge.net/project/mpg123/mpg123/1.25.3/mpg123-1.25.3.tar.bz2"
-  mirror "https://www.mpg123.de/download/mpg123-1.25.3.tar.bz2"
-  mirror "https://mpg123.orgis.org/download/mpg123-1.25.3.tar.bz2"
-  sha256 "c24848dd1fcaf6900a2b1f5549996904f75fe6e05de982da655f8c626b375644"
+  url "https://downloads.sourceforge.net/project/mpg123/mpg123/1.25.7/mpg123-1.25.7.tar.bz2"
+  mirror "https://www.mpg123.de/download/mpg123-1.25.7.tar.bz2"
+  sha256 "31b15ebcf26111b874732e07c8e60de5053ee555eea15fb70c657a4f9f0344f3"
 
   bottle do
-    sha256 "a948000e58f5453b336465d2301c9268aac26f32d6181e3012055d14ed8ef864" => :sierra
-    sha256 "708339d1dd99a685aea4d48a648a06746c0f51618518cdd6ddaf4094cbb9d3a4" => :el_capitan
-    sha256 "4240c4349208045a3c4bc6c07683a94fbd887ee85ecbe8924739f8d004f7ed63" => :yosemite
+    sha256 "f401a38a4a6d73301dbfebdb1d641fc2edfaad5709cd2fadc169c5e99ef7d80f" => :high_sierra
+    sha256 "a9b707bde969e2606b517efc0dc01c56aee32a91aaac131b27351184f24c5659" => :sierra
+    sha256 "5650febcb5fc8c64c1ba8054728ef1b4b4d35a9f132a493947e8b011a2376f19" => :el_capitan
   end
 
   def install

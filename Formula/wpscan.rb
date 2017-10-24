@@ -3,12 +3,14 @@ class Wpscan < Formula
   homepage "https://wpscan.org"
   url "https://github.com/wpscanteam/wpscan/archive/2.9.3.tar.gz"
   sha256 "1bacc03857cca5a2fdcda060886bf51dbf73b129abbb7251b8eb95bc874e5376"
+  revision 1
+
   head "https://github.com/wpscanteam/wpscan.git"
 
   bottle do
-    sha256 "20db28bc388fed0b55b3c832a6554a2daaca7f9fc28ee133bbd317d822f51099" => :sierra
-    sha256 "2f4c6fa37a8ebcda6acc281708f9bdfcaaba5a02c8097b445089e09f7814e2d7" => :el_capitan
-    sha256 "661e08da7064b2609e4e3a0c7bd2769935f479d4930563e831b5eaa2edbd0b0f" => :yosemite
+    sha256 "668b13f2a60e4882aa17479309551a934fae6f71178b05b1293b3ab7fe0cfb5f" => :high_sierra
+    sha256 "6dd163f2679959fc2ee5e340d61ab0e500efb350e395a26063d535ae09b18592" => :sierra
+    sha256 "54522adbec639a9a4e743730b39e97199f45b2f21d4a23533e7f3cd5afb0d6ae" => :el_capitan
   end
 
   depends_on :ruby => "2.1.9"
@@ -28,7 +30,7 @@ class Wpscan < Formula
     system "gem", "install", "bundler"
     system libexec/"bin/bundle", "install", "--without", "test"
 
-    (bin/"wpscan").write <<-EOS.undent
+    (bin/"wpscan").write <<~EOS
       #!/bin/bash
       GEM_HOME=#{libexec} BUNDLE_GEMFILE=#{libexec}/Gemfile \
         exec #{libexec}/bin/bundle exec ruby #{libexec}/wpscan.rb "$@"
@@ -41,13 +43,13 @@ class Wpscan < Formula
     system bin/"wpscan", "--update"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     Logs are saved to #{var}/cache/wpscan/log.txt by default.
     EOS
   end
 
   test do
     assert_match "URL: https://wordpress.org/",
-                 shell_output("#{bin}/wpscan --url https://wordpress.org/")
+                 pipe_output("#{bin}/wpscan --url https://wordpress.org/")
   end
 end

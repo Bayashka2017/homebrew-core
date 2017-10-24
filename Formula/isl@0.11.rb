@@ -2,13 +2,14 @@ class IslAT011 < Formula
   desc "Integer Set Library for the polyhedral model"
   homepage "http://freecode.com/projects/isl"
   # Track gcc infrastructure releases.
-  url "http://isl.gforge.inria.fr/isl-0.11.1.tar.bz2"
-  mirror "ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-0.11.1.tar.bz2"
+  url "https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.11.1.tar.bz2"
+  mirror "http://isl.gforge.inria.fr/isl-0.11.1.tar.bz2"
   sha256 "095f4b54c88ca13a80d2b025d9c551f89ea7ba6f6201d701960bfe5c1466a98d"
 
   bottle do
     cellar :any
     rebuild 1
+    sha256 "2b09179f027f7e66086f7fc2f6b906a670b51b83e45434ec91477b5b14e2a410" => :high_sierra
     sha256 "88be318c19e233dd4bb62760d22d42f03b9d92edc9a3f058b6ec745ad0f162eb" => :sierra
     sha256 "185efaee527e73a30355ad88cad43e407dc26b169df01531559d377e33eff971" => :el_capitan
     sha256 "beb1434e8feb9a8b1df64b9d5b6cd7b66fdd170fe22b0f5078382377162ee2ee" => :yosemite
@@ -29,7 +30,7 @@ class IslAT011 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <isl/ctx.h>
 
       int main()

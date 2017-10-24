@@ -2,15 +2,16 @@ class Minio < Formula
   desc "Amazon S3 compatible object storage server"
   homepage "https://github.com/minio/minio"
   url "https://github.com/minio/minio.git",
-      :tag => "RELEASE.2017-06-13T19-01-01Z",
-      :revision => "b9f622824ac17d3e0577d8a9b81a707666cc8cf1"
-  version "20170613190101"
+      :tag => "RELEASE.2017-08-05T00-00-53Z",
+      :revision => "aeafe668d8b6d25caac671d59e2b0f0473ce35d0"
+  version "20170805000053"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "3884d5b7aab0fa796f345a96aa729fece5dc4d058afd0409b18a62e35b3f7cf5" => :sierra
-    sha256 "4a195f448f4a9de8076feb5aa77401a666fddb93062630f8f2081923cdb20f55" => :el_capitan
-    sha256 "5af5f770c4b9a5a6faf08e08822e21e19f1d1d080cb7a89428d4cbf64adbd968" => :yosemite
+    sha256 "d7ad63cef8dfe1f858332c757f140ad099deb71870c203bd3fcfb9d04243fa6d" => :high_sierra
+    sha256 "6b709fcae2ed50362119377ab41e81b79e5b128c2a56f29ce40aa815e7e4eaa5" => :sierra
+    sha256 "0a4965a1608c5fbc514d1a5ce2e7eb443250d9549a120800cf604ada71408856" => :el_capitan
+    sha256 "307b271c6b03b32927c1eddacf4d3a940727704a4e12dc84cb716d2d8546a344" => :yosemite
   end
 
   depends_on "go" => :build
@@ -30,11 +31,11 @@ class Minio < Formula
         commit = `git rev-parse HEAD`.chomp
         proj = "github.com/minio/minio"
 
-        system "go", "build", "-o", buildpath/"minio", "-ldflags", <<-EOS.undent
-            -X #{proj}/cmd.Version=#{version}
-            -X #{proj}/cmd.ReleaseTag=#{release}
-            -X #{proj}/cmd.CommitID=#{commit}
-            EOS
+        system "go", "build", "-o", buildpath/"minio", "-ldflags", <<~EOS
+          -X #{proj}/cmd.Version=#{version}
+          -X #{proj}/cmd.ReleaseTag=#{release}
+          -X #{proj}/cmd.CommitID=#{commit}
+        EOS
       end
     end
 
@@ -48,37 +49,38 @@ class Minio < Formula
 
   plist_options :manual => "minio server"
 
-  def plist; <<-EOS.undent
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-   <plist version="1.0">
-    <dict>
-      <key>KeepAlive</key>
-      <true/>
-      <key>Label</key>
-      <string>#{plist_name}</string>
-      <key>ProgramArguments</key>
-      <array>
-        <string>#{opt_bin}/minio</string>
-        <string>server</string>
-        <string>--config-dir=#{etc}/minio</string>
-        <string>--address :9000</string>
-        <string>#{var}/minio</string>
-      </array>
-      <key>RunAtLoad</key>
-      <true/>
-      <key>KeepAlive</key>
-      <true/>
-      <key>WorkingDirectory</key>
-      <string>#{HOMEBREW_PREFIX}</string>
-      <key>StandardErrorPath</key>
-      <string>#{var}/log/minio/output.log</string>
-      <key>StandardOutPath</key>
-      <string>#{var}/log/minio/output.log</string>
-      <key>RunAtLoad</key>
-      <true/>
-    </dict>
-    </plist>
+  def plist
+    <<~EOS
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+        <dict>
+          <key>KeepAlive</key>
+          <true/>
+          <key>Label</key>
+          <string>#{plist_name}</string>
+          <key>ProgramArguments</key>
+          <array>
+            <string>#{opt_bin}/minio</string>
+            <string>server</string>
+            <string>--config-dir=#{etc}/minio</string>
+            <string>--address :9000</string>
+            <string>#{var}/minio</string>
+          </array>
+          <key>RunAtLoad</key>
+          <true/>
+          <key>KeepAlive</key>
+          <true/>
+          <key>WorkingDirectory</key>
+          <string>#{HOMEBREW_PREFIX}</string>
+          <key>StandardErrorPath</key>
+          <string>#{var}/log/minio/output.log</string>
+          <key>StandardOutPath</key>
+          <string>#{var}/log/minio/output.log</string>
+          <key>RunAtLoad</key>
+          <true/>
+        </dict>
+      </plist>
     EOS
   end
 

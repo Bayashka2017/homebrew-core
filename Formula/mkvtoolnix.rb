@@ -1,13 +1,13 @@
 class Mkvtoolnix < Formula
   desc "Matroska media files manipulation tools"
   homepage "https://www.bunkus.org/videotools/mkvtoolnix/"
-  url "https://www.bunkus.org/videotools/mkvtoolnix/sources/mkvtoolnix-13.0.0.tar.xz"
-  sha256 "855e4ea7b0d5a7066dc8db6f8f54a1d9da8ed5616d9c1cea8bc198d4adb57642"
+  url "https://www.bunkus.org/videotools/mkvtoolnix/sources/mkvtoolnix-17.0.0.tar.xz"
+  sha256 "9faf7996b84eb68c2b1738ec27217d24480731b24d31c81fbef19daa5844992e"
 
   bottle do
-    sha256 "95ec0116ff1b5c5dc468bf0d072d43e61776b7426114e00684a1ba813c5e91ea" => :sierra
-    sha256 "44f072b66e5ff22c4bdebb77ca14fc06b04d837d7e7616f7724add0c62890292" => :el_capitan
-    sha256 "dfab98f2d39081b1acadbd1ead2de965069ee9acc91b237edf1ffcd4420f8226" => :yosemite
+    sha256 "3a6d4d4ae0ee431d0503d70ad48084992f22c35414a77bd4aa5c8850096e11e8" => :high_sierra
+    sha256 "7ae8bdf0ab644ff1c6f060227a2eccd05d67a9d87712d406e5e5cab7aa7d8439" => :sierra
+    sha256 "d11c8c6ba808f41ceccce4dc9ab8cbb9a6aa6483d578a882a24830b6d3c77b60" => :el_capitan
   end
 
   head do
@@ -84,7 +84,7 @@ class Mkvtoolnix < Formula
   test do
     mkv_path = testpath/"Great.Movie.mkv"
     sub_path = testpath/"subtitles.srt"
-    sub_path.write <<-EOS.undent
+    sub_path.write <<~EOS
       1
       00:00:10,500 --> 00:00:13,000
       Homebrew

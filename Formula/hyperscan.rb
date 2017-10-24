@@ -1,14 +1,14 @@
 class Hyperscan < Formula
   desc "High-performance regular expression matching library"
   homepage "https://01.org/hyperscan"
-  url "https://github.com/01org/hyperscan/archive/v4.5.1.tar.gz"
-  sha256 "a03288e62ba6f4c3c3ca7d0fbeb9286370d05e0674a81f18d19f4d129c6810cc"
+  url "https://github.com/01org/hyperscan/archive/v4.6.0.tar.gz"
+  sha256 "0dfbfc2e5e82a6a7b2feca3d982d08fb7d4a979a4e75f667a37484cae4fda815"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "7a73c90f71e8f2735fc9d5f66e28a41b798642b3eec0f691d3614c833958c012" => :sierra
-    sha256 "078b9eb219a0533d1ac1685b0beb649570effd9a5d600086cd571970d19b65db" => :el_capitan
-    sha256 "71fbcec69831cbf6a848c888f045da122f6a2449b13b5302ef536cc1a0904f52" => :yosemite
+    sha256 "5d7821e53a9038af59c4cd993c63ebcd94127ee1bc84a59a750c77ea970ccaf2" => :high_sierra
+    sha256 "955ba56deea5527160511e0f18ff757a53d1531a9cb1034ba20c5ef2e41d61fc" => :sierra
+    sha256 "5586f79ecd99604a4c22781dd902529fed50320e4987ccc963bf7d2a6cd16e2f" => :el_capitan
   end
 
   option "with-debug", "Build with debug symbols"
@@ -41,7 +41,7 @@ class Hyperscan < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <stdio.h>
       #include <hs/hs.h>
       int main()

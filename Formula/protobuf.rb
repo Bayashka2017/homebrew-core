@@ -1,14 +1,14 @@
 class Protobuf < Formula
   desc "Protocol buffers (Google's data interchange format)"
   homepage "https://github.com/google/protobuf/"
-  url "https://github.com/google/protobuf/archive/v3.3.2.tar.gz"
-  sha256 "8b8e442becbeff637f160c1ef4a3a56769c50ba7c9ff939ccc94086530ff00e4"
+  url "https://github.com/google/protobuf/archive/v3.4.1.tar.gz"
+  sha256 "8e0236242106e680b4f9f576cc44b8cd711e948b20a9fc07769b0a20ceab9cc4"
   head "https://github.com/google/protobuf.git"
 
   bottle do
-    sha256 "61e2aab2a9c62c530b47d2e940df03140d7236496d3afc94ac3a090d5b67c76e" => :sierra
-    sha256 "193b95ca0f4ed80e11fa622162811173b8a3bd44abeb3e686433e0c063d09fd5" => :el_capitan
-    sha256 "fee139511c94fca32fd143a905ee8c545f5d319830d5872efa051f28ee0ef811" => :yosemite
+    sha256 "ad75ea442cf35e959032098b4bdf2bf7a9f542b43ac763d174ad899cab92ae4d" => :high_sierra
+    sha256 "e9a2bb7ff55416a55409ac2874bb74129d523f051e08118f685f45991d537097" => :sierra
+    sha256 "9f9a737458bed9b451b669b4070f90e8ef78bdcffb2e288a34b46e0a007fc0ff" => :el_capitan
   end
 
   # this will double the build time approximately if enabled
@@ -108,14 +108,14 @@ class Protobuf < Formula
     end
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     Editor support and examples have been installed to:
       #{doc}
     EOS
   end
 
   test do
-    testdata = <<-EOS.undent
+    testdata = <<~EOS
       syntax = "proto3";
       package test;
       message TestCase {

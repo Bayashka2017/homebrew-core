@@ -1,13 +1,15 @@
 class PerconaServer < Formula
   desc "Drop-in MySQL replacement"
   homepage "https://www.percona.com"
-  url "https://www.percona.com/downloads/Percona-Server-5.7/Percona-Server-5.7.18-15/source/tarball/percona-server-5.7.18-15.tar.gz"
-  sha256 "a95d5c79122a889300855483426483975445a247c4b3f9ed2a9a54f4b4cd60bc"
+  url "https://www.percona.com/downloads/Percona-Server-5.7/Percona-Server-5.7.18-16/source/tarball/percona-server-5.7.18-16.tar.gz"
+  sha256 "dc80833354675956fe90e01316fcd46b17cd23a8f17d9f30b9ef18e1a9bd2ae1"
 
   bottle do
-    sha256 "ea235553609cd147d8bd700967c74e4ec2e1ae3eeb595d1c37a7294b31eaf934" => :sierra
-    sha256 "3b4486d2a288bee9b8599652ce96498fd5e032d203f270269d6ad27f74ddc706" => :el_capitan
-    sha256 "29beb2aa21ea5305837240778a0d0040e5aca9f1549bac6b303c90fcc6d3f33b" => :yosemite
+    rebuild 1
+    sha256 "2097446d4eca29f7dc394ecf7901ec8f9b4718befad3fa6ea1b53087fe3e4828" => :high_sierra
+    sha256 "55aa5b068374099a81d9084336c8cf6700005f7372a2a8c7d822a25b4e92b486" => :sierra
+    sha256 "5e66b8808a6f611813fdb9e3b02e79855ff0445630853501647220beac5cb4ab" => :el_capitan
+    sha256 "988440a2b796abff37d0fbb69dd03a537e6be9ebce83da5adb4131794ea7f242" => :yosemite
   end
 
   option "with-test", "Build with unit tests"
@@ -48,6 +50,14 @@ class PerconaServer < Formula
     satisfy { datadir == var/"mysql" }
   end
 
+  # Fix C++ build failure due to Xcode 9 being very strict
+  if DevelopmentTools.clang_build_version >= 900
+    patch do
+      url "https://github.com/percona/percona-server/pull/1925.patch?full_index=1"
+      sha256 "126ed7762ab94a4b2afdaa8a09d35d5e25dfd7cd5452cf51b4db90144e737e6e"
+    end
+  end
+
   def install
     # Don't hard-code the libtool path. See:
     # https://github.com/Homebrew/homebrew/issues/20185
@@ -57,6 +67,7 @@ class PerconaServer < Formula
 
     args = std_cmake_args + %W[
       -DMYSQL_DATADIR=#{datadir}
+      -DINSTALL_PLUGINDIR=lib/plugin
       -DSYSCONFDIR=#{etc}
       -DINSTALL_MANDIR=#{man}
       -DINSTALL_DOCDIR=#{doc}
@@ -118,7 +129,7 @@ class PerconaServer < Formula
     bin.install_symlink prefix/"support-files/mysql.server"
 
     # Install my.cnf that binds to 127.0.0.1 by default
-    (buildpath/"my.cnf").write <<-EOS.undent
+    (buildpath/"my.cnf").write <<~EOS
       # Default Homebrew MySQL server config
       [mysqld]
       # Only allow connections from localhost
@@ -127,7 +138,7 @@ class PerconaServer < Formula
     etc.install "my.cnf"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     A "/etc/my.cnf" from another install may interfere with a Homebrew-built
     server starting up correctly.
 
@@ -143,7 +154,7 @@ class PerconaServer < Formula
 
   plist_options :manual => "mysql.server start"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -165,7 +176,7 @@ class PerconaServer < Formula
 
   test do
     begin
-      (testpath/"mysql_test.sql").write <<-EOS.undent
+      (testpath/"mysql_test.sql").write <<~EOS
         CREATE DATABASE `mysql_test`;
         USE `mysql_test`;
         CREATE TABLE `mysql_test`.`test` (

@@ -3,14 +3,14 @@ require "language/go"
 class PerconaServerMongodb < Formula
   desc "Drop-in MongoDB replacement"
   homepage "https://www.percona.com"
-  url "https://www.percona.com/downloads/percona-server-mongodb-3.4/percona-server-mongodb-3.4.5-1.5/source/tarball/percona-server-mongodb-3.4.5-1.5.tar.gz"
-  version "3.4.5-1.5"
-  sha256 "aa3909678ad0b5a828cd57fa3d10b0f6560700ae8b574469ceb3175ad87d243f"
+  url "https://www.percona.com/downloads/percona-server-mongodb-3.4/percona-server-mongodb-3.4.7-1.8/source/tarball/percona-server-mongodb-3.4.7-1.8.tar.gz"
+  version "3.4.7-1.8"
+  sha256 "b46275e82508bf67b155c95c540124ee81aa7dab5531dea2131e0fbd73525919"
 
   bottle do
-    sha256 "1284d029ab99e696b06559b9850d442704b68ccd32c818199137cf7262a67524" => :sierra
-    sha256 "ec09e516e889306a7a50ba9583fa4526782cf59500312d445138017a74d4cb21" => :el_capitan
-    sha256 "25a8ce37ece25d341cbfb112621c9acd30846e9f19983ee2f415b3bd8c50bc1f" => :yosemite
+    sha256 "33f717b0231ee9a7954fbdab4bd3a8e8385a769b5d4db94a4e80afec88769ddf" => :high_sierra
+    sha256 "1f3c064d76b9f2a7144fd40d87a5635c4cf5c1d45381763ec378d85c25199850" => :sierra
+    sha256 "4241de9e6f01a2ec91be56f5c286b766c1ee6de4cfef35975ed70586c6cafd97" => :el_capitan
   end
 
   option "with-boost", "Compile using installed boost, not the version shipped with this formula"
@@ -27,8 +27,8 @@ class PerconaServerMongodb < Formula
 
   go_resource "github.com/mongodb/mongo-tools" do
     url "https://github.com/mongodb/mongo-tools.git",
-        :tag => "r3.4.5",
-        :revision => "4d4d96583c40a25a4ee7e2d038d75181a300ec3c",
+        :tag => "r3.4.9",
+        :revision => "4f093ae71cdb4c6a6e9de7cd1dc67ea4405f0013",
         :shallow => false
   end
 
@@ -81,7 +81,7 @@ class PerconaServerMongodb < Formula
 
     scons "install", *args
 
-    (buildpath/"mongod.conf").write <<-EOS.undent
+    (buildpath/"mongod.conf").write <<~EOS
       systemLog:
         destination: file
         path: #{var}/log/mongodb/mongo.log
@@ -101,7 +101,7 @@ class PerconaServerMongodb < Formula
 
   plist_options :manual => "mongod --config #{HOMEBREW_PREFIX}/etc/mongod.conf"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -141,7 +141,7 @@ class PerconaServerMongodb < Formula
 
   test do
     begin
-      (testpath/"mongodb_test.js").write <<-EOS.undent
+      (testpath/"mongodb_test.js").write <<~EOS
         printjson(db.getCollectionNames())
         // create test collection
         db.test.insertOne(

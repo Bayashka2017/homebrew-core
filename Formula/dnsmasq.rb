@@ -1,14 +1,14 @@
 class Dnsmasq < Formula
   desc "Lightweight DNS forwarder and DHCP server"
   homepage "http://www.thekelleys.org.uk/dnsmasq/doc.html"
-  url "http://www.thekelleys.org.uk/dnsmasq/dnsmasq-2.77.tar.gz"
-  sha256 "ae97a68c4e64f07633f31249eb03190d673bdb444a05796a3a2d3f521bfe9d38"
-  revision 2
+  url "http://www.thekelleys.org.uk/dnsmasq/dnsmasq-2.78.tar.gz"
+  sha256 "c92e5d78aa6353354d02aabf74590d08980bb1385d8a00b80ef9bc80430aa1dc"
 
   bottle do
     rebuild 1
-    sha256 "93b314d46b19d8a67455eb2330e3ed3afd7a59f85008c2f65c2270a15b7d4b8e" => :el_capitan_or_later
-    sha256 "0391398c1c7b047159d9264cb2e8f7df57b3f445821fcc122b03ed23fa1bac09" => :yosemite
+    sha256 "29b9a8f0b872785a893a2446098ea979a4172938aac84d4dcbc42e55ffb15e73" => :high_sierra
+    sha256 "8ec8cbc805daeeba93b450ec5c5fea02cdcc7978cf93a4e8032bb836c83c5f03" => :sierra
+    sha256 "84a562c8c0ff1a83cabfaa0bf50c9a05169715ce879c4308efbc132e66302120" => :el_capitan
   end
 
   option "with-libidn", "Compile with IDN support"
@@ -78,7 +78,7 @@ class Dnsmasq < Formula
     (etc/"dnsmasq.d/dhcpc").mkpath
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     To configure dnsmasq, take the default example configuration at
       #{etc}/dnsmasq.conf and edit to taste.
     EOS
@@ -86,7 +86,7 @@ class Dnsmasq < Formula
 
   plist_options :startup => true
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

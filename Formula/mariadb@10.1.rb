@@ -1,13 +1,13 @@
 class MariadbAT101 < Formula
   desc "Drop-in replacement for MySQL"
   homepage "https://mariadb.org/"
-  url "https://ftp.osuosl.org/pub/mariadb/mariadb-10.1.25/source/mariadb-10.1.25.tar.gz"
-  sha256 "7205ecaa6f1bc16335ad88faa5c46be52b3ac628a5e795cb942a3f4335b2a0d6"
+  url "https://downloads.mariadb.org/f/mariadb-10.1.28/source/mariadb-10.1.28.tar.gz"
+  sha256 "292dc8fff420c4bdaf3a2c3381ec3c99292965db2b09de0d7fec414c00032bbd"
 
   bottle do
-    sha256 "5dcfd27e45bd51b22ccd4c3423482f6e0b8a4b345dfbc91369977cc33938fd50" => :sierra
-    sha256 "e8e2cac6daca16aa4d0ec10be20320f2b6bf6e373d65186bc9eb406a654ca772" => :el_capitan
-    sha256 "9742332d7ca603ec1665cc2351790a7add7818d8d970c92516069aa60798a58e" => :yosemite
+    sha256 "bdb5ca2aa68c7b4fbb2f09b3803ae04f2de65deea80d34c14aba3a04b37d7020" => :high_sierra
+    sha256 "e384bb3533f0a98580bec80b71885a09cdcecdd293aa3faf541f532d1244e9a1" => :sierra
+    sha256 "3a06f26aaba9fcb9d6417c47a270c426b56f29015cc0bf2f5fe328f4ea04d1a9" => :el_capitan
   end
 
   keg_only :versioned_formula
@@ -43,6 +43,7 @@ class MariadbAT101 < Formula
       -DINSTALL_DOCDIR=share/doc/#{name}
       -DINSTALL_INFODIR=share/info
       -DINSTALL_MYSQLSHAREDIR=share/mysql
+      -DWITH_PCRE=bundled
       -DWITH_SSL=yes
       -DDEFAULT_CHARSET=utf8
       -DDEFAULT_COLLATION=utf8_general_ci
@@ -109,7 +110,7 @@ class MariadbAT101 < Formula
     end
 
     # Install my.cnf that binds to 127.0.0.1 by default
-    (buildpath/"my.cnf").write <<-EOS.undent
+    (buildpath/"my.cnf").write <<~EOS
       # Default Homebrew MySQL server config
       [mysqld]
       # Only allow connections from localhost
@@ -128,7 +129,7 @@ class MariadbAT101 < Formula
     end
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     A "/etc/my.cnf" from another install may interfere with a Homebrew-built
     server starting up correctly.
 
@@ -141,7 +142,7 @@ class MariadbAT101 < Formula
 
   plist_options :manual => "#{HOMEBREW_PREFIX}/opt/mariadb@10.1/bin/mysql.server start"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

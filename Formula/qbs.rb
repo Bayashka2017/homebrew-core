@@ -1,15 +1,15 @@
 class Qbs < Formula
   desc "Build tool for developing projects across multiple platforms."
   homepage "https://wiki.qt.io/Qbs"
-  url "https://download.qt.io/official_releases/qbs/1.8.1/qbs-src-1.8.1.tar.gz"
-  sha256 "3e94460ecbd1ca43974d62a0ecf691d48866049787c465944866baf52d5b16fc"
+  url "https://download.qt.io/official_releases/qbs/1.9.1/qbs-src-1.9.1.tar.gz"
+  sha256 "970048842581bc004eec9ac9777a49380c03f4e01ef7ad309813aa1054870073"
   head "https://code.qt.io/qt-labs/qbs.git"
 
   bottle do
     cellar :any
-    sha256 "717dc0193d30ad8e28f33b100a7753ce5a0266b69e168c6a114ff6b84ad5ec68" => :sierra
-    sha256 "2aaa459c7ad7d1e6c39d14649d4c05b766374da50e2ac6b3e1fd61b7b47b1e69" => :el_capitan
-    sha256 "6c87156f701bc16793aeb468942419a03077ad3628107d2e0ed3c144b6d04098" => :yosemite
+    sha256 "e5cec8be1a0f9eb4fdf9704dceecc2dd2d1c6fcc890a97adb48a9883d6d108b9" => :high_sierra
+    sha256 "f1dc8d6bd27a165271a83979309183ce163557d9126d2000353952335ef679c1" => :sierra
+    sha256 "60174aff75d9adc9ca27ebd00250a760e0bb231207121265539bfdb43e0fe35e" => :el_capitan
   end
 
   depends_on "qt"
@@ -20,13 +20,13 @@ class Qbs < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       int main() {
         return 0;
       }
     EOS
 
-    (testpath/"test.qbp").write <<-EOS.undent
+    (testpath/"test.qbp").write <<~EOS
       import qbs
 
       CppApplication {

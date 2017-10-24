@@ -1,15 +1,15 @@
 class Onscripter < Formula
   desc "NScripter-compatible visual novel engine"
   homepage "https://onscripter.osdn.jp/"
-  url "https://onscripter.osdn.jp/onscripter-20161102.tar.gz"
-  sha256 "e9a39b1c45cc47c363eb15773a9944da7a29eff74261ccb656ff5ce4b5fdd5d8"
-  revision 1
+  url "https://onscripter.osdn.jp/onscripter-20170814.tar.gz"
+  sha256 "07010e633e490f24f4c5a57dd8c7979f519d0a10a2bfbba8e04828753f1ba97a"
 
   bottle do
     cellar :any
-    sha256 "46e7b53ef1de1e204dffa25762d6bfa03477283797542cc5d85ba6560d3c6683" => :sierra
-    sha256 "cf2419ac1d5bce4282e59a52160c30c1c1f252b79b091e8d63cf42431ee9251f" => :el_capitan
-    sha256 "8b6b99662b85cae18e11ec22d1a72bf86947a6f3107bb292bb764309c08e02ce" => :yosemite
+    sha256 "d4d4a72d51685512b19c49d28ba636251272fbcc5f51d447d88f1aa48f20e7c1" => :high_sierra
+    sha256 "e1c10a5809cd9adbb3deb217300b1e94aa868c7bf14c840c0dbb7e3fc81b5192" => :sierra
+    sha256 "3afb8e29301b62ff3253e6b834dc2bedcd2d8d27b20f1e62d26195ab18022613" => :el_capitan
+    sha256 "c8b63bcbe47a267b3eb5d18c7aab759298c61abe65899dbad99d02b44d960a8e" => :yosemite
   end
 
   option "with-english", "Build with single-byte character mode"
@@ -22,6 +22,12 @@ class Onscripter < Formula
   depends_on "smpeg"
   depends_on "jpeg"
   depends_on "lua" => :recommended
+
+  # jpeg 9 compatibility
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/eeb2de3/onscripter/jpeg9.patch"
+    sha256 "08695ddcbc6b874b903694ac783f7c21c61b5ba385572463d17fbf6ed75f60a1"
+  end
 
   def install
     incs = [

@@ -9,6 +9,7 @@ class Logentries < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "4e7c650c278735f2f7aa720bfe3d2b2bb59c685eab1a64920a70bbe53ea73dac" => :high_sierra
     sha256 "e97d41a863d4692549bd23a9e1e2d01d6255a583b0a25cdd97aaf130e12ef276" => :sierra
     sha256 "97c9c05730ea6abde47fd6ab054e73510d24db0541cc9394b687bafed1650f72" => :el_capitan
     sha256 "f61a6ead7bddbedd902216a3210cd23d5ecf7e1bf941c1dee4e59a4dde4479d9" => :yosemite
@@ -22,7 +23,7 @@ class Logentries < Formula
 
   plist_options :manual => "le monitor"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

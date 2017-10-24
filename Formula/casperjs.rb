@@ -8,6 +8,7 @@ class Casperjs < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "1569410fafea04cb0d78066a4b842448d43b1fb2156ae99a789d6556b89ba815" => :high_sierra
     sha256 "885f4f9d0b7e6ceabcde8c5542d14766212e7d189ae426c4bbe6ecd99eb25148" => :sierra
     sha256 "8f0ae4b24ce77c1fa4b93f480dcaa24b64dd0b0b8ac10ea695b91c18d1908568" => :el_capitan
     sha256 "8f0ae4b24ce77c1fa4b93f480dcaa24b64dd0b0b8ac10ea695b91c18d1908568" => :yosemite
@@ -21,7 +22,7 @@ class Casperjs < Formula
   end
 
   test do
-    (testpath/"fetch.js").write <<-EOS.undent
+    (testpath/"fetch.js").write <<~EOS
       var casper = require("casper").create();
       casper.start("https://duckduckgo.com/about", function() {
         this.download("https://duckduckgo.com/assets/dax-alt.svg", "dax-alt.svg");
@@ -30,6 +31,6 @@ class Casperjs < Formula
     EOS
 
     system bin/"casperjs", testpath/"fetch.js"
-    assert File.exist?("dax-alt.svg")
+    assert_predicate testpath/"dax-alt.svg", :exist?
   end
 end

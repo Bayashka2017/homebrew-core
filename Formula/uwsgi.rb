@@ -6,6 +6,7 @@ class Uwsgi < Formula
   head "https://github.com/unbit/uwsgi.git"
 
   bottle do
+    sha256 "8982dbb85719c513bc74910a43d89c88892a9677e53711cdee7ae369c660e46c" => :high_sierra
     sha256 "09cd8cf501bb7ffd6dc1ce48628c80798700d3b79e329321e59c98a6e3d127e1" => :sierra
     sha256 "94d275b2699c23828ff7610372a3b6b5ff11ec63222eba33db6de22adb806424" => :el_capitan
     sha256 "986cb7457249c53bf40df451f39675a8871fdefe1f111ae7e02eb70a89404ab5" => :yosemite
@@ -61,7 +62,7 @@ class Uwsgi < Formula
     json = build.with?("jansson") ? "jansson" : "yajl"
     yaml = build.with?("libyaml") ? "libyaml" : "embedded"
 
-    (buildpath/"buildconf/brew.ini").write <<-EOS.undent
+    (buildpath/"buildconf/brew.ini").write <<~EOS
       [uwsgi]
       ssl = true
       json = #{json}
@@ -137,7 +138,7 @@ class Uwsgi < Formula
 
   plist_options :manual => "uwsgi"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -171,7 +172,7 @@ class Uwsgi < Formula
   end
 
   test do
-    (testpath/"helloworld.py").write <<-EOS.undent
+    (testpath/"helloworld.py").write <<~EOS
       def application(env, start_response):
         start_response('200 OK', [('Content-Type','text/html')])
         return [b"Hello World"]

@@ -3,26 +3,25 @@ class Emscripten < Formula
   homepage "https://kripken.github.io/emscripten-site/"
 
   stable do
-    url "https://github.com/kripken/emscripten/archive/1.37.10.tar.gz"
-    sha256 "acd756abf7bb687d1fef733c49b3fb45305da6c777381f2699aa1a91b2ffbf9c"
+    url "https://github.com/kripken/emscripten/archive/1.37.22.tar.gz"
+    sha256 "433dedb63ba423cf04bbc9802b49fa842bd479bad31a339db9506614e92334c7"
 
-    emscripten_tag = version.to_s
     resource "fastcomp" do
-      url "https://github.com/kripken/emscripten-fastcomp/archive/#{emscripten_tag}.tar.gz"
-      sha256 "68c2b3f7c3ba3c5fc65a1a2bbb4362c2633baf8410c23895c13fbf945b53e4a8"
+      url "https://github.com/kripken/emscripten-fastcomp/archive/1.37.22.tar.gz"
+      sha256 "e333c68bcd0f5ecabee464a785d10a7b1ce000b866b5769bfe1603b7b277f1cb"
     end
 
     resource "fastcomp-clang" do
-      url "https://github.com/kripken/emscripten-fastcomp-clang/archive/#{emscripten_tag}.tar.gz"
-      sha256 "b647336a964e252d1f13f94a191dbd58cc8b398cc6f83d66f49349f948283d3d"
+      url "https://github.com/kripken/emscripten-fastcomp-clang/archive/1.37.22.tar.gz"
+      sha256 "6306f32150f2cc643205a1a4fd54946e63a5203d6186f783c2365607932fda25"
     end
   end
 
   bottle do
     cellar :any
-    sha256 "f67a25acc1f4d71d1cf3e8c85da143f178cf78aa71e67a7765f58e9130f12bd2" => :sierra
-    sha256 "60a8ed033902c63ae70b56578d2cb86f8aafaabebb879d946acdf0f6e66b4f9d" => :el_capitan
-    sha256 "23cb3b65b6fb2ab34de60bf889741906a09e41f1b6ebac14af1d5856052ef3fb" => :yosemite
+    sha256 "c6fd922bfcfa87a310840f36186e4c1e59e200d5546edf3b54bab3cd7bb7747f" => :high_sierra
+    sha256 "bbcb224c88295ce67f98309926977bca3f11871d75a4337be5bbe50cb93e1137" => :sierra
+    sha256 "e2b040d09d52789f7fc75d9fe743752546b9bc9db5128b1287327e28ef19fcc1" => :el_capitan
   end
 
   head do
@@ -86,7 +85,7 @@ class Emscripten < Formula
     end
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     Manually set LLVM_ROOT to
       #{opt_libexec}/llvm/bin
     and comment out BINARYEN_ROOT
@@ -95,6 +94,7 @@ class Emscripten < Formula
   end
 
   test do
-    system "#{libexec}/llvm/bin/llvm-config", "--version"
+    system bin/"emcc"
+    assert_predicate testpath/".emscripten", :exist?, "Failed to create sample config"
   end
 end

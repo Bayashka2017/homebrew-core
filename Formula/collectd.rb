@@ -6,6 +6,7 @@ class Collectd < Formula
 
   bottle do
     rebuild 1
+    sha256 "cb0615484d4cc2ecf3fd47679a94b9b0ab35e6075206e6887253d328d2749840" => :high_sierra
     sha256 "4d84af67aa0759b1b6d17addfe1fc818fc80a8290f396ddafbd0c299631cc9c0" => :sierra
     sha256 "d89fee7fc65332048b4a7ea872c73818e75e38861af8913b94c2e636dd3ab775" => :el_capitan
     sha256 "668edf52a197a19b8df6141b7077ff67b279dff65b803c82aaf2ff9d17619ef7" => :yosemite
@@ -35,7 +36,7 @@ class Collectd < Formula
 
   fails_with :clang do
     build 318
-    cause <<-EOS.undent
+    cause <<~EOS
       Clang interacts poorly with the collectd-bundled libltdl,
       causing configure to fail.
     EOS
@@ -61,7 +62,7 @@ class Collectd < Formula
 
   plist_options :manual => "#{HOMEBREW_PREFIX}/sbin/collectd -f -C #{HOMEBREW_PREFIX}/etc/collectd.conf"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -90,7 +91,7 @@ class Collectd < Formula
 
   test do
     log = testpath/"collectd.log"
-    (testpath/"collectd.conf").write <<-EOS.undent
+    (testpath/"collectd.conf").write <<~EOS
       LoadPlugin logfile
       <Plugin logfile>
         File "#{log}"

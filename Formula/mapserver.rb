@@ -3,12 +3,14 @@ class Mapserver < Formula
   homepage "http://mapserver.org/"
   url "http://download.osgeo.org/mapserver/mapserver-7.0.6.tar.gz"
   sha256 "dcbebd62976deef1490b084d8f6a0b2f2a1a25407efb6e058390025375539507"
+  revision 2
 
   bottle do
     cellar :any
-    sha256 "1ab6c6b519e7ba102308e125a84ad3a28a1c058c93dc9a14db33b646ca85315e" => :sierra
-    sha256 "7a89c7d190dad3b7686139102cabeb24e8fea79d739982020a95d5a7b5958138" => :el_capitan
-    sha256 "82f0e7a8b6d0f90831f74aea71e70b1463bdce213b763b559da3f23db6864c0c" => :yosemite
+    sha256 "ae6ae9ba705120b2df9483a7a7caac0da5c57f70cf5f8c4576eb0b76a43416ca" => :high_sierra
+    sha256 "ef3e7ddb2203276facc294f9c5e5606bbf79058c761a901947198922c87904e0" => :sierra
+    sha256 "371998c9f382661c76cdb34420433eec1e0d7585482b87f2c4679a4033fb2774" => :el_capitan
+    sha256 "a147d986ee889d28969c97363446cc81206a3c8b9372108d7df4941382387320" => :yosemite
   end
 
   option "with-fastcgi", "Build with fastcgi support"
@@ -35,6 +37,11 @@ class Mapserver < Formula
     # harfbuzz but fribidi currently fails to build with:
     # fribidi-common.h:61:12: fatal error: 'glib.h' file not found
     args = std_cmake_args + %w[
+      -DWITH_KML=ON
+      -DWITH_CURL=ON
+      -DWITH_CLIENT_WMS=ON
+      -DWITH_CLIENT_WFS=ON
+      -DWITH_SOS=ON
       -DWITH_PROJ=ON
       -DWITH_GDAL=ON
       -DWITH_OGR=ON
@@ -91,7 +98,7 @@ class Mapserver < Formula
     end
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     The Mapserver CGI executable is #{opt_bin}/mapserv
 
     If you built the PHP option:

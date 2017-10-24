@@ -6,7 +6,9 @@ class Mesos < Formula
   sha256 "a081f126134b59dcd935521a3fb3d1e13925a1c60a27a517fc63a48c3d2dffab"
 
   bottle do
-    sha256 "8669a1a4165203bd787b555983394cccf5f94306eb80fbdf15475c99129d398f" => :el_capitan_or_later
+    sha256 "2ab3b2548b2b7544f688cefca1a5e16afd075a532b4773a3a432dff289e7f950" => :high_sierra
+    sha256 "1e21968c73c7f4a89205e7670550e9ae6bc51df4c90f88596e64a1a7829eddca" => :sierra
+    sha256 "8669a1a4165203bd787b555983394cccf5f94306eb80fbdf15475c99129d398f" => :el_capitan
     sha256 "7f6e46afb9daf74f61c7229f59a72ad9020464a8bec5d6e3727c50a42c6a82be" => :yosemite
   end
 
@@ -64,8 +66,6 @@ class Mesos < Formula
   needs :cxx11
 
   def install
-    ENV.java_cache
-
     # Disable optimizing as libc++ does not play well with optimized clang
     # builds (see https://llvm.org/bugs/show_bug.cgi?id=28469 and
     # https://issues.apache.org/jira/browse/MESOS-5745).
@@ -84,7 +84,7 @@ class Mesos < Formula
     # work around distutils abusing CC instead of using CXX
     # https://issues.apache.org/jira/browse/MESOS-799
     # https://github.com/Homebrew/homebrew/pull/37087
-    native_patch = <<-EOS.undent
+    native_patch = <<~EOS
       import os
       os.environ["CC"] = os.environ["CXX"]
       os.environ["LDFLAGS"] = "@LIBS@"
@@ -98,10 +98,10 @@ class Mesos < Formula
               "import ext_modules",
               native_patch
 
-    # skip build javadoc because Homebrew sandbox ENV.java_cache
+    # skip build javadoc because Homebrew's setting user.home in _JAVA_OPTIONS
     # would trigger maven-javadoc-plugin bug.
     # https://issues.apache.org/jira/browse/MESOS-3482
-    maven_javadoc_patch = <<-EOS.undent
+    maven_javadoc_patch = <<~EOS
       <properties>
         <maven.javadoc.skip>true</maven.javadoc.skip>
       </properties>
@@ -198,7 +198,7 @@ class Mesos < Formula
     end
     Process.kill("TERM", master)
     Process.kill("TERM", agent)
-    assert File.exist?("#{testpath}/executed")
+    assert_predicate testpath/"executed", :exist?
     system "python", "-c", "import mesos.native"
   end
 end

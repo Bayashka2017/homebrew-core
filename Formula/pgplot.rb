@@ -3,12 +3,13 @@ class Pgplot < Formula
   homepage "http://www.astro.caltech.edu/~tjp/pgplot/"
   url "ftp://ftp.astro.caltech.edu/pub/pgplot/pgplot522.tar.gz"
   mirror "https://distfiles.macports.org/pgplot/pgplot522.tar.gz"
-  mirror "ftp://ftp.us.horde.org/pub/linux/gentoo/distro/distfiles/pgplot522.tar.gz"
+  mirror "https://gentoo.osuosl.org/distfiles/pgplot522.tar.gz"
   version "5.2.2"
   sha256 "a5799ff719a510d84d26df4ae7409ae61fe66477e3f1e8820422a9a4727a5be4"
   revision 4
 
   bottle do
+    sha256 "81ed79200c9c31c4b86d9e6590b0161ce1b3b475fc3f424a2aeb56619cc95ae3" => :high_sierra
     sha256 "06c11d0278bfcdbd7300ebcd71b71cee4d73ffab5c894b6c140e6ac7aa64758d" => :sierra
     sha256 "ef4a6c5d3d9cd5883c94245b1c2158058aaba6df1bda14b0cf60b45b6585bc8b" => :el_capitan
     sha256 "74aeb46030d7c3c6c6e3bdbae94bf6525c8c5adfa8d41474f2764fc83e0a3ab2" => :yosemite
@@ -43,7 +44,7 @@ class Pgplot < Formula
     inreplace "drivers/pndriv.c", "setjmp(png_ptr->jmpbuf)", "setjmp(png_jmpbuf(png_ptr))"
 
     # configure options
-    (buildpath/"sys_darwin/homebrew.conf").write <<-EOS.undent
+    (buildpath/"sys_darwin/homebrew.conf").write <<~EOS
       XINCL="#{ENV.cppflags}"
       MOTIF_INCL=""
       ATHENA_INCL=""
@@ -93,25 +94,25 @@ class Pgplot < Formula
   end
 
   test do
-    (testpath/"test.f90").write <<-EOS.undent
-      PROGRAM SIMPLE
-      INTEGER I, IER, PGBEG
-      REAL XR(100), YR(100)
-      REAL XS(5), YS(5)
-      data XS/1.,2.,3.,4.,5./
-      data YS/1.,4.,9.,16.,25./
-      IER = PGBEG(0,'?',1,1)
-      IF (IER.NE.1) STOP
-      CALL PGENV(0.,10.,0.,20.,0,1)
-      CALL PGLAB('(x)', '(y)', 'A Simple Graph')
-      CALL PGPT(5,XS,YS,9)
-      DO 10 I=1,60
-          XR(I) = 0.1*I
-          YR(I) = XR(I)**2
-   10 CONTINUE
-      CALL PGLINE(60,XR,YR)
-      CALL PGEND
-      END
+    (testpath/"test.f90").write <<~EOS
+         PROGRAM SIMPLE
+         INTEGER I, IER, PGBEG
+         REAL XR(100), YR(100)
+         REAL XS(5), YS(5)
+         data XS/1.,2.,3.,4.,5./
+         data YS/1.,4.,9.,16.,25./
+         IER = PGBEG(0,'?',1,1)
+         IF (IER.NE.1) STOP
+         CALL PGENV(0.,10.,0.,20.,0,1)
+         CALL PGLAB('(x)', '(y)', 'A Simple Graph')
+         CALL PGPT(5,XS,YS,9)
+         DO 10 I=1,60
+             XR(I) = 0.1*I
+             YR(I) = XR(I)**2
+      10 CONTINUE
+         CALL PGLINE(60,XR,YR)
+         CALL PGEND
+         END
     EOS
     system "gfortran", "-o", "test", "test.f90", "-L#{lib}", "-lpgplot", "-lX11", "-L/usr/X11/lib", "-I/usr/X11/include"
   end

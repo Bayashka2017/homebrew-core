@@ -5,14 +5,14 @@ class Hledger < Formula
 
   desc "Command-line accounting tool"
   homepage "http://hledger.org"
-  url "https://hackage.haskell.org/package/hledger-1.3/hledger-1.3.tar.gz"
-  sha256 "ade9800e4a3fab47b48c6cdbe432d261f3398f71514eb2c554a14f8f8c542f2d"
+  url "https://hackage.haskell.org/package/hledger-1.4/hledger-1.4.tar.gz"
+  sha256 "e544cf4fbf7b1c25299d365ed3b891064bcf1aa1a431ecd8888ac978e9a7d490"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "18d3c9572ce9650ed53471cbe36b581fb7265c98028aae58ce0a105ab8f547ec" => :sierra
-    sha256 "94dee5018dd460923375177611925e11e2b9b2ddb83c20e69b946b830059b456" => :el_capitan
-    sha256 "15038796cdab0dd16bbd3a7d42344bbea4ba1694b2ecda0e0b7d8a1f87765768" => :yosemite
+    sha256 "126f06d1834f603f412ae656c28dc2ecdf6adaa6bdbc55154def1f87bbf46814" => :high_sierra
+    sha256 "67cf9c8b5ba330902abc89484de6bb78b863471a6d7afa64a32d5b2cbdba0275" => :sierra
+    sha256 "a4d14f951b5eb3265229c3cb6c33080d29e5fa1360db9c1878460c39183e57b6" => :el_capitan
   end
 
   depends_on "ghc" => :build
@@ -23,6 +23,7 @@ class Hledger < Formula
   end
 
   test do
+    touch ".hledger.journal"
     system "#{bin}/hledger", "test"
   end
 end

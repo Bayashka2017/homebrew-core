@@ -1,14 +1,13 @@
 class Mpd < Formula
   desc "Music Player Daemon"
   homepage "https://www.musicpd.org/"
-  url "https://www.musicpd.org/download/mpd/0.20/mpd-0.20.9.tar.xz"
-  sha256 "cd77a2869e32354b004cc6b34fcb0bee56114caa2d9ed862aaa8071441e34eb7"
-  revision 1
+  url "https://www.musicpd.org/download/mpd/0.20/mpd-0.20.11.tar.xz"
+  sha256 "e9227d9daf32a63d6f34bf2ea18b3179b4a383e9d2b49d548702a37451e514bc"
 
   bottle do
-    sha256 "374d58569b1590ea3a21e6cc157e792a2df9ac00cac81f918ce0240ed37dd702" => :sierra
-    sha256 "2fb093671da494e6f7bc7a4cea54cbe173e241a152cd701d1e404ba11d7f7963" => :el_capitan
-    sha256 "e51dc40024ca6561a84641154f17cecefd1a4d114ea9e29fbfaed75c32a4ccc0" => :yosemite
+    sha256 "b6b08d658dac985152ca87b194c6f365e2799f5ab71a5fd8800a13c0f9a90713" => :high_sierra
+    sha256 "4bc626959c1e397db1e46c55f8f5ec3b686fe7e19e322124f6706946fb2123b4" => :sierra
+    sha256 "206e6f0386fa9942d3b09319e29fa436dac2035f0e3d41769368bd02e62af43a" => :el_capitan
   end
 
   head do
@@ -113,7 +112,7 @@ class Mpd < Formula
 
   plist_options :manual => "mpd"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -131,6 +130,8 @@ class Mpd < Formula
         <true/>
         <key>KeepAlive</key>
         <true/>
+        <key>ProcessType</key>
+        <string>Interactive</string>
     </dict>
     </plist>
     EOS

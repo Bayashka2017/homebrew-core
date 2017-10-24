@@ -3,15 +3,15 @@ require "language/go"
 class Terraform < Formula
   desc "Tool to build, change, and version infrastructure"
   homepage "https://www.terraform.io/"
-  url "https://github.com/hashicorp/terraform/archive/v0.9.11.tar.gz"
-  sha256 "400fbf7c65a5f4b599d1b3d20db8ad9d45930a80ce3abf14aa7ed56eac22b3fb"
+  url "https://github.com/hashicorp/terraform/archive/v0.10.7.tar.gz"
+  sha256 "4959ace3c3c350d4121e235ba64771f94e5d5a4a6acdd5bce1c053a417283938"
   head "https://github.com/hashicorp/terraform.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "81fb83c4299e7eedebf5ef6bc957dd386849cae929fde6236eda424169ee3d4c" => :sierra
-    sha256 "aae80c30f9302b7b4ef97e033e3252b3f508eeb9ea8727e169473b5045350999" => :el_capitan
-    sha256 "6ab38259438f7e7cd753c770f6f83a87dd1e9ed0999b1ba23bd1e5568e9754c2" => :yosemite
+    sha256 "b9735e70c4949199d0fcb6dbd5c5dbcc4311d6fa09a3d14994e9c20257546554" => :high_sierra
+    sha256 "a065e6bac77a8e40f489d3a201407301e977624ea2abeffde37021eb8da3f277" => :sierra
+    sha256 "3f047a1a024a9f815d4bb33f0eff9302eebe969a723ce924c7f789ebb13dcb28" => :el_capitan
   end
 
   depends_on "go" => :build
@@ -40,7 +40,7 @@ class Terraform < Formula
 
   go_resource "golang.org/x/tools" do
     url "https://go.googlesource.com/tools.git",
-        :revision => "5682db0e919ed9cfc6f52ac32e170511a106eb3b"
+        :branch => "release-branch.go1.8"
   end
 
   def install
@@ -74,7 +74,7 @@ class Terraform < Formula
 
   test do
     minimal = testpath/"minimal.tf"
-    minimal.write <<-EOS.undent
+    minimal.write <<~EOS
       variable "aws_region" {
           default = "us-west-2"
       }
@@ -101,6 +101,7 @@ class Terraform < Formula
         count = 4
       }
     EOS
-    system "#{bin}/terraform", "graph", testpath
+    system "#{bin}/terraform", "init"
+    system "#{bin}/terraform", "graph"
   end
 end

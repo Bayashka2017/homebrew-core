@@ -7,6 +7,7 @@ class Pgbouncer < Formula
 
   bottle do
     cellar :any
+    sha256 "0d93dc6d4c3aedb41bf98026a4dabdbb042c679dc301bcbb863eee8bcae0c285" => :high_sierra
     sha256 "856e2b0f818374b88290b5d794f9e41d691da1a164d14aedf6ef6192d726d67a" => :sierra
     sha256 "90de8ccdfe3cd6f84de801a5c003c01b95dd6f95eea77620d9be859e78a4d288" => :el_capitan
     sha256 "14b72883c284c2ca5602f29cf393b4c289c77033c6c47596fe8eb9b26245c8ab" => :yosemite
@@ -28,7 +29,7 @@ class Pgbouncer < Formula
     etc.install %w[etc/pgbouncer.ini etc/userlist.txt]
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     The config file: #{etc}/pgbouncer.ini is in the "ini" format and you
     will need to edit it for your particular setup. See:
     https://pgbouncer.github.io/config.html
@@ -40,7 +41,8 @@ class Pgbouncer < Formula
 
   plist_options :manual => "pgbouncer -q #{HOMEBREW_PREFIX}/etc/pgbouncer.ini"
 
-  def plist; <<-EOS.undent
+  def plist
+    <<~EOS
       <?xml version="1.0" encoding="UTF-8"?>
       <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
       <plist version="1.0">

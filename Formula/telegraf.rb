@@ -1,15 +1,15 @@
 class Telegraf < Formula
   desc "Server-level metric gathering agent for InfluxDB"
   homepage "https://influxdata.com"
-  url "https://github.com/influxdata/telegraf/archive/1.3.4.tar.gz"
-  sha256 "6c1612655991670906f8e82ad981ea0e7d3e43bf6041f7a6f5129457340d365a"
+  url "https://github.com/influxdata/telegraf/archive/1.4.2.tar.gz"
+  sha256 "ccd5c466b043068f4ec85bd0738810fe48e9908a1c7da9a60ccb6ca1be77c955"
   head "https://github.com/influxdata/telegraf.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "d13acb5b05a36fb1ea42857291f21e705f4833db5d84f15fd2ee8f2d6b777965" => :sierra
-    sha256 "70f3c7b362c358995253e3ceb9ce35d53fddc92f5058cb7e2b463f094843d56c" => :el_capitan
-    sha256 "cbcfa04cab42ef8ee4514790434140dfe527926850dc9fe43058b95c374aa44d" => :yosemite
+    sha256 "a48299d8bb6db7ef0596d873ba036de101464a257e4179e8e3849f07d125d733" => :high_sierra
+    sha256 "9e3ff0b0843e16541e520a46eb79647402662e1e7ac8daef4fd4d3597eefc6cd" => :sierra
+    sha256 "ad992fbb40c12ebe8afd3fe9d9be444ee210f30faa4cda3af4ede07a374655ae" => :el_capitan
   end
 
   depends_on "gdm" => :build
@@ -35,7 +35,7 @@ class Telegraf < Formula
 
   plist_options :manual => "telegraf -config #{HOMEBREW_PREFIX}/etc/telegraf.conf"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

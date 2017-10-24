@@ -32,6 +32,7 @@ class BoostAT155 < Formula
 
   bottle do
     cellar :any
+    sha256 "268a8123cf956c5f8e79115b4a5d5807a9125891ac5df161357f31f917bbe16f" => :high_sierra
     sha256 "bf89ab11c1ceab224a5ece4629987b4d8d137c5c3506a4577301f70b05d0ea97" => :sierra
     sha256 "30bb554952cdbcc445b247f570243c31ab4cafebf55bcfe96b9cabcb5ca2f716" => :el_capitan
     sha256 "f861f79bde1988282064245c5b1080f66f6a4e034162656b627c2bb8de42ebb2" => :yosemite
@@ -77,7 +78,7 @@ class BoostAT155 < Formula
 
     # https://svn.boost.org/trac/boost/ticket/8841
     if build.with?("mpi") && build.with?("single")
-      raise <<-EOS.undent
+      raise <<~EOS
         Building MPI support for both single and multi-threaded flavors
         is not supported.  Please use "--with-mpi" together with
         "--without-single".
@@ -86,7 +87,7 @@ class BoostAT155 < Formula
 
     if build.cxx11? && build.with?("mpi") && (build.with?("python") \
                                                || build.with?("python3"))
-      raise <<-EOS.undent
+      raise <<~EOS
         Building MPI support for Python using C++11 mode results in
         failure and hence disabled.  Please don"t use this combination
         of options.
@@ -104,7 +105,7 @@ class BoostAT155 < Formula
         py3version = `python3 -c "import sys; print(sys.version[:3])"`.strip
         py3prefix = `python3 -c "import sys; print(sys.prefix)"`.strip
 
-        file.write <<-EOS.undent
+        file.write <<~EOS
           using python : #{py3version}
                        : #{py3executable}
                        : #{py3prefix}/include/python#{py3version}m
@@ -173,9 +174,8 @@ class BoostAT155 < Formula
     # ENV.compiler doesn"t exist in caveats. Check library availability
     # instead.
     if Dir["#{lib}/libboost_log*"].empty?
-      s += <<-EOS.undent
-
-      Building of Boost.Log is disabled because it requires newer GCC or Clang.
+      s += <<~EOS
+        Building of Boost.Log is disabled because it requires newer GCC or Clang.
       EOS
     end
 
@@ -183,7 +183,7 @@ class BoostAT155 < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<-EOS.undent
+    (testpath/"test.cpp").write <<~EOS
       #include <boost/algorithm/string.hpp>
       #include <boost/version.hpp>
       #include <string>

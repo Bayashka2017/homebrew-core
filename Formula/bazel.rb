@@ -1,26 +1,18 @@
 class Bazel < Formula
   desc "Google's own build tool"
   homepage "https://bazel.build/"
-  url "https://github.com/bazelbuild/bazel/releases/download/0.5.2/bazel-0.5.2-dist.zip"
-  sha256 "2418c619bdd44257a170b85b9d2ecb75def29e751b725e27186468ada2e009ea"
+  url "https://github.com/bazelbuild/bazel/releases/download/0.7.0/bazel-0.7.0-dist.zip"
+  sha256 "a084a9c5d843e2343bf3f319154a48abe3d35d52feb0ad45dec427a1c4ffc416"
 
   bottle do
     cellar :any_skip_relocation
-    rebuild 1
-    sha256 "c102f7c97f48397e2cd128b111f4d1d84698299554c20e5228b0f5526f9d095f" => :sierra
-    sha256 "c9d8c15c0105d78b35ce4d405ca7649562aef7bc108ae62d03282ada358ec655" => :el_capitan
-    sha256 "a22b2da3456830f057b94ad043f28a511c2d66fd215010745b4fb55d9644b68b" => :yosemite
+    sha256 "39b129d4381684efb8bd1402d461327f775ec62c093baa86fc6904fbfa56bda8" => :high_sierra
+    sha256 "40d7cf9cacfb4265be7bfd5aecd827f541ca5fca37ca6ac789df2ca47e72fa17" => :sierra
+    sha256 "ae2d8748781086c113936ebc180000399f5aed0d9295bd8683894b430872cdd6" => :el_capitan
   end
 
   depends_on :java => "1.8+"
   depends_on :macos => :yosemite
-
-  # Upstream PR from 27 Jun 2017 "Fix build failure with old OS X mktemp"
-  # See https://github.com/bazelbuild/bazel/issues/3279
-  patch do
-    url "https://github.com/bazelbuild/bazel/pull/3281.patch?full_index=1"
-    sha256 "704dff309fa2f6ee5304f72fcbe6d2576326e1bb8e1e41385dc02d773ee35665"
-  end
 
   def install
     ENV["EMBED_LABEL"] = "#{version}-homebrew"
@@ -40,7 +32,7 @@ class Bazel < Formula
   test do
     touch testpath/"WORKSPACE"
 
-    (testpath/"ProjectRunner.java").write <<-EOS.undent
+    (testpath/"ProjectRunner.java").write <<~EOS
       public class ProjectRunner {
         public static void main(String args[]) {
           System.out.println("Hi!");
@@ -48,7 +40,7 @@ class Bazel < Formula
       }
     EOS
 
-    (testpath/"BUILD").write <<-EOS.undent
+    (testpath/"BUILD").write <<~EOS
       java_binary(
         name = "bazel-test",
         srcs = glob(["*.java"]),

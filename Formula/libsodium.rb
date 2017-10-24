@@ -1,14 +1,14 @@
 class Libsodium < Formula
   desc "NaCl networking and cryptography library"
   homepage "https://github.com/jedisct1/libsodium/"
-  url "https://github.com/jedisct1/libsodium/releases/download/1.0.13/libsodium-1.0.13.tar.gz"
-  sha256 "9c13accb1a9e59ab3affde0e60ef9a2149ed4d6e8f99c93c7a5b97499ee323fd"
+  url "https://github.com/jedisct1/libsodium/releases/download/1.0.15/libsodium-1.0.15.tar.gz"
+  sha256 "fb6a9e879a2f674592e4328c5d9f79f082405ee4bb05cb6e679b90afe9e178f4"
 
   bottle do
     cellar :any
-    sha256 "faff8ef65ff555b8a86b21bb238e3dc844405cdfc3348e0f535d1552775bc542" => :sierra
-    sha256 "a83c5f4520650c8cb81b11c26a3003aa7bdebb47c19ae1f7ff1c45b249852256" => :el_capitan
-    sha256 "afb37b9e1d093888d2d898999bb59fec9496c5efda7cf7dcecfc680199f64419" => :yosemite
+    sha256 "b2faf056b42788bfbedeee32166c3aa9c3d382f9dadf306100b6ef0d0342a64a" => :high_sierra
+    sha256 "decfe8fd1c593c8b202c99a4dc3dc21e25adf39c9cb1e8de792c7801cef66d67" => :sierra
+    sha256 "59597f646d332373e951a7b1ff6ebd4b88898016555494f27e5f195a1bed16d2" => :el_capitan
   end
 
   head do
@@ -28,7 +28,7 @@ class Libsodium < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <assert.h>
       #include <sodium.h>
 

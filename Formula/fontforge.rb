@@ -1,15 +1,15 @@
 class Fontforge < Formula
   desc "Command-line outline and bitmap font editor/converter"
   homepage "https://fontforge.github.io"
-  url "https://github.com/fontforge/fontforge/archive/20161012.tar.gz"
-  sha256 "a5f5c2974eb9109b607e24f06e57696d5861aaebb620fc2c132bdbac6e656351"
+  url "https://github.com/fontforge/fontforge/releases/download/20170731/fontforge-dist-20170731.tar.xz"
+  sha256 "840adefbedd1717e6b70b33ad1e7f2b116678fa6a3d52d45316793b9fd808822"
   revision 2
-  head "https://github.com/fontforge/fontforge.git"
 
   bottle do
-    sha256 "7761dfc6c4323b846535e40a8eab0625d5c4ce5755df649628ab29f6259b4632" => :sierra
-    sha256 "db363f7a461eeb10c685fea7667ea9f03aa486ad8348cc27dffb7415a62799d2" => :el_capitan
-    sha256 "072cfd2fb0c31d4083afa9079cc30d81185eab606b63e81f561ce2962acfb2fb" => :yosemite
+    rebuild 1
+    sha256 "2d17141ae67cf0ed5dd71744e0de6c1ec2afa7d9dfb7ff555a787dcc0314276e" => :high_sierra
+    sha256 "7d424a6d8dd7dc8bf8ae7899679877f2876a31c911bad73b547811ebae849b33" => :sierra
+    sha256 "1239df0ca7865d259b4590c362f6854c98b2d0c7664ea7235f2f3ff41bc0023c" => :el_capitan
   end
 
   option "with-giflib", "Build with GIF support"
@@ -17,9 +17,6 @@ class Fontforge < Formula
 
   deprecated_option "with-gif" => "with-giflib"
 
-  # Autotools are required to build from source in all releases.
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
   depends_on "pkg-config" => :build
   depends_on "libtool" => :run
   depends_on "gettext"
@@ -34,9 +31,12 @@ class Fontforge < Formula
   depends_on "libuninameslist" => :optional
   depends_on :python if MacOS.version <= :snow_leopard
 
-  resource "gnulib" do
-    url "https://git.savannah.gnu.org/git/gnulib.git",
-        :revision => "29ea6d6fe2a699a32edbe29f44fe72e0c253fcee"
+  # Remove for > 20170731
+  # Fix "fatal error: 'mem.h' file not found" for --with-extra-tools
+  # Upstream PR from 22 Sep 2017 https://github.com/fontforge/fontforge/pull/3156
+  patch do
+    url "https://github.com/fontforge/fontforge/commit/9f69bd0f9.patch?full_index=1"
+    sha256 "f8afa9a6ab7a71650a3f013d9872881754e1ba4a265f693edd7ba70f2ec1d525"
   end
 
   def install
@@ -56,13 +56,11 @@ class Fontforge < Formula
     args << "--without-libspiro" if build.without? "libspiro"
     args << "--without-libuninameslist" if build.without? "libuninameslist"
 
-    # Bootstrap in every build: https://github.com/fontforge/fontforge/issues/1806
-    resource("gnulib").fetch
-    system "./bootstrap",
-           "--gnulib-srcdir=#{resource("gnulib").cached_download}",
-           "--skip-git"
+    # Fix header includes to avoid crash at runtime:
+    # https://github.com/fontforge/fontforge/pull/3147
+    inreplace "fontforgeexe/startnoui.c", "#include \"fontforgevw.h\"", "#include \"fontforgevw.h\"\n#include \"encoding.h\""
+
     system "./configure", *args
-    system "make"
     system "make", "install"
 
     # The app here is not functional.
@@ -77,7 +75,7 @@ class Fontforge < Formula
     end
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     This formula only installs the command line utilities.
 
     FontForge.app can be downloaded directly from the website:
@@ -90,7 +88,8 @@ class Fontforge < Formula
 
   test do
     system bin/"fontforge", "-version"
+    system bin/"fontforge", "-lang=py", "-c", "import fontforge; fontforge.font()"
     ENV.append_path "PYTHONPATH", lib+"python2.7/site-packages"
-    system "python", "-c", "import fontforge"
+    system "python", "-c", "import fontforge; fontforge.font()"
   end
 end

@@ -1,14 +1,15 @@
 class Subversion < Formula
   desc "Version control system designed to be a better CVS"
   homepage "https://subversion.apache.org/"
-  url "https://www.apache.org/dyn/closer.cgi?path=subversion/subversion-1.9.6.tar.bz2"
-  mirror "https://archive.apache.org/dist/subversion/subversion-1.9.6.tar.bz2"
-  sha256 "dbcbc51fb634082f009121f2cb64350ce32146612787ffb0f7ced351aacaae19"
+  url "https://www.apache.org/dyn/closer.cgi?path=subversion/subversion-1.9.7.tar.bz2"
+  mirror "https://archive.apache.org/dist/subversion/subversion-1.9.7.tar.bz2"
+  sha256 "c3b118333ce12e501d509e66bb0a47bcc34d053990acab45559431ac3e491623"
+  revision 1
 
   bottle do
-    sha256 "98c6f806e0e89757a65715f8a07f17bc1e5dadb64511f09f4e63ebadad2938ee" => :sierra
-    sha256 "78149298a173413a9addd26c87e43ff599659fa658eb98436dc37cdba0bbcf33" => :el_capitan
-    sha256 "474e1482618a2da0a1d9cfb4b74ffc9f386ad91a9b20b4b3f1ba439de5acf37d" => :yosemite
+    sha256 "5e9506b629800e6dfbedb67845eb77a22896e561a826d79a0540173e4c8f3714" => :high_sierra
+    sha256 "4c7b8b2904172db671a21caa0553ef2d1a4456e3010e2e59451eef32dd407879" => :sierra
+    sha256 "411d69db8fa266625f241f8a6ec4b470d963a011b44eebb0b52e2f08249a83b3" => :el_capitan
   end
 
   deprecated_option "java" => "with-java"
@@ -170,22 +171,22 @@ class Subversion < Formula
   end
 
   def caveats
-    s = <<-EOS.undent
+    s = <<~EOS
       svntools have been installed to:
         #{opt_libexec}
     EOS
 
     if build.with? "perl"
-      s += <<-EOS.undent
-
+      s += "\n"
+      s += <<~EOS
         The perl bindings are located in various subdirectories of:
           #{opt_lib}/perl5
       EOS
     end
 
     if build.with? "ruby"
-      s += <<-EOS.undent
-
+      s += "\n"
+      s += <<~EOS
         If you wish to use the Ruby bindings you may need to add:
           #{HOMEBREW_PREFIX}/lib/ruby
         to your RUBYLIB.
@@ -193,8 +194,8 @@ class Subversion < Formula
     end
 
     if build.with? "java"
-      s += <<-EOS.undent
-
+      s += "\n"
+      s += <<~EOS
         You may need to link the Java bindings into the Java Extensions folder:
           sudo mkdir -p /Library/Java/Extensions
           sudo ln -s #{HOMEBREW_PREFIX}/lib/libsvnjavahl-1.dylib /Library/Java/Extensions/libsvnjavahl-1.dylib

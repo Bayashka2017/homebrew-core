@@ -7,6 +7,7 @@ class Headphones < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "6038f613b50ab4d7c3f67a1a45547ba2349d96fc158fd99d4e1a46357e5d7992" => :high_sierra
     sha256 "913f1f0ea6600b6aa4bb6f4f9fcfd6c5447f072334b024faf40da2d7ed6b0600" => :sierra
     sha256 "fb9288d3885ac6ee18b6ee3292d7fe886f8b5d538b4876f3bdd32309e3643431" => :el_capitan
     sha256 "be688187ebdfd25f221b227a9aa6df3e8015788f564bdfdc524cd99834540d80" => :yosemite
@@ -22,7 +23,7 @@ class Headphones < Formula
     sha256 "be308229f0c1e5e5af4f27d7ee06d90bb19e6af3059794e5fd536a6f29a9b550"
   end
 
-  def startup_script; <<-EOS.undent
+  def startup_script; <<~EOS
     #!/bin/bash
     export PYTHONPATH="#{libexec}/lib/python2.7/site-packages:$PYTHONPATH"
     python "#{libexec}/Headphones.py" --datadir="#{etc}/headphones" "$@"
@@ -44,14 +45,14 @@ class Headphones < Formula
     (bin/"headphones").write(startup_script)
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     Headphones defaults to port 8181.
   EOS
   end
 
   plist_options :manual => "headphones"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

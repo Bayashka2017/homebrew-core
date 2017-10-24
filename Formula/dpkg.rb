@@ -9,6 +9,7 @@ class Dpkg < Formula
   sha256 "d853081d3e06bfd46a227056e591f094e42e78fa8a5793b0093bad30b710d7b4"
 
   bottle do
+    sha256 "d26032f3e3a0ef5674aab0a64d182187bee880dd4e8b8cbee39ae1068242dfba" => :high_sierra
     sha256 "9e8db9fe18ba33977e4fd45375248da847c481d2f1b58b82b18c90671bace287" => :sierra
     sha256 "d830b2d5460fce38ab859d8d3d3a4ce618e32b3ad08ea3d7020a0ecc214aeb18" => :el_capitan
     sha256 "9bf757d4e0e3902bbbc97a28a2532ac1a3c8220ad487c5a18a38925483e43062" => :yosemite
@@ -61,7 +62,7 @@ class Dpkg < Formula
     (var/"log").mkpath
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     This installation of dpkg is not configured to install software, so
     commands such as `dpkg -i`, `dpkg --configure` will fail.
     EOS
@@ -71,7 +72,7 @@ class Dpkg < Formula
     # Do not remove the empty line from the end of the control file
     # All deb control files MUST end with an empty line
     (testpath/"test/data/homebrew.txt").write "brew"
-    (testpath/"test/DEBIAN/control").write <<-EOS.undent
+    (testpath/"test/DEBIAN/control").write <<~EOS
       Package: test
       Version: 1.40.99
       Architecture: amd64
@@ -80,10 +81,10 @@ class Dpkg < Formula
 
     EOS
     system bin/"dpkg", "-b", testpath/"test", "test.deb"
-    assert File.exist?("test.deb")
+    assert_predicate testpath/"test.deb", :exist?
 
     rm_rf "test"
     system bin/"dpkg", "-x", "test.deb", testpath
-    assert File.exist?("data/homebrew.txt")
+    assert_predicate testpath/"data/homebrew.txt", :exist?
   end
 end

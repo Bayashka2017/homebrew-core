@@ -1,14 +1,14 @@
 class Passenger < Formula
   desc "Server for Ruby, Python, and Node.js apps via Apache/NGINX"
   homepage "https://www.phusionpassenger.com/"
-  url "https://s3.amazonaws.com/phusion-passenger/releases/passenger-5.1.6.tar.gz"
-  sha256 "e897cc5f0ec6446bfdc226404dca4bd29f7418ae92010c389661b9f024a3cf24"
-  head "https://github.com/phusion/passenger.git"
+  url "https://s3.amazonaws.com/phusion-passenger/releases/passenger-5.1.11.tar.gz"
+  sha256 "26fc56b2f6d27ed58b948d9601a17a4f61e98fd16349bcb46f3ecebcac3177dd"
+  head "https://github.com/phusion/passenger.git", :branch => "stable-5.1"
 
   bottle do
-    sha256 "100fc232600e7ebb89147e2940a76f9eaebaa8599a4031608772d925ebffc296" => :sierra
-    sha256 "fcc4b9f5f4c38d8252097bf51552b73de43a95aed1ee5d20d54822bdd9482391" => :el_capitan
-    sha256 "899513b76dfae7570bd1336344542cec84be6af7f8ed8fd96e4eb6e917dc0b87" => :yosemite
+    sha256 "b932727801de6dbc70c229e687ce426406d67fe450c8202144f882373e97bd44" => :high_sierra
+    sha256 "1dda0b3edc47f38c5aaed75eb4572932b0a445f87e398ad6763875066fd16072" => :sierra
+    sha256 "6bc7dcc592b0ea6fa646d8a7e5430314978495d046f27afba38758a06a33803f" => :el_capitan
   end
 
   option "without-apache2-module", "Disable Apache2 module"
@@ -26,8 +26,8 @@ class Passenger < Formula
       s.gsub! "-L/usr/local/opt/openssl/lib", "-L#{Formula["openssl"].opt_lib}"
     end
 
-    rake "apache2" if build.with? "apache2-module"
-    rake "nginx"
+    system "rake", "apache2" if build.with? "apache2-module"
+    system "rake", "nginx"
 
     (libexec/"download_cache").mkpath
 
@@ -70,13 +70,13 @@ class Passenger < Formula
   end
 
   def caveats
-    s = <<-EOS.undent
+    s = <<~EOS
       To activate Phusion Passenger for Nginx, run:
         brew install nginx --with-passenger
 
       EOS
 
-    s += <<-EOS.undent if build.with? "apache2-module"
+    s += <<~EOS if build.with? "apache2-module"
       To activate Phusion Passenger for Apache, create /etc/apache2/other/passenger.conf:
         LoadModule passenger_module #{opt_libexec}/buildout/apache2/mod_passenger.so
         PassengerRoot #{opt_libexec}/src/ruby_supportlib/phusion_passenger/locations.ini

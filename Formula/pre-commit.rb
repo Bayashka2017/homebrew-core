@@ -3,20 +3,20 @@ class PreCommit < Formula
 
   desc "Framework for managing multi-language pre-commit hooks"
   homepage "http://pre-commit.com/"
-  url "https://github.com/pre-commit/pre-commit/archive/v0.15.3.tar.gz"
-  sha256 "3066ec3ff22e89b6ee32d569338b341172ed28ad9e09da88de86b7fa8726e8d7"
+  url "https://github.com/pre-commit/pre-commit/archive/v1.3.0.tar.gz"
+  sha256 "e4ba7733693c678b17465d5717b26031c5d0a08689ecfbc75887049e99f097de"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "3485a161d06e099acfec037ab4e5f63ca7171189d7a063ae6dc6122c9c7364b0" => :sierra
-    sha256 "861607d2176a1a504779e72a8c1284dad3064608b299ca8e84d7cf917e00b7ba" => :el_capitan
-    sha256 "b7c89874ed0705cba4a26f6be83c98ac81494186d2016a8a26d7eb4b7e539343" => :yosemite
+    sha256 "d61422715bd65fe95310f1d6447ac88ae3a3c1ec9f9b9fd9f2d68a9e7bf1a038" => :high_sierra
+    sha256 "87e880095a6b7ba8ae05394c1f97add7fa6265613c60634c41965237ddfaf310" => :sierra
+    sha256 "17698be7a121949a0f3dfee96f5df9df22b609e6747971e5cb2d246487407536" => :el_capitan
   end
 
-  depends_on :python if MacOS.version <= :snow_leopard
+  depends_on :python3
 
   def install
-    venv = virtualenv_create(libexec)
+    venv = virtualenv_create(libexec, "python3")
     system libexec/"bin/pip", "install", "-v", "--no-binary", ":all:",
                               "--ignore-installed", buildpath
     system libexec/"bin/pip", "uninstall", "-y", "pre-commit"
@@ -26,12 +26,12 @@ class PreCommit < Formula
   test do
     testpath.cd do
       system "git", "init"
-      (testpath/".pre-commit-config.yaml").write <<-EOF.undent
-      -   repo: https://github.com/pre-commit/pre-commit-hooks
-          sha: 5541a6a046b7a0feab73a21612ab5d94a6d3f6f0
-          hooks:
-          -   id: trailing-whitespace
-      EOF
+      (testpath/".pre-commit-config.yaml").write <<~EOS
+        -   repo: https://github.com/pre-commit/pre-commit-hooks
+            sha: v0.9.1
+            hooks:
+            -   id: trailing-whitespace
+      EOS
       system bin/"pre-commit", "install"
       system bin/"pre-commit", "run", "--all-files"
     end

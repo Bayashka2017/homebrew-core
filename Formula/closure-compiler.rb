@@ -1,8 +1,8 @@
 class ClosureCompiler < Formula
   desc "JavaScript optimizing compiler"
   homepage "https://github.com/google/closure-compiler"
-  url "https://search.maven.org/remotecontent?filepath=com/google/javascript/closure-compiler/v20170626/closure-compiler-v20170626.jar"
-  sha256 "20f17575d90d00be6ee444447ac893129778110acb7db9080ecd5b0ae8cc4aeb"
+  url "https://search.maven.org/remotecontent?filepath=com/google/javascript/closure-compiler/v20170910/closure-compiler-v20170910.jar"
+  sha256 "24ac5a57c02cb2c3da2c04f0bed2f5adbba140747963025b79c2c01b1407f14c"
 
   bottle :unneeded
 
@@ -14,7 +14,7 @@ class ClosureCompiler < Formula
   end
 
   test do
-    (testpath/"test.js").write <<-EOS.undent
+    (testpath/"test.js").write <<~EOS
       (function(){
         var t = true;
         return t;

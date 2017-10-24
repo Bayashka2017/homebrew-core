@@ -6,6 +6,7 @@ class Gtksourceview < Formula
   revision 2
 
   bottle do
+    sha256 "eb53710faa45677fbdcd50c4df35ab3f8fc7cab18ad424bba3b581536f65d434" => :high_sierra
     sha256 "3fb2f8fa75fa387446d26fff33efda69464097236347a18624a5dde92f6d73a1" => :sierra
     sha256 "457892619b702f1250a0e712d1230a12e19a94610b7adc5bc3692d982cf88e25" => :el_capitan
     sha256 "5618462ba2f24a70240a654587eed2f7fef1714d011e2960fc3265a9dab40c70" => :yosemite
@@ -30,7 +31,7 @@ class Gtksourceview < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <gtksourceview/gtksourceview.h>
 
       int main(int argc, char *argv[]) {

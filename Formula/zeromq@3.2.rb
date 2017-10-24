@@ -6,6 +6,7 @@ class ZeromqAT32 < Formula
 
   bottle do
     cellar :any
+    sha256 "71f283d975e4a60f64f4f4dfcff128a0185b2d8f1b7130e29eb42b9f7a917d0a" => :high_sierra
     sha256 "98c3cd0853a7cf9f8c8895cb9c002795925ed8991f2e720217db9d7dd59b299c" => :sierra
     sha256 "743cff40fab8d4371b8162bb803eaf1835d053d6bd784c303a18eb73bdfdbc01" => :el_capitan
     sha256 "d7b7881050dc2aadc265786d6f28f11199e998d0446ccec6f34ce53990a0ffde" => :yosemite
@@ -32,7 +33,7 @@ class ZeromqAT32 < Formula
     system "make", "install"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     To install the zmq gem on 10.6 with the system Ruby on a 64-bit machine,
     you may need to do:
 
@@ -41,7 +42,7 @@ class ZeromqAT32 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <zmq.h>
       #include <assert.h>
 

@@ -1,13 +1,13 @@
 class Suricata < Formula
   desc "Network IDS, IPS, and security monitoring engine"
   homepage "https://suricata-ids.org/"
-  url "https://www.openinfosecfoundation.org/download/suricata-3.2.3.tar.gz"
-  sha256 "ad800e313ece9b4e4ef11b2bdfe15bd73d3c8e51833bc4466525b8f0d8ac86aa"
+  url "https://www.openinfosecfoundation.org/download/suricata-4.0.1.tar.gz"
+  sha256 "0e73edb2911791644d82a62ab4f75517bbed339c0f21aadc0eb307b313643885"
 
   bottle do
-    sha256 "856f7fca47975c28ca75d5ff3ed73c78ccbf9db4d94018f7f9a9e5724182ad6c" => :sierra
-    sha256 "14f3e952fb887b686cc54859e0ebfb1eba64e79f526b42bfd6831f0b3c00c3f1" => :el_capitan
-    sha256 "c1eed68a24846ec85e875babb6876dcfbe2a910d022606c6b6d006573a827fbc" => :yosemite
+    sha256 "ea557fbfab2ad4f84719383122216a130b43ee6ee9d82860ac2f9730fad9217a" => :high_sierra
+    sha256 "fd6d2b2fedd3bc2900c3e9da9d9ddb8db3124df285a91cc78f03db610a2b9fa2" => :sierra
+    sha256 "9147c57fb8b5800e2ed26a4b949c8f40c4c7c1927d1aaae88eda7a9fe0edb575" => :el_capitan
   end
 
   depends_on :python if MacOS.version <= :snow_leopard

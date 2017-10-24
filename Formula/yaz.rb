@@ -1,14 +1,15 @@
 class Yaz < Formula
   desc "Toolkit for Z39.50/SRW/SRU clients/servers"
   homepage "https://www.indexdata.com/yaz"
-  url "http://ftp.indexdata.dk/pub/yaz/yaz-5.22.0.tar.gz"
-  sha256 "a96e788f480f2dcee361678fa308ad308a97d3bcc050c306ec92890e7067e016"
+  url "http://ftp.indexdata.dk/pub/yaz/yaz-5.23.1.tar.gz"
+  sha256 "4fb3b1ffcec4b9a56b892c47a0a645142e45418ce5ef6a835aeebc723f7d147e"
 
   bottle do
     cellar :any
-    sha256 "cdfb9bad7e4afcd6ce17f3eac53519f7ac84448df8dbe1e212971071af9394fe" => :sierra
-    sha256 "a2c2b6d166dd4fe1e9ebcf3b0a8f62499a140bfacbbb2319e436100cb0e6d0c4" => :el_capitan
-    sha256 "ee301a73c3e35f3a4deb21a483dc6b3947e04ae6eb200e3d3a929181b4a0d604" => :yosemite
+    sha256 "7cde107afb296f80f84f8e3f5ab28c49dbbdabf277e551019beced9515b23f8c" => :high_sierra
+    sha256 "79bff14a9d7cd50bbf71ae91b9b91d6e670b3b44d98271acbb6632aff30831c9" => :sierra
+    sha256 "1895528299deb6423bed5bbd9806693d57cc2af083eb335500510dbe9c5e388e" => :el_capitan
+    sha256 "020e949b02beddcf499e676b5920ec22d64030ce10d67420ca2a22cbf7900b76" => :yosemite
   end
 
   head do
@@ -48,7 +49,7 @@ class Yaz < Formula
       # * xy transformed to z
       # * lowercase
       configurationfile = testpath/"icu-chain.xml"
-      configurationfile.write <<-EOS.undent
+      configurationfile.write <<~EOS
         <?xml version="1.0" encoding="UTF-8"?>
         <icu_chain locale="en">
           <transform rule="[:Control:] Any-Remove"/>
@@ -63,7 +64,7 @@ class Yaz < Formula
       inputfile = testpath/"icu-test.txt"
       inputfile.write "yaz-ICU	xy!"
 
-      expectedresult = <<-EOS.undent
+      expectedresult = <<~EOS
         1 1 'yaz' 'yaz'
         2 1 '' ''
         3 1 'icuz' 'ICUz'

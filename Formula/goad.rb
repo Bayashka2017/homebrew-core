@@ -4,15 +4,15 @@ class Goad < Formula
   desc "AWS Lambda powered, highly distributed, load testing tool built in Go"
   homepage "https://goad.io/"
   url "https://github.com/goadapp/goad.git",
-      :tag => "v1.4.1",
-      :revision => "6cd24daf34c487894e7008e080c017989d03db4a"
+      :tag => "2.0.3",
+      :revision => "1d56f40289699a8fcb81709db7db109b8946e17c"
 
   bottle do
     cellar :any_skip_relocation
-    rebuild 1
-    sha256 "331937d2ca071b3da60f458b1d5750b3b16defbafe795f52b44780639da38672" => :sierra
-    sha256 "d7deb965c800fc18375e808f76e8a6a05419c346257b550201f079ea5c922933" => :el_capitan
-    sha256 "93c7b9b8d2f3ad8ddd689bb0079478c3b5ac9c044af3cffdf1f874e526656002" => :yosemite
+    sha256 "24ee4f845d29ac4ff17835ce605a73f9eee51c96493dbe79b53603505cdbacda" => :high_sierra
+    sha256 "1e303913ddbcc7d2284f380ffb6351c7eab64f2fdc8f95864343b97486d88f8b" => :sierra
+    sha256 "1ac09ed9e1ec55c4309b4e09171abc4907702ab44e713a068ef8549f2dcb0ed3" => :el_capitan
+    sha256 "1740f751efcb6a906a0807ec5d0c308bf9c9b77f1942c9d25bfeec75552c0e80" => :yosemite
   end
 
   depends_on "go" => :build

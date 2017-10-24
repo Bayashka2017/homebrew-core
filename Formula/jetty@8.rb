@@ -7,6 +7,7 @@ class JettyAT8 < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "a867608a08bf241e04cf7eb8fdf8018cebacc5a509bed688e5365ecea4c1587c" => :high_sierra
     sha256 "48747f0f47c63bb90688024bbea60faac0fb1f46a336ba8c56b5b1c275016115" => :sierra
     sha256 "48747f0f47c63bb90688024bbea60faac0fb1f46a336ba8c56b5b1c275016115" => :el_capitan
     sha256 "48747f0f47c63bb90688024bbea60faac0fb1f46a336ba8c56b5b1c275016115" => :yosemite
@@ -21,7 +22,7 @@ class JettyAT8 < Formula
     bin.mkpath
     Dir["#{libexec}/bin/*.sh"].each do |f|
       scriptname = File.basename(f, ".sh")
-      (bin+scriptname).write <<-EOS.undent
+      (bin+scriptname).write <<~EOS
         #!/bin/bash
         JETTY_HOME=#{libexec}
         #{f} $@

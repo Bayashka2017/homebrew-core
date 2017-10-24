@@ -5,6 +5,7 @@ class Hbase < Formula
   sha256 "a0fbc22373a7f2d66648c6d9fe13477e689df50c8ee533eda962d4e8fa2185ea"
 
   bottle do
+    sha256 "d24c34f859029e79977587f0926ce6fbe14336a044311d4d97fddacf86e2d42e" => :high_sierra
     sha256 "bb48048be73c3782d7d56725228998a0ee62673ba9d628ae9869e7e855109f5b" => :sierra
     sha256 "546eba2acf3f87d88dc9208d687dfa02c88fcada2f3ede27d732b9415187b0f8" => :el_capitan
     sha256 "49ca44b35f6d9239eb6f02ea504e2a83f78552faa85e30dd1b8f6b4664875494" => :yosemite
@@ -26,7 +27,6 @@ class Hbase < Formula
   end
 
   def install
-    ENV.java_cache if build.with? "lzo"
     rm_f Dir["bin/*.cmd", "conf/*.cmd"]
     libexec.install %w[bin conf docs lib hbase-webapps]
 
@@ -72,32 +72,32 @@ class Hbase < Formula
     # https://issues.apache.org/jira/browse/HBASE-15426
     inreplace "#{libexec}/conf/hbase-site.xml",
       /<configuration>/,
-      <<-EOS.undent
-      <configuration>
-        <property>
-          <name>hbase.rootdir</name>
-          <value>#{build.with?("hadoop") ? "hdfs://localhost:9000" : "file://"+var}/hbase</value>
-        </property>
-        <property>
-          <name>hbase.zookeeper.property.clientPort</name>
-          <value>2181</value>
-        </property>
-        <property>
-          <name>hbase.zookeeper.property.dataDir</name>
-          <value>#{var}/zookeeper</value>
-        </property>
-        <property>
-          <name>hbase.zookeeper.dns.interface</name>
-          <value>lo0</value>
-        </property>
-        <property>
-          <name>hbase.regionserver.dns.interface</name>
-          <value>lo0</value>
-        </property>
-        <property>
-          <name>hbase.master.dns.interface</name>
-          <value>lo0</value>
-        </property>
+      <<~EOS
+        <configuration>
+          <property>
+            <name>hbase.rootdir</name>
+            <value>#{build.with?("hadoop") ? "hdfs://localhost:9000" : "file://"+var}/hbase</value>
+          </property>
+          <property>
+            <name>hbase.zookeeper.property.clientPort</name>
+            <value>2181</value>
+          </property>
+          <property>
+            <name>hbase.zookeeper.property.dataDir</name>
+            <value>#{var}/zookeeper</value>
+          </property>
+          <property>
+            <name>hbase.zookeeper.dns.interface</name>
+            <value>lo0</value>
+          </property>
+          <property>
+            <name>hbase.regionserver.dns.interface</name>
+            <value>lo0</value>
+          </property>
+          <property>
+            <name>hbase.master.dns.interface</name>
+            <value>lo0</value>
+          </property>
       EOS
   end
 
@@ -108,7 +108,7 @@ class Hbase < Formula
 
   plist_options :manual => "#{HOMEBREW_PREFIX}/opt/hbase/bin/start-hbase.sh"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

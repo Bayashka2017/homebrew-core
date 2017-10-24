@@ -1,20 +1,20 @@
 class Nginx < Formula
   desc "HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server"
   homepage "https://nginx.org/"
-  url "https://nginx.org/download/nginx-1.12.1.tar.gz"
-  sha256 "8793bf426485a30f91021b6b945a9fd8a84d87d17b566562c3797aba8fac76fb"
+  url "https://nginx.org/download/nginx-1.12.2.tar.gz"
+  sha256 "305f379da1d5fb5aefa79e45c829852ca6983c7cd2a79328f8e084a324cf0416"
 
-  head "http://hg.nginx.org/nginx/", :using => :hg
+  head "https://hg.nginx.org/nginx/", :using => :hg
 
   bottle do
-    sha256 "93bcf8e3aec465c219b6c0b4f4d5437c61bf00f2a930ef5702e0521edc51f20e" => :sierra
-    sha256 "8a7c3580534aa0854927f750d4f044a2a85f90d4c1936338a4a09fef7db0824e" => :el_capitan
-    sha256 "0caae754f402abbe1eca413a7f0291fe2499d5779bb1e537d7f80a4d7d3156d3" => :yosemite
+    sha256 "44feba8d5e6031124399c6f1d7d1b2e9dd2297a04753224fb6e0352282672606" => :high_sierra
+    sha256 "b9829fb08c64db0896d491450f34d267eed77b29cc56db7be39e811078308e0a" => :sierra
+    sha256 "d338cfb3d9fa5503ff56646907ab74b25844c79a2becf3e42a0666a16ca2f232" => :el_capitan
   end
 
   devel do
-    url "https://nginx.org/download/nginx-1.13.3.tar.gz"
-    sha256 "5b73f98004c302fb8e4a172abf046d9ce77739a82487e4873b39f9b0dcbb0d72"
+    url "https://nginx.org/download/nginx-1.13.6.tar.gz"
+    sha256 "8512fc6f986a20af293b61f33b0e72f64a72ea5b1acbcc790c4c4e2d6f63f8f8"
   end
 
   # Before submitting more options to this formula please check they aren't
@@ -127,7 +127,7 @@ class Nginx < Formula
     end
   end
 
-  def passenger_caveats; <<-EOS.undent
+  def passenger_caveats; <<~EOS
     To activate Phusion Passenger, add this to #{etc}/nginx/nginx.conf, inside the 'http' context:
       passenger_root #{Formula["passenger"].opt_libexec}/src/ruby_supportlib/phusion_passenger/locations.ini;
       passenger_ruby /usr/bin/ruby;
@@ -135,13 +135,13 @@ class Nginx < Formula
   end
 
   def caveats
-    s = <<-EOS.undent
-    Docroot is: #{var}/www
+    s = <<~EOS
+      Docroot is: #{var}/www
 
-    The default port has been set in #{etc}/nginx/nginx.conf to 8080 so that
-    nginx can run without sudo.
+      The default port has been set in #{etc}/nginx/nginx.conf to 8080 so that
+      nginx can run without sudo.
 
-    nginx will load all files in #{etc}/nginx/servers/.
+      nginx will load all files in #{etc}/nginx/servers/.
     EOS
     s << "\n" << passenger_caveats if build.with? "passenger"
     s
@@ -149,7 +149,7 @@ class Nginx < Formula
 
   plist_options :manual => "nginx"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

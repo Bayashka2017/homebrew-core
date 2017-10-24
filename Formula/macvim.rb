@@ -2,16 +2,15 @@
 class Macvim < Formula
   desc "GUI for vim, made for macOS"
   homepage "https://github.com/macvim-dev/macvim"
-  url "https://github.com/macvim-dev/macvim/archive/snapshot-134.tar.gz"
-  version "8.0-134"
-  sha256 "5b512d9c02703df7ffcd3f5268e5ac8a21e1e046dca60ec7544791f11b523e0a"
-  revision 2
+  url "https://github.com/macvim-dev/macvim/archive/snapshot-140.tar.gz"
+  version "8.0-140"
+  sha256 "693a1f038907d4a79ebc08c3aee4158390b08177844e7c8c450510778153f46d"
   head "https://github.com/macvim-dev/macvim.git"
 
   bottle do
-    sha256 "b50d52456a1a4930228fe357f767b15f752e725d3734a5d7cfdd87dcd76d406b" => :sierra
-    sha256 "6a06501a15b21fa81d89d98a30d5b20e55e8ab97a9dec3bcb27dedbc3a498454" => :el_capitan
-    sha256 "36d40eb3fa86366bcfa13568f1635b9d22960f1f3fc75d5456db95509018ded7" => :yosemite
+    sha256 "98e8f603b8f2e3476987ddd903c0fc2ffe14607fa388cd1418d665c27458ff42" => :high_sierra
+    sha256 "5cc31ff65a520c5d10b1460696a25d25091b2a62814df4a2ea6b47b935c23048" => :sierra
+    sha256 "fb4cb5281e494f708f7c5e18e9c69e822e784c053283af22ee519d604ded4f22" => :el_capitan
   end
 
   option "with-override-system-vim", "Override system vim"
@@ -31,8 +30,10 @@ class Macvim < Formula
   depends_on :python3 => :optional
 
   def install
-    # Avoid "fatal error: 'ruby/config.h' file not found"
-    ENV.delete("SDKROOT") if MacOS.version == :yosemite
+    # Avoid issues finding Ruby headers
+    if MacOS.version == :sierra || MacOS.version == :yosemite
+      ENV.delete("SDKROOT")
+    end
 
     # MacVim doesn't have or require any Python package, so unset PYTHONPATH
     ENV.delete("PYTHONPATH")
@@ -47,6 +48,7 @@ class Macvim < Formula
       --enable-perlinterp
       --enable-rubyinterp
       --enable-tclinterp
+      --enable-terminal
       --with-tlib=ncurses
       --with-compiledby=Homebrew
       --with-local-dir=#{HOMEBREW_PREFIX}
@@ -75,7 +77,7 @@ class Macvim < Formula
       # Needed for <= OS X 10.9.2 with Xcode 5.1
       ENV.prepend "CFLAGS", `python-config --cflags`.chomp.gsub(/-mno-fused-madd /, "")
 
-      framework_script = <<-EOS.undent
+      framework_script = <<~EOS
         import sysconfig
         print sysconfig.get_config_var("PYTHONFRAMEWORKPREFIX")
       EOS
@@ -102,7 +104,7 @@ class Macvim < Formula
 
   def caveats
     if build.with?("python") && build.with?("python3")
-      <<-EOS.undent
+      <<~EOS
         MacVim can no longer be brewed with dynamic support for both Python versions.
         Only Python 3 support has been provided.
       EOS
@@ -116,5 +118,6 @@ class Macvim < Formula
       system_framework_path = `python-config --exec-prefix`.chomp
       assert_match system_framework_path, `mvim --version`
     end
+    assert_match "+ruby", shell_output("#{bin}/mvim --version")
   end
 end

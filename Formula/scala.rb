@@ -1,10 +1,10 @@
 class Scala < Formula
   desc "JVM-based programming language"
   homepage "https://www.scala-lang.org/"
-  url "https://downloads.lightbend.com/scala/2.12.2/scala-2.12.2.tgz"
-  mirror "https://downloads.typesafe.com/scala/2.12.2/scala-2.12.2.tgz"
-  mirror "https://www.scala-lang.org/files/archive/scala-2.12.2.tgz"
-  sha256 "196168b246fcf10e275491c5e58a50ca9eb696da95e49155b3f86f001346a6f5"
+  url "https://downloads.lightbend.com/scala/2.12.4/scala-2.12.4.tgz"
+  mirror "https://downloads.typesafe.com/scala/2.12.4/scala-2.12.4.tgz"
+  mirror "https://www.scala-lang.org/files/archive/scala-2.12.4.tgz"
+  sha256 "9554a0ca31aa8701863e881281b1772370a87e993ce785bb24505f2431292a21"
 
   bottle :unneeded
 
@@ -14,14 +14,14 @@ class Scala < Formula
   depends_on :java => "1.8+"
 
   resource "docs" do
-    url "https://downloads.lightbend.com/scala/2.12.2/scala-docs-2.12.2.txz"
-    mirror "https://www.scala-lang.org/files/archive/scala-docs-2.12.2.txz"
-    sha256 "b64ac34aac4d61c8925ec51fcedc13438aa2ad8d49afa25d46ba4a1d0bb87f6c"
+    url "https://downloads.lightbend.com/scala/2.12.4/scala-docs-2.12.4.txz"
+    mirror "https://www.scala-lang.org/files/archive/scala-docs-2.12.4.txz"
+    sha256 "477892c8bb7df996166a767037cc16feb67ec9810273fd47bf43fa1eee0597a8"
   end
 
   resource "src" do
-    url "https://github.com/scala/scala/archive/v2.12.2.tar.gz"
-    sha256 "822ef9c8077765cf558c1bbc88e957ccae77402ca02f432053f4f3bf4f91a2b1"
+    url "https://github.com/scala/scala/archive/v2.12.4.tar.gz"
+    sha256 "9d1eaf570f95204a8894ab941070354b1672904a903ae3d1b45df201ddd1ed7d"
   end
 
   resource "completion" do
@@ -45,7 +45,7 @@ class Scala < Formula
     idea.install_symlink doc => "doc"
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     To use with IntelliJ, set the Scala home to:
       #{opt_prefix}/idea
     EOS
@@ -53,7 +53,7 @@ class Scala < Formula
 
   test do
     file = testpath/"Test.scala"
-    file.write <<-EOS.undent
+    file.write <<~EOS
       object Test {
         def main(args: Array[String]) {
           println(s"${2 + 2}")

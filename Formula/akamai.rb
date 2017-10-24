@@ -1,14 +1,14 @@
 class Akamai < Formula
   desc "CLI toolkit for working with Akamai's APIs"
   homepage "https://github.com/akamai/cli"
-  url "https://github.com/akamai/cli/archive/0.1.1.tar.gz"
-  sha256 "d6548a96249c398546ba70ae83eda1d9172174966ae9586b806db926928843be"
+  url "https://github.com/akamai/cli/archive/0.4.1.tar.gz"
+  sha256 "a8b772aaa1f8721f7924ca031432c8dc81aeb8fb381eece8325412f0d6322312"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "e75485aca676727e73df65f65924ac7e815ef9e3541118593b510e40e13e6fc0" => :sierra
-    sha256 "7477ecde0341bef4435185a6c15db4e8676d4441086a526e5ff58d6cbe052798" => :el_capitan
-    sha256 "1d2399080a05deef0dde6bc0354ab5bc46d2fddc693e4c2c6c309695c2408562" => :yosemite
+    sha256 "a5521d29a9283f9b91ff2053dc0fadb7884359fbe42e7558037ee1741485b9a4" => :high_sierra
+    sha256 "b4a3356d993a58a82b1425629537c38dd4d1fc289243ce13de2d5b6d99ee0031" => :sierra
+    sha256 "afc624e735e921ca4715dcf4a3a813b9d36301e1323a2fb914059ff837c7a3a1" => :el_capitan
   end
 
   depends_on "go" => :build
@@ -23,11 +23,12 @@ class Akamai < Formula
 
     cd srcpath do
       system "glide", "install"
-      system "go", "build", "-o", bin/"akamai"
+      system "go", "build", "-tags", "noautoupgrade nofirstrun", "-o", bin/"akamai"
+      prefix.install_metafiles
     end
   end
 
   test do
-    assert_match "purge\tPurge", shell_output("yes | #{bin}/akamai get purge")
+    assert_match "Purge", shell_output("#{bin}/akamai install --force purge")
   end
 end

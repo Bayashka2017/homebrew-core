@@ -1,16 +1,16 @@
 class Bind < Formula
   desc "Implementation of the DNS protocols"
   homepage "https://www.isc.org/downloads/bind/"
-  url "https://ftp.isc.org/isc/bind9/9.11.1-P3/bind-9.11.1-P3.tar.gz"
-  mirror "https://fossies.org/linux/misc/dns/bind9/9.11.1-P3/bind-9.11.1-P3.tar.gz"
-  version "9.11.1-P3"
-  sha256 "52426e75432e46996dc90f24fca027805a341c38fbbb022b60dc9acd2677ccf4"
+  url "https://ftp.isc.org/isc/bind9/9.11.2/bind-9.11.2.tar.gz"
+  mirror "https://fossies.org/linux/misc/dns/bind9/9.11.2/bind-9.11.2.tar.gz"
+  sha256 "7f46ad8620f7c3b0ac375d7a5211b15677708fda84ce25d7aeb7222fe2e3c77a"
   head "https://source.isc.org/git/bind9.git"
 
   bottle do
-    sha256 "4574cf1a9d0b2ca03960365fbbb33d655936efe15bcc4ae901045d14d5e3aa34" => :sierra
-    sha256 "235b29c1cd6dfdeef6b4d6d02609c758596dc4a0e65eaaee8dc15ae1c929a0d8" => :el_capitan
-    sha256 "c0469f14f12ab863299c82e325ae2c8ca041685a624dc2d2076e05bc4240b81b" => :yosemite
+    sha256 "4e19c44b930577980e79d599dc32f7faee548a31b7a8cd5a27789ff5e5a97ff2" => :high_sierra
+    sha256 "30b8e84bd85742a0d15487a7f0dc6099ef28377f5ab24a368a5e9b62ac4d85e0" => :sierra
+    sha256 "06549eb4510412564f01bca75d4b11cf79d4cab7b43b4e7eb9b7ad817ad6853a" => :el_capitan
+    sha256 "24d17777e0547adfc569752001e1700dfae168b3d4df43c94bf79c4a3c192c89" => :yosemite
   end
 
   depends_on "openssl"
@@ -49,7 +49,7 @@ class Bind < Formula
     end
   end
 
-  def named_conf; <<-EOS.undent
+  def named_conf; <<~EOS
     //
     // Include keys file
     //
@@ -109,7 +109,7 @@ class Bind < Formula
     EOS
   end
 
-  def localhost_zone; <<-EOS.undent
+  def localhost_zone; <<~EOS
     $TTL    86400
     $ORIGIN localhost.
     @            1D IN SOA    @ root (
@@ -124,7 +124,7 @@ class Bind < Formula
     EOS
   end
 
-  def named_local; <<-EOS.undent
+  def named_local; <<~EOS
     $TTL    86400
     @       IN      SOA     localhost. root.localhost.  (
                                           1997022700 ; Serial
@@ -140,7 +140,7 @@ class Bind < Formula
 
   plist_options :startup => true
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

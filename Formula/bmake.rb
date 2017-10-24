@@ -1,13 +1,14 @@
 class Bmake < Formula
   desc "Portable version of NetBSD make(1)"
   homepage "http://www.crufty.net/help/sjg/bmake.html"
-  url "http://www.crufty.net/ftp/pub/sjg/bmake-20170711.tar.gz"
-  sha256 "32acecefa4fc208df29a12f8441e225a5c9e602070888e6e649bc26a315981b8"
+  url "http://www.crufty.net/ftp/pub/sjg/bmake-20170812.tar.gz"
+  sha256 "cdd9ea1aa5b84b7b892ddf2dccb1c21028de6ce0edf5684432e1f4bf861179c6"
 
   bottle do
-    sha256 "19500ae09004d53ebf685af9aef205457e809aa188cd148431a4ce463078075e" => :sierra
-    sha256 "5eaafa69f0314746a18867b40a9d189ba360ec9ef0a5cf0aa16b53ecbcea57ff" => :el_capitan
-    sha256 "3af8e2503f182b5023726658cce725a9434b7c0644a62fc6fff1e9e14d447d9d" => :yosemite
+    sha256 "846ce0ffbb9edccf39901b5acc09ca52b636702c0fcf8ca80d569e9e30214da0" => :high_sierra
+    sha256 "3f6b5a11ed609280af0e27709c78697cfaeeb9d6f2fa6990c1c876224be15117" => :sierra
+    sha256 "3b1844361e0706952f4b711a0116721d9de1458cf0abff8d932ea8dae64daaf3" => :el_capitan
+    sha256 "a4db2ef119d1bb0cdc25afb620d4142f438343039dbf9c6627c67ef10d723963" => :yosemite
   end
 
   def install
@@ -22,7 +23,7 @@ class Bmake < Formula
   end
 
   test do
-    (testpath/"Makefile").write <<-EOS.undent
+    (testpath/"Makefile").write <<~EOS
       all: hello
 
       hello:

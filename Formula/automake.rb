@@ -7,6 +7,7 @@ class Automake < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "8dd10fd54af6157796f66037f8f4ab81546824909d17dfcdfa61d42b8433d3f9" => :high_sierra
     sha256 "d2b27ce7782a966eb7c8570f7855c8c659bbefc97491a1fb54b66e7b58d26c63" => :sierra
     sha256 "0b25b38f9df72b7869783514811b7ccd17284a240a7ee5950da501811b9942ff" => :el_capitan
     sha256 "0b25b38f9df72b7869783514811b7ccd17284a240a7ee5950da501811b9942ff" => :yosemite
@@ -24,24 +25,24 @@ class Automake < Formula
 
     # Our aclocal must go first. See:
     # https://github.com/Homebrew/homebrew/issues/10618
-    (share/"aclocal/dirlist").write <<-EOS.undent
+    (share/"aclocal/dirlist").write <<~EOS
       #{HOMEBREW_PREFIX}/share/aclocal
       /usr/share/aclocal
     EOS
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       int main() { return 0; }
     EOS
-    (testpath/"configure.ac").write <<-EOS.undent
+    (testpath/"configure.ac").write <<~EOS
       AC_INIT(test, 1.0)
       AM_INIT_AUTOMAKE
       AC_PROG_CC
       AC_CONFIG_FILES(Makefile)
       AC_OUTPUT
     EOS
-    (testpath/"Makefile.am").write <<-EOS.undent
+    (testpath/"Makefile.am").write <<~EOS
       bin_PROGRAMS = test
       test_SOURCES = test.c
     EOS

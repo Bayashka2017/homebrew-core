@@ -4,7 +4,7 @@ class Parrot < Formula
   head "https://github.com/parrot/parrot.git"
 
   stable do
-    url "ftp://ftp.parrot.org/pub/parrot/releases/supported/8.1.0/parrot-8.1.0.tar.bz2"
+    url "http://ftp.parrot.org/releases/supported/8.1.0/parrot-8.1.0.tar.bz2"
     sha256 "caf356acab64f4ea50595a846808e81d0be8ada8267afbbeb66ddb3c93cb81d3"
 
     # remove at 8.2.0, already in HEAD
@@ -21,6 +21,7 @@ class Parrot < Formula
   end
 
   bottle do
+    sha256 "c3ce1d1fe24e6f5172629cd092cc03db16b957649865af052ee6a72d75fa10e6" => :high_sierra
     sha256 "e8c50fee6a2111412b5f6ac31292f3ff7d3e4dd2be9a02cc94a890026588ae63" => :sierra
     sha256 "3b78be029276ca642cb2bc705888ed0cd7745c0398cf90bf67031190191c76a8" => :el_capitan
     sha256 "37a9ad2396bcf355d6d7ae2d432489e316d3290528947a6f1a30e753fed59902" => :yosemite
@@ -49,7 +50,7 @@ class Parrot < Formula
 
   test do
     path = testpath/"test.pir"
-    path.write <<-EOS.undent
+    path.write <<~EOS
       .sub _main
         .local int i
         i = 0

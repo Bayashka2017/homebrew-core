@@ -3,25 +3,25 @@ class Rust < Formula
   homepage "https://www.rust-lang.org/"
 
   stable do
-    url "https://static.rust-lang.org/dist/rustc-1.19.0-src.tar.gz"
-    sha256 "15231f5053fb72ad82be91f5abfd6aa60cb7898c5089e4f1ac5910a731090c51"
+    url "https://static.rust-lang.org/dist/rustc-1.21.0-src.tar.gz"
+    sha256 "1707c142244b5bd909993559c6116c81987c1de21d6207c05d3ecbe5bba548fa"
 
     resource "cargo" do
       url "https://github.com/rust-lang/cargo.git",
-          :tag => "0.20.0",
-          :revision => "a60d185c878c470876e123b0e40b0ba9f3271163"
+          :tag => "0.21.1",
+          :revision => "6084a2ba03aaa73794e6b86199e463ea6df290fe"
     end
 
     resource "racer" do
-      url "https://github.com/racer-rust/racer/archive/2.0.9.tar.gz"
-      sha256 "31185317118a069569611572daf28890989d52222c390448feacf17bb469fb87"
+      url "https://github.com/racer-rust/racer/archive/2.0.10.tar.gz"
+      sha256 "8e81da4f238117affe7631a7656b219294950ff17b2bea85794060be11b80489"
     end
   end
 
   bottle do
-    sha256 "820256549befa3d777916e00e23b4d95d326c5aae9456562165f8036f99584ea" => :sierra
-    sha256 "a7e0c6f3ecff71b59d74007fcedf2f9423627ca99699a7c96eeeffaa795dc9ae" => :el_capitan
-    sha256 "1dbc83dbcdd3a3bdbcd53014a1055414d10beb92c11a872acfca0a15db4f98c6" => :yosemite
+    sha256 "ebe6dd9f87f6f81f9ec8c9d51763886896e521ab01266b7fe2ffd709b8306a13" => :high_sierra
+    sha256 "2077ee3e5c0b0793a9056ee961ab13fb8074163501607059b79d3c47626e3abf" => :sierra
+    sha256 "1aa86662988d782cba00e69b4543e14e6359c8c5db5bf5ebd07c381bc14f724c" => :el_capitan
   end
 
   head do
@@ -52,8 +52,8 @@ class Rust < Formula
 
   resource "cargobootstrap" do
     # From https://github.com/rust-lang/rust/blob/#{version}/src/stage0.txt
-    url "https://static.rust-lang.org/dist/2017-06-08/cargo-0.19.0-x86_64-apple-darwin.tar.gz"
-    sha256 "bd0b62b6afbfb1435ac5a72cee072f0f65b29c6c0baeb11f4f9b9b16dc241151"
+    url "https://static.rust-lang.org/dist/2017-08-31/cargo-0.21.0-x86_64-apple-darwin.tar.gz"
+    sha256 "05720fe91343c6ed5c4995f7b06677a08a585209f6f504d192722f3bb585bc9d"
   end
 
   def install
@@ -110,10 +110,10 @@ class Rust < Formula
 
   test do
     system "#{bin}/rustdoc", "-h"
-    (testpath/"hello.rs").write <<-EOS.undent
-    fn main() {
-      println!("Hello World!");
-    }
+    (testpath/"hello.rs").write <<~EOS
+      fn main() {
+        println!("Hello World!");
+      }
     EOS
     system "#{bin}/rustc", "hello.rs"
     assert_equal "Hello World!\n", `./hello`

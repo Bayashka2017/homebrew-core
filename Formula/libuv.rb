@@ -1,15 +1,15 @@
 class Libuv < Formula
   desc "Multi-platform support library with a focus on asynchronous I/O"
   homepage "https://github.com/libuv/libuv"
-  url "https://github.com/libuv/libuv/archive/v1.13.1.tar.gz"
-  sha256 "6a4976887594ec9f4e8521c95598dbbc478c59733056a5cf46354e93a1bc8400"
+  url "https://github.com/libuv/libuv/archive/v1.15.0.tar.gz"
+  sha256 "17afc94ec307be28fe8d4316679171219770df4f993905a79643c7583e106489"
   head "https://github.com/libuv/libuv.git", :branch => "v1.x"
 
   bottle do
     cellar :any
-    sha256 "58cd0113bf0363839bcc0cf6e08798873d0acf572de8efb895583744d8694a01" => :sierra
-    sha256 "71a374a011ec7da1f451c27b0e03a89f4c66f729b390115c10e5dcc656cd5099" => :el_capitan
-    sha256 "eef3b088de095b55e3975f076f67450ba6a4dbd7a31c9584f3bfd6e1196a6642" => :yosemite
+    sha256 "c14c938e98be4ee894b67b5a138a60120d386e630404ee33e4a21dadd2702118" => :high_sierra
+    sha256 "888486e403aaaf122ee0643575824107478c07f0014e474857ad6d6bc8aada44" => :sierra
+    sha256 "2114a5273196755e1a19f10f1f48f82b44977725b6451ead34baf2020d27d919" => :el_capitan
   end
 
   option "with-test", "Execute compile time checks (Requires Internet connection)"
@@ -41,7 +41,7 @@ class Libuv < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <uv.h>
       #include <stdlib.h>
 

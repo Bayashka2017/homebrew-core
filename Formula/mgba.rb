@@ -1,7 +1,7 @@
 class Mgba < Formula
   desc "Game Boy Advance emulator"
   homepage "https://mgba.io/"
-  revision 3
+  revision 4
   head "https://github.com/mgba-emu/mgba.git"
 
   stable do
@@ -17,21 +17,20 @@ class Mgba < Formula
 
   bottle do
     cellar :any
-    sha256 "e4fb392e7a67655615e215ac7ffe4dbf8923b7cafe1fb0000a7db9b290e491cc" => :sierra
-    sha256 "7ab161a44b6081c6a9f9ebc6ffcbf9a0e7b03d58c5815b2cbf05035b3ed63f99" => :el_capitan
-    sha256 "49dec7dc507d9048599cdd75379cff76789c0e6eb65a7a5c6da5451381008f7b" => :yosemite
+    sha256 "b1b8e1cc12513830ebba82ce391fb44984dcccd503608b8b0d214ab7c7e93c95" => :high_sierra
+    sha256 "913b8ea3f4268206dc3a633189c61301d5aa69677e616d7ab331a22f2abfdb87" => :sierra
+    sha256 "bc9f25939e113ff965b5ac747dd04ef9145679ddba246814215662bbcac7a50c" => :el_capitan
+    sha256 "d8feb2b07ced1d12548512c02bb9b53b765a04557819b390c6e9578527460ae9" => :yosemite
   end
-
-  deprecated_option "with-qt5" => "with-qt"
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "ffmpeg" => :recommended
-  depends_on "imagemagick" => :recommended
-  depends_on "libepoxy" => :recommended
-  depends_on "libpng" => :recommended
-  depends_on "libzip" => :recommended
-  depends_on "qt" => :recommended
+  depends_on "ffmpeg"
+  depends_on "imagemagick"
+  depends_on "libepoxy"
+  depends_on "libpng"
+  depends_on "libzip"
+  depends_on "qt"
   depends_on "sdl2"
 
   def install
@@ -42,22 +41,13 @@ class Mgba < Formula
       s.gsub! "Applications", "."
     end
 
-    cmake_args = []
-    cmake_args << "-DUSE_EPOXY=OFF"  if build.without? "libepoxy"
-    cmake_args << "-DUSE_MAGICK=OFF" if build.without? "imagemagick"
-    cmake_args << "-DUSE_FFMPEG=OFF" if build.without? "ffmpeg"
-    cmake_args << "-DUSE_PNG=OFF"    if build.without? "libpng"
-    cmake_args << "-DUSE_LIBZIP=OFF" if build.without? "libzip"
-    cmake_args << "-DBUILD_QT=OFF"   if build.without? "qt"
-
-    system "cmake", ".", *cmake_args, *std_cmake_args
+    system "cmake", ".", *std_cmake_args
     system "make", "install"
-    if build.with? "qt"
-      # Replace SDL frontend binary with a script for running Qt frontend
-      # -DBUILD_SDL=OFF would be easier, but disable joystick support in Qt frontend
-      rm "#{bin}/mgba"
-      bin.write_exec_script "#{prefix}/mGBA.app/Contents/MacOS/mGBA"
-    end
+
+    # Replace SDL frontend binary with a script for running Qt frontend
+    # -DBUILD_SDL=OFF would be easier, but disable joystick support in Qt frontend
+    rm bin/"mgba"
+    bin.write_exec_script "#{prefix}/mGBA.app/Contents/MacOS/mGBA"
   end
 
   test do

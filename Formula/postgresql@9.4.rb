@@ -1,13 +1,14 @@
 class PostgresqlAT94 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v9.4.12/postgresql-9.4.12.tar.bz2"
-  sha256 "fca055481875d1c49e31c28443f56472a1474b3fbe25b7ae64440c6118f82e64"
+  url "https://ftp.postgresql.org/pub/source/v9.4.14/postgresql-9.4.14.tar.bz2"
+  sha256 "8e7df23a104b057b360d03180ebcb67f645e198a4a0bee94bf56b2bc9505ec6b"
 
   bottle do
-    sha256 "18c0730abb8c6722231bd61c28da3ac649f378547afa6e7ffaa30831a04119e5" => :sierra
-    sha256 "1514a47e4147b522986eca8337e27bc7a2001e12f82d6e6641c3fda0ef028998" => :el_capitan
-    sha256 "d54bcce2a9c033541b19969795c039efc88ce62a265892595e550e46ac32ba92" => :yosemite
+    sha256 "a66cb718bcef0bf531b3c600587686d2f94d52d9ed43380a89d9d8feb5025ee2" => :high_sierra
+    sha256 "195d2d4472ed45cf1c377bedda84c0bd867f7d414ca099193d1f3945d807cdcd" => :sierra
+    sha256 "e06a5ce1ca401d146a8b6c6c2ca2b172010ccfa160dcfb2bd273f36b2caf9004" => :el_capitan
+    sha256 "4ce5801b9f3330ab7036c0711f1b57fcd9fefb8b63fce1f1e053ab2fa602be0e" => :yosemite
   end
 
   keg_only :versioned_formula
@@ -73,22 +74,22 @@ class PostgresqlAT94 < Formula
   end
 
   def caveats
-    s = <<-EOS.undent
-    If builds of PostgreSQL 9 are failing and you have version 8.x installed,
-    you may need to remove the previous version first. See:
-      https://github.com/Homebrew/legacy-homebrew/issues/2510
+    s = <<~EOS
+      If builds of PostgreSQL 9 are failing and you have version 8.x installed,
+      you may need to remove the previous version first. See:
+        https://github.com/Homebrew/legacy-homebrew/issues/2510
 
-    To migrate existing data from a previous major version (pre-9.3) of PostgreSQL, see:
-      https://www.postgresql.org/docs/9.3/static/upgrading.html
+      To migrate existing data from a previous major version (pre-9.3) of PostgreSQL, see:
+        https://www.postgresql.org/docs/9.3/static/upgrading.html
     EOS
 
     if MacOS.prefer_64_bit?
-      s << <<-EOS.undent
-      \nWhen installing the postgres gem, including ARCHFLAGS is recommended:
-        ARCHFLAGS="-arch x86_64" gem install pg
+      s << <<~EOS
+        \nWhen installing the postgres gem, including ARCHFLAGS is recommended:
+          ARCHFLAGS="-arch x86_64" gem install pg
 
-      To install gems without sudo, see the Homebrew documentation:
-      https://github.com/Homebrew/brew/blob/master/docs/Gems%2C-Eggs-and-Perl-Modules.md
+        To install gems without sudo, see the Homebrew documentation:
+        https://github.com/Homebrew/brew/blob/master/docs/Gems%2C-Eggs-and-Perl-Modules.md
       EOS
     end
 
@@ -97,7 +98,7 @@ class PostgresqlAT94 < Formula
 
   plist_options :manual => "pg_ctl -D #{HOMEBREW_PREFIX}/var/postgresql@9.4 start"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

@@ -2,15 +2,15 @@ class Mypy < Formula
   desc "Experimental optional static type checker for Python"
   homepage "http://www.mypy-lang.org/"
   url "https://github.com/python/mypy.git",
-      :tag => "v0.520",
-      :revision => "cb7d6b0859f3277ecb1ac75ab9550e62715dc009"
+      :tag => "v0.540",
+      :revision => "3d22699db61eac1f405768f0c5979e5e9b87baa1"
   head "https://github.com/python/mypy.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "86d5334891fd0d2817b3eaf88aef931ba3336f62010fcd00337dce6b4ba0c9c0" => :sierra
-    sha256 "f1da0ee499029389794bf37edabcf9c690fa8536621da765f57c84d3c7c571c4" => :el_capitan
-    sha256 "9f3b29210a14828febbd5f9fc1ae316a61d404b6df6a149854cc8ae1048cda31" => :yosemite
+    sha256 "2516401b6c1f5cbf16fd579d01b6c2deac6613acd285f70c69c5298f1f0bb255" => :high_sierra
+    sha256 "06ae6a2a2cf8280ab9a55c15563cc9a7363bd1286b2db0ad58a780dea4b103fc" => :sierra
+    sha256 "8387c79aa22121a1ce76bce3261cc6b6f34a2da6891182b12fa97f429ef37b8b" => :el_capitan
   end
 
   option "without-sphinx-doc", "Don't build documentation"
@@ -26,8 +26,8 @@ class Mypy < Formula
   end
 
   resource "typed-ast" do
-    url "https://files.pythonhosted.org/packages/6c/8c/308968906916c5523c3a0e5ecb8ba8d79b8baf67f05faf1dffcb2a78ae7e/typed-ast-1.0.4.tar.gz"
-    sha256 "73f09aac0119f6664a3f471a1ec1c9b719f572bc9212913cea96a78b22c2e96e"
+    url "https://files.pythonhosted.org/packages/52/cf/2ebc7d282f026e21eed4987e42e10964a077c13cfc168b42f3573a7f178c/typed-ast-1.1.0.tar.gz"
+    sha256 "57fe287f0cdd9ceaf69e7b71a2e94a24b5d268b35df251a88fef5cc241bf73aa"
   end
 
   def install
@@ -65,7 +65,7 @@ class Mypy < Formula
   end
 
   test do
-    (testpath/"broken.py").write <<-EOS.undent
+    (testpath/"broken.py").write <<~EOS
       def p() -> None:
         print('hello')
       a = p()

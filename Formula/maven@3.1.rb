@@ -6,6 +6,7 @@ class MavenAT31 < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "816abdeb1351192b568e21da788f39fb53d80bacb97c25b453efffe77456320a" => :high_sierra
     sha256 "eebf2748f352b0bc30d358f47e0ecd33ddb1d4286a801c2971fa54ba10639ae8" => :sierra
     sha256 "ea999fb27f3944de65bc42f824b6f16a6b8f4d31c04624ac233e997908284310" => :el_capitan
     sha256 "ea999fb27f3944de65bc42f824b6f16a6b8f4d31c04624ac233e997908284310" => :yosemite
@@ -34,7 +35,7 @@ class MavenAT31 < Formula
   end
 
   test do
-    (testpath/"pom.xml").write <<-EOS.undent
+    (testpath/"pom.xml").write <<~EOS
       <?xml version="1.0" encoding="UTF-8"?>
       <project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -44,7 +45,7 @@ class MavenAT31 < Formula
         <version>1.0.0-SNAPSHOT</version>
       </project>
     EOS
-    (testpath/"src/main/java/org/homebrew/MavenTest.java").write <<-EOS.undent
+    (testpath/"src/main/java/org/homebrew/MavenTest.java").write <<~EOS
       package org.homebrew;
       public class MavenTest {
         public static void main(String[] args) {

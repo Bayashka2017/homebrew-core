@@ -5,19 +5,22 @@ class SaneBackends < Formula
   mirror "https://mirrors.kernel.org/debian/pool/main/s/sane-backends/sane-backends_1.0.27.orig.tar.gz"
   mirror "https://fossies.org/linux/misc/sane-backends-1.0.27.tar.gz"
   sha256 "293747bf37275c424ebb2c833f8588601a60b2f9653945d5a3194875355e36c9"
+  revision 3
   head "https://anonscm.debian.org/cgit/sane/sane-backends.git"
 
   bottle do
-    sha256 "5abe83de7d4deb0e9710aa2d21d4e80ebde98965f09a6460ba23fe6a90bd6046" => :sierra
-    sha256 "68fe8f9d3db39e1c28fc06dd8d2766b6889c7a269be0067fb53892673d47ec97" => :el_capitan
-    sha256 "19bbbe725bb8fa139134a0c999eb0bad22bc1a48998148632750adc61a7dbd21" => :yosemite
+    sha256 "ac27058e0edd6bc0af11af3de0703169ce4508ba9840a598155bc1fcdccd00b5" => :high_sierra
+    sha256 "2fce948374f59735fc55c2ef4803f44fba0ac9979943dadc30d11f9a262c6fd2" => :sierra
+    sha256 "2faeb4b16e4e2ea851c1cfc100d8deedea3bb042ba3b21b66ba2865812500479" => :el_capitan
+    sha256 "68242fa7feb502d1b5001df7db05837268085f6f97e58768323566e671ac59f9" => :yosemite
   end
 
   depends_on "jpeg"
   depends_on "libtiff"
-  depends_on "libusb-compat"
+  depends_on "libusb"
   depends_on "openssl"
   depends_on "net-snmp"
+  depends_on "pkg-config" => :build
 
   def install
     system "./configure", "--disable-dependency-tracking",
@@ -25,8 +28,13 @@ class SaneBackends < Formula
                           "--localstatedir=#{var}",
                           "--without-gphoto2",
                           "--enable-local-backends",
-                          "--enable-libusb",
-                          "--disable-latex"
+                          "--with-usb=yes"
+
+    # Remove for > 1.0.27
+    # Workaround for bug in Makefile.am described here:
+    # https://lists.alioth.debian.org/pipermail/sane-devel/2017-August/035576.html
+    # It's already fixed in commit 519ff57.
+    system "make"
     system "make", "install"
   end
 

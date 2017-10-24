@@ -1,14 +1,14 @@
 class Libspectrum < Formula
   desc "Support library for ZX Spectrum emulator"
   homepage "https://fuse-emulator.sourceforge.io/libspectrum.php"
-  url "https://downloads.sourceforge.net/project/fuse-emulator/libspectrum/1.3.4/libspectrum-1.3.4.tar.gz"
-  sha256 "1f4a92a8703fe9e6c3a995d324916ecb52e3281673b999ce3da2aaa4d67e8e5c"
+  url "https://downloads.sourceforge.net/project/fuse-emulator/libspectrum/1.4.1/libspectrum-1.4.1.tar.gz"
+  sha256 "025a1663491cc58174e91df77d82b28782310f6831485cb14291ce774f23c729"
 
   bottle do
     cellar :any
-    sha256 "f3b397006c4fd43964c66f312dd1ecd41fe1e8faf8826f50fc9c6bb3a2e9188a" => :sierra
-    sha256 "f7dd390b63d92d89e90cbdc1575df3732d1dd1fb780b916d25b747f4420931f4" => :el_capitan
-    sha256 "03a6b48ae78fee04f022fd08a2f042c17485fa823eed6dbb5128a306d9b2dbb8" => :yosemite
+    sha256 "345eb34fea01e4c8c56ebd6cf9760212f2824128994d36ed54101ae1a7ea8ede" => :high_sierra
+    sha256 "3a73d20585d1bcfd63cd22cf875ffd5d7ef00f7edf72117beefaca8886be8da4" => :sierra
+    sha256 "ae0fef62ab3cbfc4f53a69203c517b217016c2bfd76edfeea66cdbbcf7915c8c" => :el_capitan
   end
 
   head do
@@ -30,7 +30,7 @@ class Libspectrum < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include "libspectrum.h"
       #include <assert.h>
 

@@ -1,13 +1,14 @@
 class GnomeRecipes < Formula
   desc "Formula for GNOME recipes"
   homepage "https://wiki.gnome.org/Apps/Recipes"
-  url "https://download.gnome.org/sources/gnome-recipes/1.4/gnome-recipes-1.4.6.tar.xz"
-  sha256 "792585df5cb77ee670ca9eb8e6b0fceb823fe092805c026466f01d153f3e9833"
+  url "https://download.gnome.org/sources/gnome-recipes/1.6/gnome-recipes-1.6.2.tar.xz"
+  sha256 "8a11ed483b422dbbedb10237dac8b47fe94d76d40cac87ae6d19292942c94f9c"
 
   bottle do
-    sha256 "5010150333537fad3d944ea98abe521a9da2e8221f925ce483ef0f5dd348d398" => :sierra
-    sha256 "0701055fc5b1a04f542802f473b1ecc9bf1b273da8c92f16424ecff3e03ece8f" => :el_capitan
-    sha256 "b1950505198a444cbe2b3f1a54c2115922d174e645962f8f4d766888884e4a8e" => :yosemite
+    rebuild 1
+    sha256 "cf42a7711b8baaa341b2aa1e1bafa7ac0ca8b58f02cdfc221556dc23f869b896" => :high_sierra
+    sha256 "a643b6dd52e83abdc01ef3c0e5d08a05c78ad20179d3b5190fadccab85dda0e2" => :sierra
+    sha256 "d81b4cac80b65e170ba85e5b31fd3bf7d2ec6891fd7dc44d0312829a4cf98992" => :el_capitan
   end
 
   depends_on "meson" => :build
@@ -16,7 +17,7 @@ class GnomeRecipes < Formula
   depends_on "itstool" => :build
   depends_on :python3 => :build
   depends_on "gtk+3"
-  depends_on "gnome-icon-theme"
+  depends_on "adwaita-icon-theme"
   depends_on "libcanberra"
   depends_on "gnome-autoar"
   depends_on "gspell"
@@ -32,7 +33,6 @@ class GnomeRecipes < Formula
     mkdir "build" do
       system "meson", "--prefix=#{prefix}", ".."
       system "ninja"
-      system "ninja", "test"
       system "ninja", "install"
     end
   end

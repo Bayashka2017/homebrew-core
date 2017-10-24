@@ -3,13 +3,13 @@ class Osquery < Formula
   homepage "https://osquery.io"
   # pull from git tag to get submodules
   url "https://github.com/facebook/osquery.git",
-      :tag => "2.5.0",
-      :revision => "445fc126482a1fa2bfb206defe45dac84bce48b0"
-  revision 4
+      :tag => "2.9.0",
+      :revision => "fc4ee471ff660632671ce537bd9a3336578afa24"
 
   bottle do
     cellar :any
-    sha256 "746e1d413a9a133a8d064c17234c3c69d29177cd3c1aa60d326281cbd6fd9341" => :sierra
+    sha256 "e22d2766a80bec328332f8cb5692ea574e4b5dec9bad363b22a0a81e30a97b17" => :high_sierra
+    sha256 "a271b533137cd9f0b033b97ecc3b9b9fb55e2c30f6545c0ff010a964b24e8d85" => :sierra
   end
 
   fails_with :gcc => "6"
@@ -22,19 +22,19 @@ class Osquery < Formula
   depends_on "asio"
   depends_on "augeas"
   depends_on "boost"
-  depends_on "snappy"
   depends_on "gflags"
   depends_on "glog"
   depends_on "libarchive"
   depends_on "libmagic"
   depends_on "lldpd"
-  depends_on "lz4"
+  depends_on "librdkafka"
   depends_on "openssl"
+  depends_on "rapidjson"
   depends_on "rocksdb"
   depends_on "sleuthkit"
-  depends_on "snappy"
   depends_on "yara"
   depends_on "xz"
+  depends_on "zstd"
 
   resource "MarkupSafe" do
     url "https://files.pythonhosted.org/packages/c0/41/bae1254e0396c0cc8cf1751cb7d9afc90a602353695af5952530482c963f/MarkupSafe-0.23.tar.gz"
@@ -52,13 +52,12 @@ class Osquery < Formula
   end
 
   resource "aws-sdk-cpp" do
-    url "https://github.com/aws/aws-sdk-cpp/archive/1.0.107.tar.gz"
-    sha256 "0560918ef2a4b660e49981378af42d999b91482a31e720be2d9c427f21ac8ad0"
+    url "https://github.com/aws/aws-sdk-cpp/archive/1.2.7.tar.gz"
+    sha256 "1f65e63dbbceb1e8ffb19851a8e0ee153e05bf63bfa12b0e259d50021ac3ab6e"
   end
 
   resource "cpp-netlib" do
     url "https://github.com/cpp-netlib/cpp-netlib/archive/cpp-netlib-0.12.0-final.tar.gz"
-    version "0.12.0"
     sha256 "d66e264240bf607d51b8d0e743a1fa9d592d96183d27e2abdaf68b0a87e64560"
   end
 
@@ -88,7 +87,7 @@ class Osquery < Formula
         -DNO_HTTP_CLIENT=1
         -DMINIMIZE_SIZE=ON
         -DBUILD_SHARED_LIBS=OFF
-        -DBUILD_ONLY=firehose;kinesis;sts
+        -DBUILD_ONLY=ec2;firehose;kinesis;sts
         -DCMAKE_INSTALL_PREFIX=#{vendor}/aws-sdk-cpp
       ]
 

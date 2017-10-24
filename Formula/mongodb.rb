@@ -5,26 +5,26 @@ class Mongodb < Formula
   homepage "https://www.mongodb.org/"
 
   stable do
-    url "https://fastdl.mongodb.org/src/mongodb-src-r3.4.6.tar.gz"
-    sha256 "8170360f6dfede9c19c131f3d76831e952b3f1494925aa7e2a3a2f95b58ad901"
+    url "https://fastdl.mongodb.org/src/mongodb-src-r3.4.9.tar.gz"
+    sha256 "2fd0f47a5f9175e71d3d381e81a1b6a2500c9c414dd6ae0940ad6194a0e85549"
 
     go_resource "github.com/mongodb/mongo-tools" do
       url "https://github.com/mongodb/mongo-tools.git",
-          :tag => "r3.4.6",
-          :revision => "29b8883c560319b016f8bd4927807fa36f1a682f",
+          :tag => "r3.4.9",
+          :revision => "4f093ae71cdb4c6a6e9de7cd1dc67ea4405f0013",
           :shallow => false
     end
   end
 
   bottle do
-    sha256 "2153f0d69412834f53b727c725863a52f2cd9634f9b23c50e2172ca79738e108" => :sierra
-    sha256 "62255dfb4db80e370fce5325fe41709aeecfb21b389331ca2838f8a30050ebd1" => :el_capitan
-    sha256 "d2073684542cb072b91de282034a226b8687442c6c8c608e55e892a7b4d2d65f" => :yosemite
+    sha256 "fa1c636ad710cb8d9a28c3a26c3fe8134b22cf0cf5f2bf630cc68965d26f2784" => :high_sierra
+    sha256 "abba5a957f15d3a1d46762e9834caddfeca58e6ba47cb71d4351e8f50e3a8053" => :sierra
+    sha256 "aaef1e983776ffbc34c051401172d847f43961fc2f1359c2f281d9f3efc8300e" => :el_capitan
   end
 
   devel do
-    url "https://fastdl.mongodb.org/src/mongodb-src-r3.5.9.tar.gz"
-    sha256 "3b1805a5b84248207da976d8ff40781cb19d2d9004dadae074b4a2406a756e47"
+    url "https://fastdl.mongodb.org/src/mongodb-src-r3.5.11.tar.gz"
+    sha256 "a118dc32e048c20c2cbc593ac41f1787963f5f9edde8cccca5b9f5d7a31a4e8a"
 
     depends_on :xcode => ["8.3.2", :build]
 
@@ -34,14 +34,20 @@ class Mongodb < Formula
     end
 
     resource "typing" do
-      url "https://files.pythonhosted.org/packages/17/75/3698d7992a828ad6d7be99c0a888b75ed173a9280e53dbae67326029b60e/typing-3.6.1.tar.gz"
-      sha256 "c36dec260238e7464213dcd50d4b5ef63a507972f5780652e835d0228d0edace"
+      url "https://files.pythonhosted.org/packages/ca/38/16ba8d542e609997fdcd0214628421c971f8c395084085354b11ff4ac9c3/typing-3.6.2.tar.gz"
+      sha256 "d514bd84b284dd3e844f0305ac07511f097e325171f6cc4a20878d11ad771849"
     end
 
     go_resource "github.com/mongodb/mongo-tools" do
       url "https://github.com/mongodb/mongo-tools.git",
-        :tag => "r3.5.9",
+        :tag => "r3.5.11",
         :revision => "8bda55730d30c414a71dfbe6f45f5c54ef97811d"
+    end
+
+    # Upstream commit from 24 Jul 2017 "Changes to allow build to work with SCons 3.0"
+    patch do
+      url "https://github.com/mongodb/mongo/commit/e9570ae0bc9.patch?full_index=1"
+      sha256 "62514846120eab72aa71d1da758a62bfb8479f182de7d059fa29a3b62c779290"
     end
   end
 
@@ -68,7 +74,7 @@ class Mongodb < Formula
         end
       end
     end
-    (buildpath/".brew_home/Library/Python/2.7/lib/python/site-packages/vendor.pth").write <<-EOS.undent
+    (buildpath/".brew_home/Library/Python/2.7/lib/python/site-packages/vendor.pth").write <<~EOS
       import site; site.addsitedir("#{buildpath}/vendor/lib/python2.7/site-packages")
     EOS
 
@@ -99,14 +105,18 @@ class Mongodb < Formula
     ]
 
     args << "--osx-version-min=#{MacOS.version}" if build.stable?
-    args << "CCFLAGS=-mmacosx-version-min=#{MacOS.version}" if build.devel?
-    args << "LINKFLAGS=-mmacosx-version-min=#{MacOS.version}" if build.devel?
     args << "CC=#{ENV.cc}"
     args << "CXX=#{ENV.cxx}"
+
+    if build.devel?
+      args << "CCFLAGS=-mmacosx-version-min=#{MacOS.version}"
+      args << "LINKFLAGS=-mmacosx-version-min=#{MacOS.version}"
+    end
 
     args << "--use-sasl-client" if build.with? "sasl"
     args << "--use-system-boost" if build.with? "boost"
     args << "--use-new-tools"
+    args << "--build-mongoreplay=true"
     args << "--disable-warnings-as-errors" if MacOS.version >= :yosemite
 
     if build.with? "openssl"
@@ -118,14 +128,16 @@ class Mongodb < Formula
 
     scons "install", *args
 
-    (buildpath+"mongod.conf").write mongodb_conf
+    (buildpath/"mongod.conf").write mongodb_conf
     etc.install "mongod.conf"
-
-    (var+"mongodb").mkpath
-    (var+"log/mongodb").mkpath
   end
 
-  def mongodb_conf; <<-EOS.undent
+  def post_install
+    (var/"mongodb").mkpath
+    (var/"log/mongodb").mkpath
+  end
+
+  def mongodb_conf; <<~EOS
     systemLog:
       destination: file
       path: #{var}/log/mongodb/mongo.log
@@ -139,7 +151,7 @@ class Mongodb < Formula
 
   plist_options :manual => "mongod --config #{HOMEBREW_PREFIX}/etc/mongod.conf"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

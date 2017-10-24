@@ -3,11 +3,13 @@ class Libgeotiff < Formula
   homepage "https://geotiff.osgeo.org/"
   url "http://download.osgeo.org/geotiff/libgeotiff/libgeotiff-1.4.2.tar.gz"
   sha256 "ad87048adb91167b07f34974a8e53e4ec356494c29f1748de95252e8f81a5e6e"
+  revision 1
 
   bottle do
-    sha256 "194dc211dc45fe89183b53245ed494f4338afedaf65635202ae61df4495139aa" => :sierra
-    sha256 "2256a133251e48d5df3719d1e83e9b2ac2e8be7bea41fcff25d036dce1e3cef7" => :el_capitan
-    sha256 "0e283a6d16503c98c978092d98573f68a8d4e59aefe0b86f7ba6e6e3f33597c8" => :yosemite
+    sha256 "47f9a4c29186e4e4b17ea1598b22c85fff045a06c64cbe44a878966f32f5489c" => :high_sierra
+    sha256 "3e497773ae48cb38f7d7bdbaa19f137d23d87b5b1980d3feea2c818680acd145" => :sierra
+    sha256 "97b06d1759717ccfed9b2e21de20d256b8852d472ed2aaa7ce7ec16f260fbe1a" => :el_capitan
+    sha256 "90b680bcf7a45cd17ca3066713bea7c0162811ff5a20804a8afa282bf1c87638" => :yosemite
   end
 
   head do
@@ -18,22 +20,22 @@ class Libgeotiff < Formula
     depends_on "libtool" => :build
   end
 
-  depends_on "libtiff"
-  depends_on "lzlib"
   depends_on "jpeg"
+  depends_on "libtiff"
   depends_on "proj"
 
   def install
     system "./autogen.sh" if build.head?
 
     system "./configure", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}"
+                          "--prefix=#{prefix}",
+                          "--with-jpeg"
     system "make" # Separate steps or install fails
     system "make", "install"
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include "geotiffio.h"
       #include "xtiffio.h"
       #include <stdlib.h>

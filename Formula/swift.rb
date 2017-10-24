@@ -6,43 +6,44 @@ class Swift < Formula
   # both UIKit.framework and AssetsLibrary.framework. This is
   # simply due to the nature of Swift's SDK Overlays.
   stable do
-    url "https://github.com/apple/swift/archive/swift-3.1.1-RELEASE.tar.gz"
-    sha256 "03eb54e7f89109a85c9b2a9bfdee88d2d7e1bdef73ae0385b30fe4661efaf407"
+    url "https://github.com/apple/swift/archive/swift-4.0-RELEASE.tar.gz"
+    sha256 "9ebd6b634baf82e69ac9f6fae5c9c979db7c7e4bc9db149b30b575e57da99b94"
 
     resource "clang" do
-      url "https://github.com/apple/swift-clang/archive/swift-3.1.1-RELEASE.tar.gz"
-      sha256 "ed41f1231bae030a412455491a5244ede53a4761617194b2dda573f5776361ad"
+      url "https://github.com/apple/swift-clang/archive/swift-4.0-RELEASE.tar.gz"
+      sha256 "d0f9a5a06074318fa237bc4847fc4a746918ab1d016e14baafc6bf17b24083d9"
     end
 
     resource "cmark" do
-      url "https://github.com/apple/swift-cmark/archive/swift-3.1.1-RELEASE.tar.gz"
-      sha256 "51db8067f11976a7ca38a6ff9f173d3d9e3df290991be87835cdc003e0b62e4e"
+      url "https://github.com/apple/swift-cmark/archive/swift-4.0-RELEASE.tar.gz"
+      sha256 "71aea066925abb92738549051cc5e91f78b588fe0f1102c64c35d7f9078f1cef"
     end
 
     resource "compiler-rt" do
-      url "https://github.com/apple/swift-compiler-rt/archive/swift-3.1.1-RELEASE.tar.gz"
-      sha256 "569568141b1f9ff0f433eaf815a0c19592bf43407bb4150d647aa9c7bc2a7c7b"
+      url "https://github.com/apple/swift-compiler-rt/archive/swift-4.0-RELEASE.tar.gz"
+      sha256 "189baa8e00dca394afa8c58104c9a293ce37aebf38343c250bea36054f6f006d"
     end
 
     resource "llbuild" do
-      url "https://github.com/apple/swift-llbuild/archive/swift-3.1.1-RELEASE.tar.gz"
-      sha256 "ea59fd6603fe5d71598895832d6eef9314f1af99a72050536e473e9bb08a57df"
+      url "https://github.com/apple/swift-llbuild/archive/swift-4.0-RELEASE.tar.gz"
+      sha256 "2e9fe830e25c74d9597a4189132b09348fc995b2de831814a55c426198c941f4"
     end
 
     resource "llvm" do
-      url "https://github.com/apple/swift-llvm/archive/swift-3.1.1-RELEASE.tar.gz"
-      sha256 "fc6ac7c0c6afff344a8d4e5299b7417f414f1499cf374953e06c339d8177fc26"
+      url "https://github.com/apple/swift-llvm/archive/swift-4.0-RELEASE.tar.gz"
+      sha256 "6c30d7f3190b9f76fd646f2c03a093cf768c1aa7e10898ee8281bfe88ba0feeb"
     end
 
     resource "swiftpm" do
-      url "https://github.com/apple/swift-package-manager/archive/swift-3.1.1-RELEASE.tar.gz"
-      sha256 "5f98dd6fd41170e2f51f85131ca50cba3d50a187ce94b7a1db7a776c2815c778"
+      url "https://github.com/apple/swift-package-manager/archive/swift-4.0-RELEASE.tar.gz"
+      sha256 "fe19d370cb5fea32246bac1fd81a4c0e6932518e6e3b7fcc1913adc3b01b91e7"
     end
   end
 
   bottle do
     cellar :any
-    sha256 "3f856e641147d9a743dc7e978e0dab93652ad43b59a0c064af35ab679412c5ad" => :sierra
+    sha256 "12d9b5326506e94d8d3aa49b6046c081924dd930dbb78bb22a404587788e34c6" => :high_sierra
+    sha256 "db483790a2a844d2795e17567b2abfc9af3924736c3a07d4b2bba084c1120610" => :sierra
   end
 
   keg_only :provided_by_osx, "Apple's CLT package contains Swift"
@@ -52,7 +53,7 @@ class Swift < Formula
 
   # Depends on latest version of Xcode
   # https://github.com/apple/swift#system-requirements
-  depends_on :xcode => ["8.3", :build]
+  depends_on :xcode => ["9.0", :build]
 
   # According to the official llvm readme, GCC 4.7+ is required
   fails_with :gcc_4_0
@@ -95,19 +96,19 @@ class Swift < Formula
   end
 
   test do
-    (testpath/"test.swift").write <<-EOS.undent
-    let base = 2
-    let exponent_inner = 3
-    let exponent_outer = 4
-    var answer = 1
+    (testpath/"test.swift").write <<~EOS
+      let base = 2
+      let exponent_inner = 3
+      let exponent_outer = 4
+      var answer = 1
 
-    for _ in 1...exponent_outer {
-      for _ in 1...exponent_inner {
-        answer *= base
+      for _ in 1...exponent_outer {
+        for _ in 1...exponent_inner {
+          answer *= base
+        }
       }
-    }
 
-    print("(\\(base)^\\(exponent_inner))^\\(exponent_outer) == \\(answer)")
+      print("(\\(base)^\\(exponent_inner))^\\(exponent_outer) == \\(answer)")
     EOS
     output = shell_output("#{prefix}/Swift-#{version}.xctoolchain/usr/bin/swift test.swift")
     assert_match "(2^3)^4 == 4096\n", output

@@ -1,14 +1,13 @@
 class Lftp < Formula
   desc "Sophisticated file transfer program"
   homepage "https://lftp.yar.ru/"
-  url "https://lftp.yar.ru/ftp/lftp-4.8.0.tar.xz"
-  mirror "ftp://ftp.st.ryukoku.ac.jp/pub/network/ftp/lftp/lftp-4.8.0.tar.xz"
-  sha256 "7a2880968088b4aeec43b6b6680fef0e065e1dddcce9b409390157e9766b690f"
+  url "https://lftp.yar.ru/ftp/lftp-4.8.3.tar.xz"
+  sha256 "de7aee451afaa1aa391f7076b5f602922c2da0e05524a8d8fea413eda83cc78b"
 
   bottle do
-    sha256 "ccbccfbe7b87c772c1bedec5585481371512143b3ecccc65ef15383c47319f50" => :sierra
-    sha256 "14a56b9bbb6709960f647b78a65d3ba361bfa8c0a9b81b3cfd15d79c2b5efd36" => :el_capitan
-    sha256 "2137ced78d09beb8561a22ea180adb336da8ecadc91b1c650970ae37ac521f79" => :yosemite
+    sha256 "699cbe616307d318e21e36f2665d5f6acfa616b194d9dd998feb977be61694af" => :high_sierra
+    sha256 "b9bdd2db27e79ac0fe39ac583fa2734f4296303a5f46d9f7a953122829643f75" => :sierra
+    sha256 "1bfc8491a2ff1103daf12a5b4c16f6f0b897c830d4cff85002db8bb0e1e14313" => :el_capitan
   end
 
   depends_on "readline"

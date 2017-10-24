@@ -1,9 +1,9 @@
 class CassandraAT22 < Formula
   desc "Eventually consistent, distributed key-value db"
   homepage "https://cassandra.apache.org"
-  url "https://www.apache.org/dyn/closer.cgi?path=/cassandra/2.2.8/apache-cassandra-2.2.8-bin.tar.gz"
-  mirror "https://archive.apache.org/dist/cassandra/2.2.8/apache-cassandra-2.2.8-bin.tar.gz"
-  sha256 "eab09bfe27ac09558aa1bb2b391559d932b89cea94cf254d350395786d7b4a67"
+  url "https://www.apache.org/dyn/closer.cgi?path=/cassandra/2.2.10/apache-cassandra-2.2.10-bin.tar.gz"
+  mirror "https://archive.apache.org/dist/cassandra/2.2.10/apache-cassandra-2.2.10-bin.tar.gz"
+  sha256 "850a4f3d4d9fe67bfd6c77bc79d22c5acfc3c00ba883d5a7d9e3ee41c7d92943"
 
   bottle :unneeded
 
@@ -94,7 +94,7 @@ class CassandraAT22 < Formula
 
   plist_options :manual => "cassandra -f"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

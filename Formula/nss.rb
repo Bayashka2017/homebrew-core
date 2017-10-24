@@ -1,17 +1,17 @@
 class Nss < Formula
   desc "Libraries for security-enabled client and server applications"
   homepage "https://developer.mozilla.org/docs/NSS"
-  url "https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_31_RTM/src/nss-3.31.tar.gz"
-  sha256 "e90561256a3271486162c1fbe8d614d118c333d36a4455be2af8688bd420a65d"
+  url "https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_33_RTM/src/nss-3.33.tar.gz"
+  sha256 "98f0dabd36408e83dd3a11727336cc3cdfee4cbdd9aede2b2831eb2389c284e4"
 
   bottle do
     cellar :any
-    sha256 "72a94a9d54b7a977a51323df0c93d3b8a6f8918eed3d05ecbc69fb73e1297e7d" => :sierra
-    sha256 "c24d90189225532dbc1c1d15ccd3683f8c28335d8464128cdfaf4417ae96a318" => :el_capitan
-    sha256 "3d0ef862f4f473ad5d4489306f87a9efda487b45824fa6ca2090e85b70c0a80f" => :yosemite
+    sha256 "5370542a68a7bf4226cfb960ffcec3b9f5119d0ab99f87b40103566c0ebf7419" => :high_sierra
+    sha256 "492cae9064df1b7c480163e326b001d08e00ccf246ab5c838396e5d581227bf9" => :sierra
+    sha256 "629820273540d23034085ffbe72ea24400a63cafb9e1ac077e707fe39b369ddd" => :el_capitan
   end
 
-  keg_only <<-EOS.undent
+  keg_only <<~EOS
     Firefox can pick this up instead of the built-in library, resulting in
     random crashes without meaningful explanation.
 
@@ -76,7 +76,7 @@ class Nss < Formula
 
   # A very minimal nss-config for configuring firefox etc. with this nss,
   # see https://bugzil.la/530672 for the progress of upstream inclusion.
-  def config_file; <<-EOS.undent
+  def config_file; <<~EOS
     #!/bin/sh
     for opt; do :; done
     case "$opt" in
@@ -88,7 +88,7 @@ class Nss < Formula
     EOS
   end
 
-  def pc_file; <<-EOS.undent
+  def pc_file; <<~EOS
     prefix=#{prefix}
     exec_prefix=${prefix}
     libdir=${exec_prefix}/lib

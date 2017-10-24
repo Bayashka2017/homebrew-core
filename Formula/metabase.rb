@@ -1,13 +1,14 @@
 class Metabase < Formula
   desc "Business intelligence report server"
-  homepage "http://www.metabase.com/"
-  url "http://downloads.metabase.com/v0.24.2/metabase.jar"
-  sha256 "44849557f9f4f3e19dff657467624d07d3d21b4fc07cc6b6ea63e301e2465d5c"
+  homepage "https://www.metabase.com/"
+  url "http://downloads.metabase.com/v0.26.1/metabase.jar"
+  sha256 "689861423b8124741913a7a8387f7be04d1d9484c3eafb2657ba48177159bffc"
 
   head do
     url "https://github.com/metabase/metabase.git"
 
     depends_on "node" => :build
+    depends_on "yarn" => :build
     depends_on "leiningen" => :build
   end
 
@@ -17,7 +18,6 @@ class Metabase < Formula
 
   def install
     if build.head?
-      ENV.prepend_path "PATH", "#{Formula["node"].opt_libexec}/npm/bin"
       system "./bin/build"
       libexec.install "target/uberjar/metabase.jar"
     else
@@ -28,7 +28,7 @@ class Metabase < Formula
 
   plist_options :startup => true, :manual => "metabase"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

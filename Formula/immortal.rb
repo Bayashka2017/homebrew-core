@@ -3,22 +3,23 @@ require "language/go"
 class Immortal < Formula
   desc "OS agnostic (*nix) cross-platform supervisor"
   homepage "https://immortal.run/"
-  url "https://github.com/immortal/immortal/archive/0.14.0.tar.gz"
-  sha256 "a280078875cd0c80c723c4e8412bee1a61e694d282b030a44639bf7e86632175"
+  url "https://github.com/immortal/immortal/archive/0.16.0.tar.gz"
+  sha256 "b540882641b904be956ac0cf3a4a9cda9c5ea709c24b68c77c3f08a1a13272b6"
   head "https://github.com/immortal/immortal.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "c1b662f66f20f7653a7524310fdc34a6e34471253a9e317fb59703db3a95b454" => :sierra
-    sha256 "1526ff90b73b777895f341eca82ef1639b627a5b69e28745f7550f9dc07caa61" => :el_capitan
-    sha256 "5d9e7c4f1894fa27b6e341d7ad50aac67081962c51cf6ee8b9c6b8d9eee5328f" => :yosemite
+    sha256 "33e6319abe4584cec0ded5cfa27f7c9c04f99013eed17e2fed45055f61bdf502" => :high_sierra
+    sha256 "02f4489c2f01ee2b8255ff39e4ea31d1395e99fc1279b20079de883c62751933" => :sierra
+    sha256 "a49c5e210b009a6dbbd662f16a89b650470a291f192058e1e88dc817397f1be5" => :el_capitan
+    sha256 "b7b2835be2e0984d1e756312144e81029de34e1e83fbe7edf1eef8ae07ec392a" => :yosemite
   end
 
   depends_on "go" => :build
 
   go_resource "github.com/go-yaml/yaml" do
     url "https://github.com/go-yaml/yaml.git",
-        :revision => "1be3d31502d6eabc0dd7ce5b0daab022e14a5538"
+        :revision => "eb3733d160e74a9c7e442f435eb3bea458e1d19f"
   end
 
   go_resource "github.com/nbari/violetear" do
@@ -28,7 +29,7 @@ class Immortal < Formula
 
   go_resource "github.com/immortal/logrotate" do
     url "https://github.com/immortal/logrotate.git",
-        :revision => "3691ab555939319a80a8833983faedb8b76d9cc6"
+        :revision => "859105169067e6c76e08f888fb76cf4929fe9064"
   end
 
   go_resource "github.com/immortal/multiwriter" do

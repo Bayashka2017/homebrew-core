@@ -1,13 +1,13 @@
 class Glib < Formula
   desc "Core application library for C"
   homepage "https://developer.gnome.org/glib/"
-  url "https://download.gnome.org/sources/glib/2.52/glib-2.52.3.tar.xz"
-  sha256 "25ee7635a7c0fcd4ec91cbc3ae07c7f8f5ce621d8183511f414ded09e7e4e128"
+  url "https://download.gnome.org/sources/glib/2.54/glib-2.54.1.tar.xz"
+  sha256 "50c01b1419324f10fbf9b9709ec2164b18586968bdce7540583bf32302cf47a3"
 
   bottle do
-    sha256 "6676ac794f50963131d761521b174c4efee254ed81c87bb232dc0d257c18b9a3" => :sierra
-    sha256 "0c01d6caf33f29db737fa98e7e8139bd2f2bb907b73ffc537dd7aed421519e6d" => :el_capitan
-    sha256 "c84e0a51965e4664f0d3998427dfa2af4f1f4378717af27a26f9fbb2fb48083e" => :yosemite
+    sha256 "b2e868b829d820d8f713aa15f87fabe17137209267af7c9b80a6cdfd9478e20b" => :high_sierra
+    sha256 "7e595082aacd2060267024407734dca23431ba90f619d57dea3c605673db70d4" => :sierra
+    sha256 "f627657c66e12140468ab708210b6c134f8cd3c618dfb87b954d9a876b9d9ba4" => :el_capitan
   end
 
   option "with-test", "Build a debug build and run tests. NOTE: Not all tests succeed yet"
@@ -99,7 +99,7 @@ class Glib < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <string.h>
       #include <glib.h>
 

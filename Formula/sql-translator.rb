@@ -6,6 +6,7 @@ class SqlTranslator < Formula
 
   bottle do
     cellar :any_skip_relocation
+    sha256 "bc28f52d673739ee5f95a27dcd7f647071a48790f89fa5ecac930fe710f31679" => :high_sierra
     sha256 "9851c3298aaa5410dbd2458ee66ff0fe872be44eec0d433f3217e45fb5007ddc" => :sierra
     sha256 "63e86ac1d8db225650978de482e44049b8483dcfee0364fa7229d816def767ec" => :el_capitan
     sha256 "f80b97cd7f5bffe208f0402aa56b85ea141c4c310b59e4e37246472a277b136e" => :yosemite
@@ -26,7 +27,7 @@ class SqlTranslator < Formula
   test do
     command = "#{bin}/sqlt -f MySQL -t PostgreSQL --no-comments -"
     sql_input = "create table sqlt ( id int AUTO_INCREMENT );"
-    sql_output = <<-EOS.undent
+    sql_output = <<~EOS
       CREATE TABLE "sqlt" (
         "id" serial
       );

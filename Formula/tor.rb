@@ -1,14 +1,20 @@
 class Tor < Formula
   desc "Anonymizing overlay network for TCP"
   homepage "https://www.torproject.org/"
-  url "https://tor.eff.org/dist/tor-0.3.0.9.tar.gz"
-  mirror "https://www.torproject.org/dist/tor-0.3.0.9.tar.gz"
-  sha256 "48d4880bf6ccb19ce9af2abde6946d7cf0635cc807548badbf4a221a79581e42"
+  url "https://tor.eff.org/dist/tor-0.3.1.7.tar.gz"
+  mirror "https://www.torproject.org/dist/tor-0.3.1.7.tar.gz"
+  sha256 "1df5dd4894bb2f5e0dc96c466955146353cf33ac50cd997cfc1b28ea3ed9c08f"
 
   bottle do
-    sha256 "95fb42ba3fbaa1d6a82f4925b81e17b4c482758015307db07885840415a05cf2" => :sierra
-    sha256 "ca6b4270b67ec03412005a7ab185b0e5956bdab34a6a9e453e26df51db826a73" => :el_capitan
-    sha256 "ce46158820e601f3863f3ea2004a522321200c4c3ae38970c8920fecbe0fd263" => :yosemite
+    sha256 "fd269435de52eee46657a6e03375dfd68ad532d003c34debe4b4a8666f751332" => :high_sierra
+    sha256 "c679e86562b81e82ba77616e7d28a034095607ff749defd31cf1292ec5752c1c" => :sierra
+    sha256 "ca7a8914c17f071efb9a4b1a99d861827a1ea7eb2903df10e4bf485f3a525566" => :el_capitan
+  end
+
+  devel do
+    url "https://tor.eff.org/dist/tor-0.3.2.2-alpha.tar.gz"
+    mirror "https://www.torproject.org/dist/tor-0.3.2.2-alpha.tar.gz"
+    sha256 "948f82246370eadf2d52a5d1797fa8966e5238d28de5ec69120407f22d59e774"
   end
 
   depends_on "pkg-config" => :build
@@ -34,7 +40,7 @@ class Tor < Formula
 
   plist_options :manual => "tor"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">
@@ -62,8 +68,8 @@ class Tor < Formula
 
   test do
     pipe_output("script -q /dev/null #{bin}/tor-gencert --create-identity-key", "passwd\npasswd\n")
-    assert (testpath/"authority_certificate").exist?
-    assert (testpath/"authority_signing_key").exist?
-    assert (testpath/"authority_identity_key").exist?
+    assert_predicate testpath/"authority_certificate", :exist?
+    assert_predicate testpath/"authority_signing_key", :exist?
+    assert_predicate testpath/"authority_identity_key", :exist?
   end
 end

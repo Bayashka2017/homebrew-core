@@ -1,17 +1,14 @@
 class Gtkx3 < Formula
   desc "Toolkit for creating graphical user interfaces"
   homepage "https://gtk.org/"
-  url "https://download.gnome.org/sources/gtk+/3.22/gtk+-3.22.17.tar.xz"
-  sha256 "a6c1fb8f229c626a3d9c0e1ce6ea138de7f64a5a6bc799d45fa286fe461c3437"
+  url "https://download.gnome.org/sources/gtk+/3.22/gtk+-3.22.24.tar.xz"
+  sha256 "cbb16e4cfc928ab8f5f22f7290616f95f6ebc8c97cc724a2007b07ced833592b"
 
   bottle do
-    sha256 "2512bb567493724c1e88f0773bee5d8e028c80b15b1e3ef25c085bfaf0657304" => :sierra
-    sha256 "300eccfdd8a88a2499891e7924444b7e0cd311b90e054820ec12c9e0793364f3" => :el_capitan
-    sha256 "ffcb7262c67de59c89e66216288021cdf29cbe0b714f91570057e919ec8f0c44" => :yosemite
+    sha256 "35ed1f0c57b6c1a9e5c1c750e9600a77dfadbbca216a9c3009547153b14c3250" => :high_sierra
+    sha256 "d8b1c047f110494cfd34e9bef7e6ffc8338e2839491c411422c02d6f36858a6f" => :sierra
+    sha256 "35ac475e5b781d23bc934809e40aabceea31a5591c61b5d8b01149ea1028d867" => :el_capitan
   end
-
-  # see https://bugzilla.gnome.org/show_bug.cgi?id=781118
-  patch :DATA
 
   option "with-quartz-relocation", "Build with quartz relocation support"
 
@@ -54,7 +51,7 @@ class Gtkx3 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <gtk/gtk.h>
 
       int main(int argc, char *argv[]) {
@@ -114,32 +111,3 @@ class Gtkx3 < Formula
     system "./test"
   end
 end
-
-__END__
-diff --git a/gdk/quartz/gdkscreen-quartz.c b/gdk/quartz/gdkscreen-quartz.c
-index 586f7af..d032643 100644
---- a/gdk/quartz/gdkscreen-quartz.c
-+++ b/gdk/quartz/gdkscreen-quartz.c
-@@ -79,7 +79,7 @@ gdk_quartz_screen_init (GdkQuartzScreen *quartz_screen)
-   NSDictionary *dd = [[[NSScreen screens] objectAtIndex:0] deviceDescription];
-   NSSize size = [[dd valueForKey:NSDeviceResolution] sizeValue];
-
--  _gdk_screen_set_resolution (screen, size.width);
-+  _gdk_screen_set_resolution (screen, 72.0);
-
-   gdk_quartz_screen_calculate_layout (quartz_screen);
-
-@@ -334,11 +334,8 @@ gdk_quartz_screen_get_height (GdkScreen *screen)
- static gint
- get_mm_from_pixels (NSScreen *screen, int pixels)
- {
--  const float mm_per_inch = 25.4;
--  NSDictionary *dd = [[[NSScreen screens] objectAtIndex:0] deviceDescription];
--  NSSize size = [[dd valueForKey:NSDeviceResolution] sizeValue];
--  float dpi = size.width;
--  return (pixels / dpi) * mm_per_inch;
-+  const float dpi = 72.0;
-+  return (pixels / dpi) * 25.4;
- }
-
- static gchar *

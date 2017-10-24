@@ -1,14 +1,13 @@
 class FileRoller < Formula
   desc "GNOME archive manager"
   homepage "https://wiki.gnome.org/Apps/FileRoller"
-  url "https://download.gnome.org/sources/file-roller/3.24/file-roller-3.24.1.tar.xz"
-  sha256 "011545e8bd81a415fb068718347bf63ced4ab176210ce36a668904a3124c7f3a"
+  url "https://download.gnome.org/sources/file-roller/3.26/file-roller-3.26.1.tar.xz"
+  sha256 "ecd5e4c9b8435a6515120c59efeed196ec3f07cb84e1bbda7534cb5456e491ae"
 
   bottle do
-    rebuild 1
-    sha256 "74fe63e2014b57103eb17a1b51aecd73434c1c593ab5bb8f977c5e66e48b374b" => :sierra
-    sha256 "5b35a8620e69b635ed91237ff2ecdf7766489f1b92c812dfb002b8dca1a6648a" => :el_capitan
-    sha256 "1dea5b09ee2670a277aca9d169741def0ce6bf7f20637f47355b55c5f8acd927" => :yosemite
+    sha256 "fb2e0cb4f892a5ead43413e8af3a3b5c2ad7f3be1aebd070568499c07723e86f" => :high_sierra
+    sha256 "97be4885cf6dd4b815155cf48503daa3877f6f7ddbe14a32d2723dc8f9e6ce2b" => :sierra
+    sha256 "4a70941c4394a17fc3ac65fe0c8a330a3fbe2d8eb0f205cfd052026efc9698ef" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
@@ -20,7 +19,7 @@ class FileRoller < Formula
   depends_on "libmagic"
   depends_on "libarchive"
   depends_on "hicolor-icon-theme"
-  depends_on "gnome-icon-theme"
+  depends_on "adwaita-icon-theme"
 
   # Add linked-library dependencies
   depends_on "atk"

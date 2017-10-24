@@ -1,7 +1,7 @@
 class Zbar < Formula
   desc "Suite of barcodes-reading tools"
   homepage "https://zbar.sourceforge.io"
-  revision 5
+  revision 7
 
   stable do
     url "https://downloads.sourceforge.net/project/zbar/zbar/0.10/zbar-0.10.tar.bz2"
@@ -15,9 +15,10 @@ class Zbar < Formula
 
   bottle do
     cellar :any
-    sha256 "3e6dc5f4f2d734287286677241c7d0580f4b2f786bbc8ce9a13d728fa4b54499" => :sierra
-    sha256 "84e0feef90dfe6f75a28f27a625030d68ab7a029e14055717bbc4622e63c4f0a" => :el_capitan
-    sha256 "e0dd76519a36dba47248616b8aa4f5cbe6b2b7df54529d36794de4e8488bbf1b" => :yosemite
+    sha256 "abcf91210917bbde7b317e3936177344eafb38a938b3058fece85646cba43000" => :high_sierra
+    sha256 "b1d3f126b515d19d6bb1a35900c7aa9bddc36aa62b03d6f19f3c302584648ea3" => :sierra
+    sha256 "eb338869d998fa094a2c1a49565405e1c3c0b6697fbe55ebf3369ea35a58834e" => :el_capitan
+    sha256 "9e5ba88e909d3150b5496e2d70f8e63b63edbf918887428b3a57183da7878bf3" => :yosemite
   end
 
   head do

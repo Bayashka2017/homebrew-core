@@ -1,15 +1,13 @@
 class Glade < Formula
   desc "RAD tool for the GTK+ and GNOME environment"
   homepage "https://glade.gnome.org/"
-  url "https://download.gnome.org/sources/glade/3.20/glade-3.20.0.tar.xz"
-  sha256 "82d96dca5dec40ee34e2f41d49c13b4ea50da8f32a3a49ca2da802ff14dc18fe"
-  revision 1
+  url "https://download.gnome.org/sources/glade/3.20/glade-3.20.1.tar.xz"
+  sha256 "8064676dd46baa7e00c38ec1cc3ddc75c4ef5e714cd9d1491309b4df3e9cb1df"
 
   bottle do
-    rebuild 1
-    sha256 "01d2d5d6277b331485281d6668d5a2494367813a7cf09e4eb3670955ace238aa" => :sierra
-    sha256 "420cee7949561ae0c5ed7d5c7472a83b655d8dc427bdf965b49d7e989c71fe4e" => :el_capitan
-    sha256 "8c9c09600f97e65562ac8afc4eebe3a66a8122db850f86aacc65195e4f97ccfd" => :yosemite
+    sha256 "c4fa3ee5b36ca073b988e9419abe843ff820c2642347555eeb59be8a4f7e42af" => :high_sierra
+    sha256 "c7eeeb7a059ff24ced402aad019172f7db44ced1a4744738fde4c54cb1da77e2" => :sierra
+    sha256 "f160c989c55a7eaf3830bd8379d67e363b8495b2feb6ab6a8bc3cb5d4e2615fb" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
@@ -18,7 +16,7 @@ class Glade < Formula
   depends_on "docbook-xsl" => :build
   depends_on "gettext"
   depends_on "libxml2"
-  depends_on "gnome-icon-theme"
+  depends_on "adwaita-icon-theme"
   depends_on "hicolor-icon-theme"
   depends_on "gtk+3"
   depends_on "gtk-mac-integration"
@@ -44,7 +42,7 @@ class Glade < Formula
     # executable test (GUI)
     system "#{bin}/glade", "--version"
     # API test
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <gladeui/glade.h>
 
       int main(int argc, char *argv[]) {

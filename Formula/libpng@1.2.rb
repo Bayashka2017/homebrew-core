@@ -1,12 +1,13 @@
 class LibpngAT12 < Formula
   desc "Library for manipulating PNG images"
   homepage "http://www.libpng.org/pub/png/libpng.html"
-  url "ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng12/libpng-1.2.54.tar.xz"
+  url "https://downloads.sourceforge.net/project/libpng/libpng12/older-releases/1.2.54/libpng-1.2.54.tar.xz"
   mirror "https://dl.bintray.com/homebrew/mirror/libpng-1.2.54.tar.xz"
   sha256 "cf85516482780f2bc2c5b5073902f12b1519019d47bf473326c2018bdff1d272"
 
   bottle do
     cellar :any
+    sha256 "2e896eb5f32858eb578e89dd688260bb63da45760581acc01d342876eaced246" => :high_sierra
     sha256 "0f85343171350540afdbea7912b1c3873be2674c20939cb9586f549df0b0ac7b" => :sierra
     sha256 "3a77919fd1e4776d87df3838dfffb1e6588cd71798424cf809ccebd284bc2f08" => :el_capitan
     sha256 "65c40b981d5fb639087ebabca450d1a70596049bc45dbfbbec3e7e93a31454c4" => :yosemite
@@ -24,7 +25,7 @@ class LibpngAT12 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <png.h>
 
       int main()

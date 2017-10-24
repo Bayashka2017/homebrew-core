@@ -10,7 +10,7 @@ class Erlang18Requirement < Requirement
     erl
   end
 
-  def message; <<-EOS.undent
+  def message; <<~EOS
     Erlang 18+ is required to install.
 
     You can install this with:
@@ -25,21 +25,15 @@ end
 class Elixir < Formula
   desc "Functional metaprogramming aware language built on Erlang VM"
   homepage "https://elixir-lang.org/"
-  url "https://github.com/elixir-lang/elixir/archive/v1.4.5.tar.gz"
-  sha256 "bef1a0ea7a36539eed4b104ec26a82e46940959345ed66509ec6cc3d987bada0"
+  url "https://github.com/elixir-lang/elixir/archive/v1.5.2.tar.gz"
+  sha256 "7317b7a9d3b5bef2b5cd56de738f2b37fd4111e24efbe71a3e39bea1b702ff6c"
 
   head "https://github.com/elixir-lang/elixir.git"
 
   bottle do
-    sha256 "b59dde1332bce0aabc7aebe9527607adb68dc1c1a8070c2d0c1b1e702511ff62" => :sierra
-    sha256 "c994c7a94a52eac63fa0478175f8a0e256b3ef2b73e81f61b67429830fbc201e" => :el_capitan
-    sha256 "291946687a7d64541b69a132daab1d400592a115ed02ae1f0116fbe1799aee67" => :yosemite
-  end
-
-  devel do
-    url "https://github.com/elixir-lang/elixir/archive/v1.5.0-rc.1.tar.gz"
-    version "1.5.0-rc.1"
-    sha256 "1ad60996c2141e61d36fc9c87726fa4d71353c7017c6ceb75221fe1edea14f6b"
+    sha256 "a73f29068edcfc35fd5adae518eb563594bf154368b0ebcda8fe24d0c8844b74" => :high_sierra
+    sha256 "2e2bc323b22c0618d324fd0fd0ecb41d10eb2a0f8c157b9dce161db9ef708321" => :sierra
+    sha256 "a74d9912c1ef658626a400d37a8df162d1f6e0d8337a80963dc289289931920f" => :el_capitan
   end
 
   depends_on Erlang18Requirement

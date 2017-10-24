@@ -4,15 +4,15 @@ class Imagemagick < Formula
   # Please always keep the Homebrew mirror as the primary URL as the
   # ImageMagick site removes tarballs regularly which means we get issues
   # unnecessarily and older versions of the formula are broken.
-  url "https://dl.bintray.com/homebrew/mirror/imagemagick-7.0.6-2.tar.xz"
-  mirror "https://www.imagemagick.org/download/ImageMagick-7.0.6-2.tar.xz"
-  sha256 "62e54feca26ae9fdcaa3bb3b5f6c0c98e8fced9a5459c40f06714b0c5f42618f"
-  head "http://git.imagemagick.org/repos/ImageMagick.git"
+  url "https://dl.bintray.com/homebrew/mirror/imagemagick-7.0.7-8.tar.xz"
+  mirror "https://www.imagemagick.org/download/ImageMagick-7.0.7-8.tar.xz"
+  sha256 "547826f95a23ad3a1a6a514c0bff16ae875f6b7211809dff566e5994f65a0313"
+  head "https://github.com/ImageMagick/ImageMagick.git"
 
   bottle do
-    sha256 "5dc45950e109a5c8ef07560724da065e86e9f4fd0014b64c1e2a08d1d9c1d89d" => :sierra
-    sha256 "4e37a4e229ec7a3eff6444e13791a1a48309d84d43bf0e7b9db7dc04fdc6ed1f" => :el_capitan
-    sha256 "df8fe391d9849074bf8c1dbbbd0ba38c7fe247ea81e5f26b8cab99159a24f575" => :yosemite
+    sha256 "bc7db3f84ef21350592fe0a688feb8a793d90cde35a9387dbdf036d0e3349d26" => :high_sierra
+    sha256 "d02da228ed58829442ba94030b2f7fb73081da4e42d4470c6522f3b94fd46946" => :sierra
+    sha256 "21c4555cdf967b4626768c453f7b0d0a92bd761fe56fae6e3a7b69c61ffc78c9" => :el_capitan
   end
 
   option "with-fftw", "Compile with FFTW support"
@@ -20,9 +20,6 @@ class Imagemagick < Formula
   option "with-opencl", "Compile with OpenCL support"
   option "with-openmp", "Compile with OpenMP support"
   option "with-perl", "Compile with PerlMagick"
-  option "with-quantum-depth-8", "Compile with a quantum depth of 8 bit"
-  option "with-quantum-depth-16", "Compile with a quantum depth of 16 bit"
-  option "with-quantum-depth-32", "Compile with a quantum depth of 32 bit"
   option "without-magick-plus-plus", "disable build/install of Magick++"
   option "without-modules", "Disable support for dynamically loadable modules"
   option "without-threads", "Disable threads support"
@@ -112,15 +109,7 @@ class Imagemagick < Formula
     args << "--with-fontconfig=yes" if build.with? "fontconfig"
     args << "--with-freetype=yes" if build.with? "freetype"
     args << "--enable-zero-configuration" if build.with? "zero-configuration"
-
-    if build.with? "quantum-depth-32"
-      quantum_depth = 32
-    elsif build.with?("quantum-depth-16") || build.with?("perl")
-      quantum_depth = 16
-    elsif build.with? "quantum-depth-8"
-      quantum_depth = 8
-    end
-    args << "--with-quantum-depth=#{quantum_depth}" if quantum_depth
+    args << "--without-wmf" if build.without? "libwmf"
 
     # versioned stuff in main tree is pointless for us
     inreplace "configure", "${PACKAGE_NAME}-${PACKAGE_VERSION}", "${PACKAGE_NAME}"
@@ -129,7 +118,7 @@ class Imagemagick < Formula
   end
 
   def caveats
-    s = <<-EOS.undent
+    s = <<~EOS
       For full Perl support you may need to adjust your PERL5LIB variable:
         export PERL5LIB="#{HOMEBREW_PREFIX}/lib/perl5/site_perl":$PERL5LIB
     EOS

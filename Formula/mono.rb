@@ -5,6 +5,7 @@ class Mono < Formula
   sha256 "48d6ae71d593cd01bf0f499de569359d45856cda325575e1bacb5fabaa7e9718"
 
   bottle do
+    sha256 "ae35573df33c718c3d9999572392480d2426cc995cfc4b123f0a66f885ea8053" => :high_sierra
     sha256 "8dab2660d98e8e3bb1fa7f4640db04ef33e4e7fcfb7c3ef8a5c718e5254d80bd" => :sierra
     sha256 "89d4d7f5df7bbf0e61a24e042bac29c41433dd71e8008394ce181ef6e7a4b77f" => :el_capitan
     sha256 "72dd883ab2c394bde73325086350545db1a0a0414989fb28b9a31b7b8217c7a7" => :yosemite
@@ -29,7 +30,6 @@ class Mono < Formula
   depends_on "cmake" => :build
 
   conflicts_with "xsd", :because => "both install `xsd` binaries"
-  conflicts_with "czmq", :because => "both install `makecert` binaries"
 
   resource "fsharp" do
     url "https://github.com/fsharp/fsharp.git",
@@ -66,7 +66,7 @@ class Mono < Formula
     end
   end
 
-  def caveats; <<-EOS.undent
+  def caveats; <<~EOS
     To use the assemblies from other formulae you need to set:
       export MONO_GAC_PREFIX="#{HOMEBREW_PREFIX}"
     Note that the 'mono' formula now includes F#. If you have
@@ -77,7 +77,7 @@ class Mono < Formula
   test do
     test_str = "Hello Homebrew"
     test_name = "hello.cs"
-    (testpath/test_name).write <<-EOS.undent
+    (testpath/test_name).write <<~EOS
       public class Hello1
       {
          public static void Main()
@@ -91,7 +91,7 @@ class Mono < Formula
     assert_match test_str, output.strip
 
     # Tests that xbuild is able to execute lib/mono/*/mcs.exe
-    (testpath/"test.csproj").write <<-EOS.undent
+    (testpath/"test.csproj").write <<~EOS
       <?xml version="1.0" encoding="utf-8"?>
       <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
         <PropertyGroup>
@@ -109,14 +109,14 @@ class Mono < Formula
     if build.with? "fsharp"
       # Test that fsharpi is working
       ENV.prepend_path "PATH", bin
-      (testpath/"test.fsx").write <<-EOS.undent
+      (testpath/"test.fsx").write <<~EOS
         printfn "#{test_str}"; 0
       EOS
       output = pipe_output("#{bin}/fsharpi test.fsx")
       assert_match test_str, output
 
       # Tests that xbuild is able to execute fsc.exe
-      (testpath/"test.fsproj").write <<-EOS.undent
+      (testpath/"test.fsproj").write <<~EOS
         <?xml version="1.0" encoding="utf-8"?>
         <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
           <PropertyGroup>
@@ -137,7 +137,7 @@ class Mono < Formula
           </ItemGroup>
         </Project>
       EOS
-      (testpath/"Main.fs").write <<-EOS.undent
+      (testpath/"Main.fs").write <<~EOS
         [<EntryPoint>]
         let main _ = printfn "#{test_str}"; 0
       EOS

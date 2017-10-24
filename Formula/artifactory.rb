@@ -1,8 +1,8 @@
 class Artifactory < Formula
   desc "Manages binaries"
   homepage "https://www.jfrog.com/artifactory/"
-  url "https://dl.bintray.com/jfrog/artifactory/jfrog-artifactory-oss-5.4.5.zip"
-  sha256 "b9cba4f566117fe000a2c57a12aaf2f91112f64ee94bdc53a580cb3bbbb46281"
+  url "https://dl.bintray.com/jfrog/artifactory/jfrog-artifactory-oss-5.5.0.zip"
+  sha256 "d26130b776fb50a4ca8c240c2f77e00eb955f989a0483271b924851d8e0344ee"
 
   bottle :unneeded
 
@@ -47,7 +47,7 @@ class Artifactory < Formula
 
   plist_options :manual => "#{HOMEBREW_PREFIX}/opt/artifactory/libexec/bin/artifactory.sh"
 
-  def plist; <<-EOS.undent
+  def plist; <<~EOS
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
     <plist version="1.0">

@@ -1,14 +1,14 @@
 class Gedit < Formula
   desc "The GNOME text editor"
   homepage "https://wiki.gnome.org/Apps/Gedit"
-  url "https://download.gnome.org/sources/gedit/3.22/gedit-3.22.0.tar.xz"
-  sha256 "063b5a0b5dcc8f540f6e8c3ea1c22cf8a3a19edffc25315a1b6bc51d462b3f45"
-  revision 1
+  url "https://download.gnome.org/sources/gedit/3.22/gedit-3.22.1.tar.xz"
+  sha256 "aa7bc3618fffa92fdb7daf2f57152e1eb7962e68561a9c92813d7bbb7fc9492b"
 
   bottle do
-    sha256 "b98d81e3fa64423cd27715461f605e6a2ea2f36a0e033d09165051376b87f7e3" => :sierra
-    sha256 "cdfb749b71767e06dcf905fd4388b76e9de83a34cd0e3c84a076d22a716eb3fb" => :el_capitan
-    sha256 "52687c06f23fdaa9f612a18821dcaa8a7db190b75c6116b61a54ea4630230fa0" => :yosemite
+    rebuild 1
+    sha256 "20a1c65040063c87ce7543c91bc5bf567c775b81f1895949f4a42d003a6f2c12" => :high_sierra
+    sha256 "5909c7a8820499ab0d76d2946fa2d91f4e81b7a385acfdbb7b987c3f974e4c7e" => :sierra
+    sha256 "1a333dc7184f3d57b609d561895a07f7c3fb4f442dc6b3bdcaaec472310f9f61" => :el_capitan
   end
 
   depends_on "pkg-config" => :build
@@ -29,7 +29,7 @@ class Gedit < Formula
   depends_on "libpeas"
   depends_on "gtksourceview3"
   depends_on "gsettings-desktop-schemas"
-  depends_on "gnome-icon-theme"
+  depends_on "adwaita-icon-theme"
 
   def install
     system "./configure", "--disable-dependency-tracking",
@@ -49,7 +49,7 @@ class Gedit < Formula
     # main executable test
     system bin/"gedit", "--version"
     # API test
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <gedit/gedit-utils.h>
 
       int main(int argc, char *argv[]) {

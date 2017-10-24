@@ -5,19 +5,10 @@ class Gupnp < Formula
   sha256 "5173fda779111c6b01cd4a5e41b594322be9d04f8c74d3361f0a0c2069c77610"
 
   bottle do
+    sha256 "637290bee0b95267d9d900afbb081b437b89d2b4d353724fa492e52ba25627b2" => :high_sierra
     sha256 "28afff235b826e62bfd7133394b91a4b3746c3bf591efb5eb35767978e6e5f9a" => :sierra
     sha256 "122ab1bd5cd7864e3ba5e8242d62fc4d1a46fe3827801751c967c4877958a19d" => :el_capitan
     sha256 "c75c47821df5392618b6ce7f438f509e5c6833fe7f60f6657b3081adf537da37" => :yosemite
-  end
-
-  head do
-    url "https://github.com/GNOME/gupnp.git"
-
-    depends_on "automake" => :build
-    depends_on "autoconf" => :build
-    depends_on "gnome-common" => :build
-    depends_on "gtk-doc" => :build
-    depends_on "libtool" => :build
   end
 
   depends_on "pkg-config" => :build
@@ -28,24 +19,16 @@ class Gupnp < Formula
   depends_on "gssdp"
 
   def install
-    args = %W[
-      --disable-debug
-      --disable-dependency-tracking
-      --disable-silent-rules
-      --prefix=#{prefix}
-    ]
-    if build.head?
-      ENV.append "CFLAGS", "-I/usr/include/uuid"
-      system "./autogen.sh", *args
-    else
-      system "./configure", *args
-    end
+    system "./configure", "--disable-debug",
+                          "--disable-dependency-tracking",
+                          "--disable-silent-rules",
+                          "--prefix=#{prefix}"
     system "make", "install"
   end
 
   test do
     system bin/"gupnp-binding-tool", "--help"
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <libgupnp/gupnp-control-point.h>
 
       static GMainLoop *main_loop;
